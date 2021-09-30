@@ -1,4 +1,4 @@
-= OPenCPN JavaScript library
+= OpenCPN JavaScript library
 
 This library shares scripts you can use as-is, or modify for your own needs.
 
