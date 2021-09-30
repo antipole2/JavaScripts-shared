@@ -6,7 +6,7 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |===
 |Name |Description |Details/instructions |Author
 
-|link:https://github.com/antipole2/JavaScripts-shared/blob/main/Driver.js[Driver.js]
+|link:https:../../Driver/Driver.js[Driver.js]
 |A simple way of driving the ship on a compass course or relative to a simulated wind.
 |link:https://github.com/antipole2/JavaScripts-shared/blob/223a994776846e65c9b8c43c64fbc97711bbd066/Driver.adoc[instructions]
 |Antipole
