@@ -1,0 +1,25 @@
+= OPenCPN JavaScript library
+
+This library shares scripts you can use as-is, or modify for your own needs.
+
+[cols="1,1,2,1"] 
+|===
+|Name |Description |Details/instructions |Author
+
+|link:https://github.com/antipole2/JavaScripts-shared/blob/main/Driver.js[Driver.js]
+|A simple way of driving the ship on a compass course or relative to a simulated wind.
+|link:https://github.com/antipole2/JavaScripts-shared/blob/223a994776846e65c9b8c43c64fbc97711bbd066/Driver.adoc[instructions]
+|Antipole
+
+|link:https://github.com/antipole2/JavaScripts-shared/blob/67d81867511adce31db4cdc0c63b8f33579dd4a4/TackAdvisor.js[TackAdvisor.js]
+|When close-hauled or running, displays suggested tacks
+|link:https://github.com/antipole2/JavaScripts-shared/blob/main/TackAdvisor.adoc[instructions]
+|Antipole
+|===
+
+=== Contributing to this library +
+If you have developed a script that you would like to contribute, send me
+
+* the link to your script
+* the description for the table entry
+* the link to the instructions file if any
