@@ -15,6 +15,11 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |When close-hauled or running, displays suggested tacks
 |link:https:../TackAdvisor/TackAdvisor.adoc[Instructions]
 |Antipole
+
+|link:https:../BuildRaceCourses/BuildRaceCourses.js[BuildRaceCourses.js]
+|Build a race course from set of race marks
+|link:https:../TackAdvisor/TackAdvisor.adoc[Instructions]
+|Antipole
 |===
 
 === Contributing to this library +
