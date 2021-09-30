@@ -1,0 +1,16 @@
+This script monitors for when you have an active waypoint and will need to tack to reach it.  It then displays the two tack legs required.
+
+If you are running off the wind to an active waypoint and will need to gybe to reach it, it displays the two legs and hence the recommended point to gybe.
+
+TackAdvisor does not take cross-current offsets into account and will not give an accurate tack point if the cross-current is significant.
+
+If TackAdvisor is standing by and not displaying your tacks when you are expecting it to, check for the following.
+It will not display tacks under any of these conditions:
+
+* No active waypoint
+* You are off the wind by more than the configured amount, i.e. reaching
+* You are heading too close to the wind to be sailing
+* You are running close to straight for the waypoint
+
+TIP: You can exercise TackAdvisor without being underway by running Driver in a separate console.
+When you set Driver to a beat or near run, TackAdvisor will display the necessary tacks.
