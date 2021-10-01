@@ -225,10 +225,13 @@ function handleMessageDone(){
 
 function handleRL(routeListJS){	// receive list of routes in JSON and build index
 	var i;
-	routeList = JSON.parse(routeListJS);
-	if (routeList != null) {
-		if (routeList.length > 1){  // (changed from 0 because null entry when no routes)
-			if (!routeList[0]) routeList.shift(); // drop first null entry - don't know why it is there
+	if (routeListJS == null) routeList.length = 0;	// no routes
+	else {
+		routeList = JSON.parse(routeListJS);
+		if (routeList != null) {
+			if (routeList.length > 1){  // (changed from 0 because null entry when no routes)
+				if (!routeList[0]) routeList.shift(); // drop first null entry - don't know why it is there
+				}
 			}
 		}
 	onDialogue(handleConfig, config);
