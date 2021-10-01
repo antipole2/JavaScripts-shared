@@ -30,7 +30,7 @@ If you have developed a script that you would like to contribute, please store i
 * the link to the instructions file if any
 
 You could store your scripts and any descriptions as gists on GitHub.
-This has the advantage of version control if you modify it.
+This has the advantage of having version control if you modify it.
 
 I keep my published scripts in a GitHub repository synchronised to a folder on my computer using GitHub Desktop.
-They are thus available to me when offline afloat.  Any modifications I might make get synchronised back to the published version.
+They are thus available to me when offline afloat.  I can synchronise any modifications I might make back to the published version.
