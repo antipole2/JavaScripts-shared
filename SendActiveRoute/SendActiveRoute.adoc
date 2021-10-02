@@ -27,6 +27,7 @@ This provided important resilience.
 The script monitors for when you have an active waypoint  or route.
 
 When the script detects an active route, it sends the following NMEA sentences:
+
 * A series of WPL sentences defining the waypoints in the route
 * A group of RTE sentences creating a route comprising the waypoints
 * A BOD sentence with the bearing from the position at which the leg was activated to the next route point.
@@ -40,7 +41,7 @@ This script fixes up the APB sentences to carry the full route name.
 == Instructions for making this work
 
 . Have OpenCPN receive NMEA data on one port - say 60001
-. Have OpenCPN send NMEA data on a different port - say 60002+
+. Have OpenCPN send NMEA data on a different port - say 60002 +
 Drop outgoing sentences ECRMB,ECAPB because the script sends modified sentences NVRMB,NVAPB
 . Connect your device to the same WiFi network
 . Within iNavX select Instruments  > TCP/IP and set the protocol and port number to as in Step 2 above.
