@@ -28,9 +28,10 @@ The script monitors for when you have an active waypoint  or route.
 
 When the script detects an active route, it sends the following NMEA sentences:
 
-* A series of WPL sentences defining the waypoints in the route
-* A group of RTE sentences creating a route comprising the waypoints
-* A BOD sentence with the bearing from the position at which the leg was activated to the next route point.
+. A series of WPL sentences defining the routepoints in the route
+. A group of RTE sentences creating a route comprising the routepoints
+. A BOD sentence with the bearing from the position at which the leg was activated to the next routepoint.
+. A repeat of the WPL sentence for the active routepoint
 
 These sentences cause iNavX to hold a mirror copy of the current route and navigate to the active point within the route.
 
