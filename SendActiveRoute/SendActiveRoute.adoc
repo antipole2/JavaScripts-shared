@@ -1,0 +1,63 @@
+= SendActiveRoute
+
+== What this script addresses
+
+Running a tablet or phone as a repeater for OpenCPN is unsatisfactory.
+Viewing OpenCPN on such a small screen gives a poor experience.
+Further, if OpenCPN were to fail, the repeater will also fail.
+There is no resilience.
+
+There are navigational applications better optimised these devices and more robust.
+I use https://inavx.com[iNavX], which is available on iOS (iPad and iPhone) and Android devices.
+I will asume the other device are running iNavX here.
+
+If OpenCPN is being used as the main planning tool and navigational application,
+iNavX needs to shadow OpenCPN and keep synchronised with any changes in the navigation.
+
+This script causes iNavX to shadow OpenCPN by adopting any active waypoint or route.
+As you advance along the route, iNavX will also advance.
+If you amend the route by adding or moving routepoints, iNavX will update accordingly.
+
+In the event that OpenCPN were to fail, iNavX will continue to navigate from its own ship's navigational feed.
+If that feed were to fail, a device with its own GPS receiver will switch to using that.
+This provided important resilience.
+
+== What the script does
+
+The script monitors for when you have an active waypoint  or route.
+
+When the script detects an active route, it sends the following NMEA sentences:
+* A series of WPL sentences defining the waypoints in the route
+* A group of RTE sentences creating a route comprising the waypoints
+* A BOD sentence with the bearing from the position at which the leg was activated to the next route point.
+
+These sentences cause iNavX to hold a mirror copy of the current route and navigate to the active point within the route.
+
+While a route is active, OpenCPN sends APB sentences with the routeName.
+Unfortunately, that route name is truncated.
+This script fixes up the APB sentences to carry the full route name.
+
+== Instructions for making this work
+
+. Have OpenCPN receive NMEA data on one port - say 60001
+. Have OpenCPN send NMEA data on a different port - say 60002+
+Drop outgoing sentences ECRMB,ECAPB because the script sends modified sentences NVRMB,NVAPB
+. Connect your device to the same WiFi network
+. Within iNavX select Instruments  > TCP/IP and set the protocol and port number to as in Step 2 above.
+. On the same panel, Enable Waypoints and enable Link. +
+You should now see the NMEA sentences scrolling in the monitoring pane of this panel.
+. Click Done and then select the Chart.
+
+The device should now follow the ship's navigation using the ship's navigation data.
+
+When a waypoint becomes active in OpenCPN, it becomes active in iNavX.
+
+When a route is activated in OpenCPN, it appears as the active route in iNavX.
+As OpenCPN advances the routepoint, so iNavX advances its active routepoint.
+Progress along the route is available in the route tab of the ribbon at the top of the iNavX screen,
+together with predicted time on route and ETA.
+
+If you wish to force an advance to the next routepoint, this should be done on OpenCPN, whereupon iNavX will update too.
+
+If you advance the routepoint in iNavX, it will start ignoring changes in the active routepoint send from OpenCPN.
+To restore this, go to the panel used for step 5 above, turn Enable Waypoints off and back on again.
