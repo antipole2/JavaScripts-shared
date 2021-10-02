@@ -17,7 +17,7 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |Antipole
 
 |link:https:../BuildRaceCourses/BuildRaceCourses.js[BuildRaceCourses.js]
-|Build a race course from set of race marks
+|Build a race course from a set of race marks
 |link:https:../BuildRaceCourses/BuildRaceCourses.pdf[Instructions]
 |Antipole
 |===
