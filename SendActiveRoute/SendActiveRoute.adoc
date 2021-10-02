@@ -66,14 +66,14 @@ To restore this, go to the panel used for step 5 above, turn Enable Waypoints of
 
 == Limitations
 
-WARNING: Unlike OpenCPN but like most navigationl applications, iNavX identifies waypoints and route by their unique name.
-It replaces anything with the same name, so I navigate +
+WARNING: Unlike OpenCPN but like most navigationl applications, iNavX identifies waypoints and routes by their unique name.
+It replaces anything with the same name, so if I navigate +
 Route 1 with routepoints A, B, C & D +
 and then a different +
 Route 2 with routepoints A, X, C & Y +
-Route 1 still exists withing iNavX but the routepoints A and C within it have the position of thos routepoints in Route B.
+Route 1 still exists withing iNavX but the routepoints A and C within it have the position of those routepoints in Route B.
 
-CAUTION: To avoid unneccearyly refetching the whole list of routes every few sconds, the script does not check for a chnage in route name.
+CAUTION: To avoid refetching the whole list of routes every few sconds, the script does not check for a change in route name.
 So if you edit the route name in OpenCPN, the script will get confused.
 Stop the script and start it again.
 
