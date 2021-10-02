@@ -77,4 +77,17 @@ CAUTION: To avoid refetching the whole list of routes every few sconds, the scri
 So if you edit the route name in OpenCPN, the script will get confused.
 Stop the script and start it again.
 
+== My network set up
 
+On Antipole I have an NMEA2000 network and an Actisense W2K-1 NMEA200 to WiFi converter.
+The W2K-1 is usually used to create a WiFi network.
+However, it is not a router and you cannot use it to connect OpenCPN and other devices.
+
+I happened to have a USB-powered mini-hub that British Telecom gave me when we were moving house.
+This does have a router.
+So I connect the W2K-1 in client mode to the minihub and use this as the WiFi network.
+OpenCPN receives the NMEA data from the W2K-1 on port 60001
+and sends NMEA data on port 60002.
+Other devices receive via port 60002.
+
+In the event that OpenCPN were to fail, I would connect the iOS devices via port 60001 and they would receive the navigational data directly, without it being procesed via OpenCPN.
