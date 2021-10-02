@@ -12,7 +12,7 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |Antipole
 
 |link:https:../TackAdvisor/TackAdvisor.js[TackAdvisor.js]
-|When close-hauled or running, displays suggested tacks
+|When close-hauled or running towards a waypoint, displays suggested tacks
 |link:https:../TackAdvisor/TackAdvisor.adoc[Instructions]
 |Antipole
 
