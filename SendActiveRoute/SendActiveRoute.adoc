@@ -65,13 +65,15 @@ If you advance the routepoint in iNavX, it will start ignoring changes in the ac
 To restore this, go to the panel used for step 5 above, turn Enable Waypoints off and back on again.
 
 == Limitations
-
-WARNING: Unlike OpenCPN but like most navigationl applications, iNavX identifies waypoints and routes by their unique name.
+[WARNING]
+====
+Unlike OpenCPN but like most navigationl applications, iNavX identifies waypoints and routes by their unique name.
 It replaces anything with the same name, so if I navigate +
 Route 1 with routepoints A, B, C & D +
 and then a different +
 Route 2 with routepoints A, X, C & Y +
 Route 1 still exists withing iNavX but the routepoints A and C within it have the position of those routepoints in Route B.
+====
 
 CAUTION: To avoid refetching the whole list of routes every few sconds, the script does not check for a change in route name.
 So if you edit the route name in OpenCPN, the script will get confused.
