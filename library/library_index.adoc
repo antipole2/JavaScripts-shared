@@ -1,4 +1,4 @@
-= OpenCPN JavaScript library
+= OpenCPN JavaScripts library
 
 This library shares scripts you can use as-is, or modify for your own needs.
 
@@ -12,19 +12,25 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |Antipole
 
 |link:https:../TackAdvisor/TackAdvisor.js[TackAdvisor.js]
-|When close-hauled or running, displays suggested tacks
+|When close-hauled or running with an active waypoint, displays advised tacks
 |link:https:../TackAdvisor/TackAdvisor.adoc[Instructions]
 |Antipole
 
 |link:https:../BuildRaceCourses/BuildRaceCourses.js[BuildRaceCourses.js]
-|Build a race course from set of race marks
+|Build a race course from a set of race marks
 |link:https:../BuildRaceCourses/BuildRaceCourses.pdf[Instructions]
 |Antipole
 |===
 
 === Contributing to this library +
-If you have developed a script that you would like to contribute, send me
+If you have developed a script that you would like to contribute, please store it somewhere online and send me
 
 * the link to your script
 * the description for the table entry
 * the link to the instructions file if any
+
+You could store your scripts and any descriptions as gists on GitHub.
+This has the advantage of having version control if you modify it.
+
+I keep my published scripts in a GitHub repository synchronised to a folder on my computer using GitHub Desktop.
+They are thus available to me when offline afloat.  I can synchronise any modifications I might make back to the published version.
