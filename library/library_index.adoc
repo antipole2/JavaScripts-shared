@@ -21,6 +21,11 @@ They need at least v0.4 of the plugin.
 |Build a race course from a set of race marks
 |link:https:../BuildRaceCourses/BuildRaceCourses.pdf[Instructions]
 |Antipole
+
+|link:https:../SendActiveRoute/SendActiveRoute.js[SendActiveRoute.js]
+|Mirror active waypoint or route to other devices running. e.g. iNavX
+|link:https:../SendActiveRoute/SendActiveRoute.pdf[Fuller description and instructions]
+|Antipole
 |===
 
 === Contributing to this library +
