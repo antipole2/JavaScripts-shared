@@ -1,5 +1,7 @@
 = SendActiveRoute
 
+https://github.com/antipole2/JavaScripts-shared/blob/main/SendActiveRoute/SendActiveRoute.js[SendActiveRoute.js]
+
 == What this script addresses
 
 Running a tablet or phone as a repeater for OpenCPN is unsatisfactory.
