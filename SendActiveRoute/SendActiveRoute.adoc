@@ -97,6 +97,9 @@ In the event that OpenCPN were to fail, I would connect the iOS devices via port
 
 == Implementation notes
 
+These notes may be of iterest to thos maintining te script.
+They are not need to use it.
+
 === Forming the RTE sentences
 
 A challenge in writing this script was forming the RTE sentences, which list the routepoints.
