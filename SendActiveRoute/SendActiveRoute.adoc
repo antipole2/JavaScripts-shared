@@ -94,3 +94,17 @@ and sends NMEA data on port 60002.
 Other devices receive via port 60002.
 
 In the event that OpenCPN were to fail, I would connect the iOS devices via port 60001 and they would receive the navigational data directly, without it being procesed via OpenCPN.
+
+== Implementation notes
+
+=== Forming the RTE sentences
+
+A challenge in writing this script was forming the RTE sentences, which list the routepoints.
+NMEA sentences are limited to 80 characters, so several "n of m" installments are required.
+How many depends on the number of routepoints and the length of the routepoint names.
+
+The easy way out would be to send each routepoint in its own RTE installment.
+o with 6 routepoints there would be 6 RTE installments.
+Simpe but inefficient.
+
+The script actually pack the routepoints into the minimum number of RTE installements.
