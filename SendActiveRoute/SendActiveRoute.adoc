@@ -1,5 +1,4 @@
 = SendActiveRoute
-:icons: font
 
 == What this script addresses
 
