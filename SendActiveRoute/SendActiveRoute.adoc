@@ -67,8 +67,7 @@ To restore this, go to the panel used for step 5 above, turn Enable Waypoints of
 == Limitations
 [WARNING]
 ====
-=== Duplication of names
-
+*Duplication of names* +
 Unlike OpenCPN but like most navigationl applications, iNavX identifies waypoints and routes by their unique name.
 It replaces anything with the same name, so if I navigate +
 Route 1 with routepoints A, B, C & D +
