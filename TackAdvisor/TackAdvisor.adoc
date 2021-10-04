@@ -1,3 +1,7 @@
+= TackAdvisor
+
+https://github.com/antipole2/JavaScripts-shared/blob/main/TackAdvisor/TackAdvisor.js[TackAdvisor.js]
+
 This script monitors for when you have an active waypoint and will need to tack to reach it.  It then displays the two tack legs required.
 
 If you are running off the wind to an active waypoint and will need to gybe to reach it, it displays the two legs and hence the recommended point to gybe.
