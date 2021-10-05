@@ -52,7 +52,6 @@ function handleRL(routeListJS){
 		if (copies ==2) print("Waypoint name ", waypointNames[w], " used twice\n");
 		else if (copies > 2) print("Waypoint name ", waypointNames[w], " used ", copies, " times\n");
 		if (copies > 1) duplicates++;
-if (copies = 1) print("Point ", waypointNames[w], " used once\n");
 		}
 	if (!duplicates) print("All waypoints have unique names\n");
 	
