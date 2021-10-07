@@ -26,7 +26,6 @@ They need at least v0.4 of the plugin.
 |Mirror active waypoint or route to other devices running. e.g. iNavX
 |link:https:../SendActiveRoute/SendActiveRoute.adoc[Fuller description and instructions]
 |Antipole
-|===
 
 |link:https://github.com/antipole2/JavaScripts-shared/blob/main/DuplicateCounter.js[DuplicateCounter.js]
 |Looks for routes or waypoints with duplicate names and reports the number of duplicates
