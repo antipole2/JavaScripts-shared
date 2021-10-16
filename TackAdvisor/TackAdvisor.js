@@ -1,6 +1,7 @@
 // Tack advisor v0.2.1  27 Sep 2021
 // Since v0.1 added down-wind tacking and onExit clean-up
 // v0.2.1 removes degree character from comments in three places as Windows objects
+// v0.3 works with relative wind angle
 
 // configuration
 repeatInterval = 5;	// seconds
@@ -12,6 +13,7 @@ maxRunWindAngle = 179;	// Don't work if virtually straight down wind
 autoHide = false
 displayDialogue = true;
 debug = false;
+simulate= false;
 routeName = "tackRoute";	// name of route to be created
 
 // Enduring variables
@@ -20,6 +22,7 @@ var lastPosString = false;
 var windDirection = -1;	// < 0 until wind received
 var windSpeed;
 var tackString;	// the text summarising tack legs
+var here;	// OCPN navigation
 
 routeDisplayDialog = [
 		{type:"text", value:"", style:{font:"courier"}},
@@ -75,13 +78,26 @@ function handleRL(routeListJS){	// receive list of routes in JSON
 	}
 
 function processNMEA(input){
+	here = OCPNgetNavigation();
+
+	if (simulate) here.COG = here.HDM = 45;
 	if (input.OK){
 		sentence = input.value;
 		if (sentence.slice(3,6) == "MWV"){
-			splut = sentence.split(",");
+			if (simulate){
+//				sentence = "$WIMWV,45,R,4.96,N,A";
+				print(sentence, "\n");
+				}
+			splut = sentence.split(",");			
 			if (splut[5] == "A"){ // valid data
-				if (splut[2] != "T") throw("Code written for true wind direction only");
 				windDirection = splut[1]; windSpeed = splut[3];
+				type = splut[2];
+				if (type == "R"){
+					windDirection = bearing(here.HDM, windDirection);					
+					}
+				if (simulate) {
+					print("Simulating COG: ", here.COG, " Wind direction: ", windDirection, "\n");
+					}
 				}
 			}
 		}
@@ -133,7 +149,7 @@ function updateWorks(){
 		targetWaypoint.position.longitude = lon;
 		lastPosString = posString;
 		}
-	here = OCPNgetNavigation();
+//	here = OCPNgetNavigation();
 	var angleToWind;	// angle of wind from course made good
 	// NB if windAngle is positive, wind is on starboard side
 	windAngle = angle(here.COG, windDirection); // angle off wind
@@ -142,7 +158,6 @@ function updateWorks(){
 		if (debug) print("Head to wind\n");
 		return false;
 		}
-	if (debug) print("Initial wind angle:", windAngle, "\n");
 	if (absWindAngle > 90){
 		// we are running
 		running = true;
@@ -163,8 +178,6 @@ function updateWorks(){
 			return false;	// too close to wind
 			}
 		}
-	if (debug) print("COG:", here.COG, "\twindDirction:",
-		windDirection, "\twindAngle:", windAngle, "\tRunning:", running, "\n");
 	var vectorToWpt;	// vector from here to target waypoint
 	var oppositeTack;	// bearing if we tack
 	var alpha;		// angle between course to waypoint and CMG (+ve clockwise)
@@ -174,7 +187,6 @@ function updateWorks(){
 	// trigonometry:			a/sin(alpha) = b/sin(beta) = c/sin(gamma)
 	hereWaypoint.position = here.position;
 	vectorToWpt = OCPNgetVectorPP(hereWaypoint.position, targetWaypoint.position);
-	if (debug) print("Bearing to waypoint:", vectorToWpt.bearing, "\n");
 	alpha = angle(vectorToWpt.bearing, here.COG);	// is angle between bearing to WP and our COG
 	if (Math.abs(alpha) > 90){
 		// making away from mark
@@ -251,7 +263,7 @@ function angle(bearing1, bearing2){
 
 function bearing(bearing, angle){
 	// given a bearing, returns the bearing changed by angle	
-	newBearing = 1*bearing + angle;
+	newBearing = 1*bearing + 1*angle;
 	if (newBearing < 0) newBearing += 360;
 	newBearing = newBearing % 360
 	return newBearing;

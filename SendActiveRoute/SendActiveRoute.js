@@ -1,6 +1,7 @@
 // This script sends any active route out as WPT and RTE sentences so that iNavX shows the up-to-date active route.
 // If the route or its routepoints are updated, iNavX will update to reflect this
 // V2.0 - major rewrite to utilise latest plugin capabilities - much simplified
+// V2.01 - fixed error crept in to RMB sentence
 
 Position = require("Position");	// load the required constructors
 Route = require("Route");	
@@ -180,7 +181,7 @@ function processNMEA(input){	// we need to un-abbreviate the routepoint name in 
 			{
 			if (nextRoutePoint == "") break;	// we cannot act until we have this
 			splut = input.value.split(",", 20);
-			shortWPname = splut[5];
+			shortWPname = splut[4];
 			if (activeRoutepointName.startsWith(shortWPname)){  // we check this really is the right one
 				splut[0] = prefix + "RMB";		// give it our branding
 				splut[4] = lastRoutePoint.markName; // and add the origin WP name
