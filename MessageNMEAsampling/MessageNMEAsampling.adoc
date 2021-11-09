@@ -2,7 +2,9 @@
 
 https://github.com/antipole2/JavaScripts-shared/blob/main/MessageNMEAsampling.js[MessageNMEAsampling.js]
 
-This script monitors OpenCPN messages and NMEA sentences over 30 seconds (configurable).
+The OpenCPN Debugger plugin can be used to monitor NMEA sentences but the output can be difficult to use.
+This script is an alternative.
+It monitors OpenCPN messages and NMEA sentences over 30 seconds (configurable).
 
 It then reports:
 
