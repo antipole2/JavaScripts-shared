@@ -33,6 +33,12 @@ They need at least v0.4 of the plugin.
 |Antipole
 |===
 
+|link:https://raw.githubusercontent.com/antipole2/JavaScripts-shared/main/MessageNMEAsampling/MessageNMEAsampling.js[MessageNMEAsampling.js]
+|Monitors OpenCPN messages and counts NMEA sentences over a period and then reports what has been seen.
+|link:../MessageNMEAsampling/MessageNMEAsampling.adoc
+|Antipole
+|===
+
 === Issues
 
 Please raise any issues with these scripts or their documentation using the Issues tab, including the script name in the issue title.
