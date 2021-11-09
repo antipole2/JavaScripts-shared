@@ -5,6 +5,7 @@ https://github.com/antipole2/JavaScripts-shared/blob/main/MessageNMEAsampling.js
 This script monitors OpenCPN messages and NMEA sentences over 30 seconds (configurable).
 
 It then reports:
+
 * which OpenCPN messages have been seen.
 * which NMEA sentences have been seen and the count of each, sorted by type and then sender.
 * for each NMEA sentence type and sender, it then lists one sample of each.
@@ -12,5 +13,7 @@ It then reports:
 You might find one sample of each insufficient.  For example, you could have more than one sender using the same talker ID.
 The script contains an array of sentence types which are to all be be displayed.
 For example, configuring
+
 `var displayThese = ["GPGGA", "JSVTG"];`
+
 will cause all sentences of these types to be displayed in addition to the single samples
