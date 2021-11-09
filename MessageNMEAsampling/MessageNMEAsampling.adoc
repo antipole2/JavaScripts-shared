@@ -1,6 +1,6 @@
 = MessageNMEAsampling
 
-https://github.com/antipole2/JavaScripts-shared/blob/main/MessageNMEAsampling.js[MessageNMEAsampling.js]
+https://github.com/antipole2/JavaScripts-shared/blob/main/MessageNMEAsampling/MessageNMEAsampling.js[MessageNMEAsampling.js]
 
 The _OpenCPN Debugger_ plugin can be used to monitor NMEA sentences but the output can be difficult to use.
 This script is an alternative.
