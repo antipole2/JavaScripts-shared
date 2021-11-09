@@ -16,4 +16,5 @@ For example, configuring
 
 `var displayThese = ["GPGGA", "JSVTG"];`
 
-will cause all sentences of these types to be displayed in addition to the single samples
+will cause all sentences of these types to be displayed in addition to the single samples.
+To supress this feature, leave the array empty or set it to some non-existant type.
