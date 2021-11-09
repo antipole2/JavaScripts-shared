@@ -31,7 +31,6 @@ They need at least v0.4 of the plugin.
 |Looks for routes or waypoints with duplicate names and reports the number of duplicates
 |
 |Antipole
-|===
 
 |link:https://raw.githubusercontent.com/antipole2/JavaScripts-shared/main/MessageNMEAsampling/MessageNMEAsampling.js[MessageNMEAsampling.js]
 |Monitors OpenCPN messages and counts NMEA sentences over a period and then reports what has been seen.
