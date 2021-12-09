@@ -3,6 +3,7 @@
 // v0.2.1 removes degree character from comments in three places as Windows objects
 // v0.3 works with relative wind angle
 // v0.3.1 fix to ensure deletion of tack route on termination
+// v0.4 uses plugin v0.5 - much simplified script accesses routes directly
 
 // configuration
 repeatInterval = 5;	// seconds
@@ -51,32 +52,18 @@ windRetry = windRetryMax =10;	// times to wait for wind data
 OCPNonNMEAsentence(processNMEA);
 
 // check if we need to delete an old route
-OCPNonMessageName(handleRL, "OCPN_ROUTELIST_RESPONSE");
-OCPNsendMessage("OCPN_ROUTELIST_REQUEST", JSON.stringify({"mode": "Not track"}));
+routeGUIDs = OCPNgetRouteGUIDs();
+for (i = 0; i < routeGUIDs.length; i++){
+	route = OCPNgetRoute(routeGUIDs[i]);
+	if (route.name == routeName){
+		OCPNdeleteRoute(routeGUIDs[i]);
+		print("Stale route ", routeName, " deleted\n");
+		}
+	}
 
 consoleHide();
 onExit(cleanUp);	// Make sure we cclean up after ourself
-
-function handleRL(routeListJS){	// receive list of routes in JSON
-	var i;
-	routeList = JSON.parse(routeListJS);
-	if (routeList != null) {
-		if (routeList.length > 1){  // (changed from 0 because null entry when no routes)
-			if (!routeList[0]) routeList.shift(); // drop first null entry - don't know why it is there ''
-			}
-		count = routeList.length;		// number of existing routes
-		for (i = 0; i < count; i++){
-			if (routeList[i].name == routeName){
-				routeGUID = routeList[i].GUID;
-				break;
-				}
-			}
-		if (!routeGUID) routeGUID = OCPNgetNewGUID();
-		tackRoute.GUID =routeGUID;
-		tackRoute.name = routeName;
-		}
-	onSeconds(update, repeatInterval);	// start the update cycle
-	}
+onSeconds(update, repeatInterval);	// start the update cycle
 
 function processNMEA(input){
 	here = OCPNgetNavigation();
@@ -234,14 +221,14 @@ function updateWorks(){
 	tackWaypoint.position.latitude = tackPosition.latitude;
 	tackWaypoint.position.longitude = tackPosition.longitude;
 
-// now to create/update the route - not sure if we have one already or are updating
+	// now to create/update the route - not sure if we have one already or are updating
 	try { OCPNupdateRoute(tackRoute); }
 	catch (err) {
 		routeGUID = OCPNaddRoute(tackRoute);
 		tackRoute.GUID = routeGUID;
 		}
 
-// 	now to display the outcome
+	// 	now to display the outcome
 	if (displayDialogue){
 		vectorToTp = OCPNgetVectorPP(here.position, tackPosition);
 		c = vectorToTp.distance;
