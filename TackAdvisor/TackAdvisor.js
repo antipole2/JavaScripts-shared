@@ -2,6 +2,7 @@
 // Since v0.1 added down-wind tacking and onExit clean-up
 // v0.2.1 removes degree character from comments in three places as Windows objects
 // v0.3 works with relative wind angle
+// v0.3.1 fix to ensure deletion of tack route on termination
 
 // configuration
 repeatInterval = 5;	// seconds
@@ -235,7 +236,10 @@ function updateWorks(){
 
 // now to create/update the route - not sure if we have one already or are updating
 	try { OCPNupdateRoute(tackRoute); }
-	catch (err) {OCPNaddRoute(tackRoute);}
+	catch (err) {
+		routeGUID = OCPNaddRoute(tackRoute);
+		tackRoute.GUID = routeGUID;
+		}
 
 // 	now to display the outcome
 	if (displayDialogue){
