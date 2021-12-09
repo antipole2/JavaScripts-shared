@@ -18,3 +18,9 @@ It will not display tacks under any of these conditions:
 
 TIP: You can exercise TackAdvisor without being underway by running Driver in a separate console.
 When you set Driver to a beat or near run, TackAdvisor will display the necessary tacks.
+
+*History*
+|==========================
+|Version|Date|Note
+|v0.3.1 |9 Dec 2021 |fix to ensure deletion of tack route on termination
+|===========================
