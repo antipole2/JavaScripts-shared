@@ -9,14 +9,14 @@ panel.push({type:"text", value:"Status: Standing by"});
 statusRow = panel.length-1;
 panel.push({type:"slider", range:[0,10], value:5, width:300, label:"SOG knots"});
 SOGrow = panel.length-1;
-panel.push({type:"slider", range:[0,360], value:180, width:300, label:"COG °"});
+panel.push({type:"slider", range:[0,360], value:180, width:300, label:"COG " + String.fromCharCode(176)});
 COGrow = panel.length-1;
 panel.push({type:"button", label:["Compass course"]})
 panel.push({type:"hLine"});
-panel.push({type:"slider", range:[0,360], value:180, width:300, label:"Wind °"});
+panel.push({type:"slider", range:[0,360], value:180, width:300, label:"Wind " + String.fromCharCode(176)});
 windDirectionRow = panel.length-1;
-//panel.push({type:"slider", range:[0,180], value:90, width:300, label:"Angle to wind °"});
-panel.push({type:"spinner", range:[0,180], value:50, label:"Angle to wind °"});
+//panel.push({type:"slider", range:[0,180], value:90, width:300, label:"Angle to wind &#xb0"});
+panel.push({type:"spinner", range:[0,180], value:50, label:"Angle to wind " + String.fromCharCode(176)});
 windAngleRow = panel.length-1;
 panel.push({type:"slider", range:[0,50], value:15, width:300, label:"Wind knots"});
 windSpeedRow = panel.length-1;
