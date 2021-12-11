@@ -11,7 +11,7 @@ There is no resilience.
 
 There are navigational applications better optimised these devices and more robust.
 I use https://inavx.com[iNavX], which is available on iOS (iPad and iPhone) and Android devices.
-I will asume the other device are running iNavX here.
+I will asume the other device is running iNavX here.
 
 If OpenCPN is being used as the main planning tool and navigational application,
 iNavX needs to shadow OpenCPN and keep synchronised with any changes in the navigation.
@@ -48,7 +48,7 @@ This script fixes up the APB sentences to carry the full route name.
 Drop outgoing sentences ECRMB,ECAPB because the script sends modified sentences NVRMB,NVAPB
 . Connect your device to the same WiFi network
 . Within iNavX select Instruments  > TCP/IP and set the protocol and port number to as in Step 2 above.
-. On the same panel, Enable Waypoints and enable Link. +
+. On the same panel, enable Waypoints and enable Link. +
 You should now see the NMEA sentences scrolling in the monitoring pane of this panel.
 . Click Done and then select the Chart.
 
@@ -112,4 +112,4 @@ The easy way out would be to send each routepoint in its own RTE installment.
 So with 6 routepoints there would be 6 RTE installments.
 Simpe but inefficient.
 
-The script actually pack the routepoints into the minimum number of RTE installements possible.
+The script actually packs the routepoints into the minimum number of RTE installements possible.
