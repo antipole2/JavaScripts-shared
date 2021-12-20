@@ -43,7 +43,13 @@ This script fixes up the APB sentences to carry the full route name.
 
 == Instructions for making this work
 
-. Have OpenCPN receive NMEA data on one port - say 60001
+For this to work, your device ruuning iNavX needs to receive NMEA data over a WiFi connection via a WiFi router.
+
+Note that many instrument WiFi gateways create their own WiFi network and are not actual routers.
+This is the case, for example, for the Actisense W2K-1 and also the Yacht Devices YDNR-02N
+If your gateway is not also a router, you need a WiFi router and need to connect your gateway as a client of that network.
+
+. Have OpenCPN receive NMEA data from your gateway on one port - say 60001
 . Have OpenCPN send NMEA data on a different port - say 60002 +
 Drop outgoing sentences ECRMB,ECAPB because the script sends modified sentences NVRMB,NVAPB
 . Connect your device to the same WiFi network
@@ -84,7 +90,7 @@ Stop the script and start it again.
 
 == My network set up
 
-On Antipole I have an NMEA2000 network and an Actisense W2K-1 NMEA200 to WiFi converter.
+On Antipole I have an NMEA2000 network and an Actisense W2K-1 NMEA2000 to WiFi converter.
 The W2K-1 is usually used to create a WiFi network.
 However, it is not a router and you cannot use it to connect OpenCPN and other devices.
 
@@ -99,7 +105,7 @@ In the event that OpenCPN were to fail, I would connect the iOS devices via port
 
 == Implementation notes
 
-These notes may be of iterest to thos maintining te script.
+These notes may be of iterest to those maintining the script.
 They are not need to use it.
 
 === Forming the RTE sentences
