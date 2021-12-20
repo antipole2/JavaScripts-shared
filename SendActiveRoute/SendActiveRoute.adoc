@@ -46,7 +46,8 @@ This script fixes up the APB sentences to carry the full route name.
 For this to work, your device ruuning iNavX needs to receive NMEA data over a WiFi connection via a WiFi router.
 
 Note that many instrument WiFi gateways create their own WiFi network and are not actual routers.
-This is the case, for example, for the Actisense W2K-1 and also the Yacht Devices YDNR-02N
+This is the case, for example, for the Actisense W2K-1 and also the Yacht Devices YDNR-02N.
+
 If your gateway is not also a router, you need a WiFi router and need to connect your gateway as a client of that network.
 
 . Have OpenCPN receive NMEA data from your gateway on one port - say 60001
