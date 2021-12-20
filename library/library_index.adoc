@@ -23,7 +23,7 @@ They need at least v0.4 of the plugin.
 |Antipole
 
 |link:https:../SendActiveRoute/SendActiveRoute.js[SendActiveRoute.js]
-|Mirror active waypoint or route to other devices running. e.g. iNavX
+|Mirror active waypoint or route to other devices running. e.g. iNavX.  Be sure to read the istructions about how to make this work!
 |link:https:../SendActiveRoute/SendActiveRoute.adoc[Fuller description and instructions]
 |Antipole
 
