@@ -45,4 +45,44 @@ Each structure is pushed into an array of structures of `allpoints[]` and `route
 
 === `analyse()`
 
-T
+Both `allpoints[]` and `routes[]` are sorted on their names.
+This allows identification of unnamed and duplicate names.
+
+A point is referenced by its index number in the allpoints array.
+A leg within a route is identified by the index within the routes array and the leg number within that route.
+
+For unnamed entries it is sufficient to build an array of these indexes.
+
+For duplicates, we build a cluster of indexes for a given name and push the cluster onto the array.
+Clusters may contain additional attributes noted during building.
+
+The routepoints are scanned and clusters of successive repeated routepoints built.
+
+Each point is given an exra attribute of 'uses[]', each use identifying the route index and leg number of that use.
+The length of the uses array gives the number of times that point has been included in a route.
+A length greater than 1 indicates the point is being shared.
+
+To identify multiple points at or near the same location, we build a `location` structure.
+Each location contains its position and an array of the marks.
+To make matters simpler later, it also contains an array of the true ayiit names and their indexes.
+
+Any location with only a single mark can then be thinned out.
+
+Each location is then classified according to what it contains.
+The classifications are defined in the `classifications` structure.
+
+The locations are then sorred on classification so that subsequent processing is done class by class.
+
+=== `report()`
+
+The report is produced strictly from the structures build during the analysis.
+This discipline ensures that all information need is hel within the structures.
+
+=== `WhatToDoA()`
+
+This function examines the structures and presents a dialogue with buttons for each kind of action for which there is an issue.
+
+Processing of buttons has to be handled in a separate function and 
+
+Function 'doNaming()' identifies the button selected and makes the required changes.
+Each issue is shifted off the array of issues do that, when the dialogue is next presented, only buttons for remaining isues are displayed.
