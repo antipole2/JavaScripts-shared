@@ -77,6 +77,12 @@ The above example may seem unlikely, but Housekeeper has found a real case of a 
 
 
 === Co-located waypoints
+Housekeeper will identify multiple marks at the same lcation. There is an option at the start of the script
+
+`nearby = 0.05;	//two points this close in nm regarded as at same position`
+
+This specifies how close points need to be before they are regarded as at the same point.
+You can adjust this to your own requirement.
 
 NOTE: I use the term _waypoint_ to refer to a mark which exists independently of a route and which will be listed in the Waypoints tab of the Route & Mark Manager.
 I use the term _routepoint_ to refer to a mark which exists only in a route.  Routepoints are not included in the list of waypoints.  When a route is deleted, its routepoints are also deleted unless they are being used in another route.  Any included waypoints are not deleted.  I here use the term _point_ when it may be either a waypoint or a routepoint.
@@ -84,8 +90,6 @@ I use the term _routepoint_ to refer to a mark which exists only in a route.  Ro
 When you add a routepoint to a route, OpenCPN will offer to use any nearby point.
 If you accept this, the point may be shared by more than one route.
 If you decline, you will have more than one point at this location.
-
-Houskeeper will identify multiple waypoints or routepoints at the same location, list them and offer to share one for all routes with a point at that location. 
 
 ==== Imported waypoints and routes
 
@@ -105,3 +109,29 @@ In my case, Housekeeper found I had duplicate marks at several locations - as ma
 And if, when editing a route,  you accept the invitation to use a nearby mark, you will not know which of multiple marks at that location will be used.
 
 WARNING: Mutiple duplicated marks are dangerous, in my opinion.  Suppose you need to move a mark because a channel has shifted or a new obstruction has been identified.  If you have multiple marks, they all need to be moved.  If some of them are hidden at the time you move the mark, they will retain their old location.  You may end up sailing a route with a mark in its old position.
+
+To avoid this problem, it is best to share a mark.
+Houskeeper will identify multiple waypoints or routepoints at the same location, list them and offer to share one for all routes with a point at that location.
+
+The options presented depend on the situation at the location, as follows
+
+|===
+|Situation at this location|Offered solution
+
+|Multiple waypoints none of which are used in any route|Choose which waypoints to delete
+|Single waypoint which may or may not be used in a route and other routepoints|Share the waypoint in all routes
+|Multiple waypoints and one or more route points|Choose which waypoint to use as shared waypoint in all routes
+|Multiple routepoints but no waypoint|Choose which routepoint to share in all routes
+|===
+
+== Saving the changes
+
+When all issues have been dealt with, either by adopting the proposed change or by skipping the action,
+you have the option of saving the changes back into OpenCPN.
+If you stop the script without this step, nothing will be changed.
+
+== About the script
+
+This script is quite complex.
+There is a technical description that documents how the script works.
+You should familiarise yourself with this before attempting to modify it.
