@@ -104,4 +104,4 @@ These may exactly overlay each other and you may not even be aware there are mul
 In my case, Housekeeper found I had duplicate marks at several locations - as many as *eight* in some cases.
 And if, when editing a route,  you accept the invitation to use a nearby mark, you will not know which of multiple marks at that location will be used.
 
-WARNING: Mutiple duplicated marks are dangerous in my opinion.  Suppose you need to move a mark because a channel has shifted or a new obstruction has been identified.  If you have multiple marks, they all need to be moved.  If some of them hidden at the time you move the mark, they will retain their old location.  You may end up sailing a route with a mark in its old position.
+WARNING: Mutiple duplicated marks are dangerous, in my opinion.  Suppose you need to move a mark because a channel has shifted or a new obstruction has been identified.  If you have multiple marks, they all need to be moved.  If some of them are hidden at the time you move the mark, they will retain their old location.  You may end up sailing a route with a mark in its old position.
