@@ -1,0 +1,1 @@
+= Technical guide for the Housekeeper script
