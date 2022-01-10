@@ -5,6 +5,10 @@ It would be wise to read this before attempting to modify or maintain the Housek
 
 == Overall approach
 
+The script uses internal JavaScript structures right up until the point where these are saved back into OpenCPN.
+It has thus been possible to develop the script over several weeks without changing any data in OpenCPN.
+The actual update phase is very simple and took only a couple of hours to implement and test.
+
 |===
 |Function|Purpose
 
@@ -16,8 +20,18 @@ It would be wise to read this before attempting to modify or maintain the Housek
 |`doSave()`|Saves the structures back into OpenCPN, thus implementing the changes.
 |===
 
+An advantage of implementing the phases as functions is that they can be repeated if need be.
+For example, if points are removed from a route, that invalidates the indexing created by the analysis.
+The analysis can be redone to update the indexing.
+
 === `load()`
 
-This reads all waypoints and routes into the standard structures created by the JavaSCript plugin.
-Additionally, it adds an _action_ attribute and sets it to the custom symbol _none_.
-During the changes, the action may be set to _remove_ or _update_ to indicate what action is required during the doSave(). 
+This reads all waypoints and routes into the standard structures created by the JavaScript plugin.
+It adds an `action` attribute and sets it to the custom symbol `none`.
+During the changes, the action may be set to `remove` or `update` to indicate what action is required of doSave().
+
+Each structure is pushed into an array of structures of `allpoints[]` and `routes[]`.
+
+=== `analyse()`
+
+T
