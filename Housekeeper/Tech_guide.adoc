@@ -1,1 +1,23 @@
 = Technical guide for the Housekeeper script
+
+As this script is quite complex, this guid documents the script's structure and how it works.
+It would be wise to read this before attempting to modify or maintain the Housekeepper script.
+
+== Overall approach
+
+|===
+|Function|Purpose
+
+|`load()`|Loads the waypoints and routes into JavaScript structures.
+|`analyse()`|Analyses the structures and creates structures recording the issues found
+|`report()`|Prints a report of the issues found and returns the number of issues
+|`WhatToDoA()`|Presents the dialogue through which the user decides on actions relating to waypoints and routes
+|`WhatToDoB()`|Presents a series of dialogues hrough which the user decides on actions relating to each location at which there are multiple points.
+|`doSave()`|Saves the structures back into OpenCPN, thus implementing the changes.
+|===
+
+=== `load()`
+
+This reads all waypoints and routes into the standard structures created by the JavaSCript plugin.
+Additionally, it adds an _action_ attribute and sets it to the custom symbol _none_.
+During the changes, the action may be set to _remove_ or _update_ to indicate what action is required during the doSave(). 
