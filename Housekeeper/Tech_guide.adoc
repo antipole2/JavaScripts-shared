@@ -3,6 +3,17 @@
 As this script is quite complex, this guid documents the script's structure and how it works.
 It would be wise to read this before attempting to modify or maintain the Housekeepper script.
 
+There are two variables set up early on which are useful during debugging.
+
+`var log = false;`
+
+If this is set to true, the script prints its progress and also certain structures developed during the analysis.
+
+`var doSaves = true;`
+
+If this is set to false, the changes are not actually saved back int OpenCPN even though they are reported.
+THis allows testing without the inconvenience of having to restore the OpenCPN data to its previous state.
+
 == Overall approach
 
 The script uses internal JavaScript structures right up until the point where these are saved back into OpenCPN.
