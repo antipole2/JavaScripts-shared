@@ -5,16 +5,26 @@ https://github.com/antipole2/JavaScripts-shared/blob/main/Housekeeper/Housekeepe
 == What this script addresses
 
 A collection of OpenCPN waypoints and routes can become untidy and are not always what they seem.
-This script examines your waypoints and routes and presents a report.
+This script analyses your waypoints and routes and presents a report.
 
-It then presents  series of dialogues allowing you to fix various issues.
+It then presents a series of dialogues allowing you to fix various issues.
 
 The script is structured in such a way that you can make the proposed changes and only save them back into OpenCPN at the end.
 
 
 == What the script does
 
+[cols="1,2,2"]
+|===
+|Issue|Explanation|Proposed fix
 
+|Name unnamed waypoints||Assigns names like 'Waypoint_1', Waypoint_2 etc. always ensuring the assigned name is unique.
+|Uniquify waypoint names||Makes duplicated waypoint names unique by adding suffixes _1, _2 etc.
+|Name unnamed routes||Assigns names like 'Route 1', 'Route 2' etc.
+If the route has _From_ or _To_ attributes, these are used to construct the route name.  The constructed name is always unique.
+|Uniquify route names||Makes duplicated route names unique by adding suffixes _1, _2 etc.
+|Remove Goto routes
+|===
 
 == Limitations
 [WARNING]
