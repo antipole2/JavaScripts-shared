@@ -1,4 +1,5 @@
 = Housekeeper
+:table-caption!:
 
 https://github.com/antipole2/JavaScripts-shared/blob/main/Housekeeper/Housekeeper.js[Housekeeper.js]
 
@@ -14,6 +15,7 @@ The script is structured in such a way that you can make the proposed changes an
 
 == What the script does
 
+.Fixes for waypoint and route names
 [cols="1,2,2"]
 |===
 |Issue|Explanation|Proposed fix
@@ -23,8 +25,54 @@ The script is structured in such a way that you can make the proposed changes an
 |Name unnamed routes||Assigns names like 'Route 1', 'Route 2' etc.
 If the route has _From_ or _To_ attributes, these are used to construct the route name.  The constructed name is always unique.
 |Uniquify route names||Makes duplicated route names unique by adding suffixes _1, _2 etc.
-|Remove Goto routes
+|Remove Goto routes|When you navigate to a waypoiynt/location, OPenCPN creates a one leg route with a name like 'Goto <waypoint name>'|These routes can be removed
+|Remove routepoints removed from routes|When you create a route, OpenCPN adds routepoints with names 001, 002, 003 etc.
+If you remove one of these routepoints from the route, it becomes a free-standing waypoint.|Freestanding waypoints with names lik 0001, 002 which are no longer included in any route can be removed.
 |===
+
+=== Successive repeated routepoints
+Suppose you have a route used to visit a series of lobster pots in two bays.  Your route might have routepoints like this:
+
+. Home port
+. Sandy Bay
+. Pot 1
+. Pot 2
+. Sandy Bay
+. Rocky Cove
+. Pot A
+. Pot B
+. Rocky Cove
+. Pot C
+. Rocky Cove
+. Home Port
+
+Now suppose it is the end of the season.
+You lift the pots an delete their marks.
+You are now left with the route:
+
+. Home port
+. Sandy Bay
+. Sandy Bay
+. Rocky Cove
+. Rocky Cove
+. Rocky Cove
+. Home Port
+
+Housekeeper will spot this nd remove the repeated routepoints, leaving you with:
+
+. Home port
+. Sandy Bay
+. Rocky Cove
+. Home Port
+
+Now suppose you stop visiting Sandy Bay and Rocky Cove and remove them.
+Your route would now be:
+
+. Home port
+. Home Port
+
+Housekeeper will spot that when it removes the repeated point, you would be left with a singleton route with just a starting point and it will delete the route.
+
 
 == Limitations
 [WARNING]
