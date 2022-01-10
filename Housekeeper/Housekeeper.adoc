@@ -15,7 +15,7 @@ The script is structured in such a way that you can make the proposed changes an
 
 == What the script does
 
-.Fixes for waypoint and route names
+=== Fixes for waypoint and route names
 [cols="1,2,2"]
 |===
 |Issue|Explanation|Proposed fix
@@ -25,7 +25,7 @@ The script is structured in such a way that you can make the proposed changes an
 |Name unnamed routes||Assigns names like 'Route 1', 'Route 2' etc.
 If the route has _From_ or _To_ attributes, these are used to construct the route name.  The constructed name is always unique.
 |Uniquify route names||Makes duplicated route names unique by adding suffixes _1, _2 etc.
-|Remove Goto routes|When you navigate to a waypoiynt/location, OPenCPN creates a one leg route with a name like 'Goto <waypoint name>'|These routes can be removed
+|Remove Goto routes|When you navigate to a waypoiynt/location, OpenCPN creates a one leg route with a name like 'Goto <waypoint name>'|These routes can be removed
 |Remove routepoints removed from routes|When you create a route, OpenCPN adds routepoints with names 001, 002, 003 etc.
 If you remove one of these routepoints from the route, it becomes a free-standing waypoint.|Freestanding waypoints with names lik 0001, 002 which are no longer included in any route can be removed.
 |===
@@ -58,7 +58,7 @@ You are now left with the route:
 . Rocky Cove
 . Home Port
 
-Housekeeper will spot this nd remove the repeated routepoints, leaving you with:
+Housekeeper will spot this and remove the repeated routepoints, leaving you with:
 
 . Home port
 . Sandy Bay
@@ -73,6 +73,35 @@ Your route would now be:
 
 Housekeeper will spot that when it removes the repeated point, you would be left with a singleton route with just a starting point and it will delete the route.
 
+The above example may seem unlikely, but Housekeeper has found a real case of a repeated routepoint in my routes.
 
-== Limitations
-[WARNING]
+
+=== Co-located waypoints
+
+NOTE: I use the term _waypoint_ to refer to a mark which exists independently of a route and which will be listed in the Waypoints tab of the Route & Mark Manager.
+I use the term _routepoint_ to refer to a mark which exists only in a route.  Routepoints are not included in the list of waypoints.  When a route is deleted, its routepoints are also deleted unless they are being used in another route.  Any included waypoints are not deleted.  I here use the term _point_ when it may be either a waypoint or a routepoint.
+
+When you add a routepoint to a route, OpenCPN will offer to use any nearby point.
+If you accept this, the point may be shared by more than one route.
+If you decline, you will have more than one point at this location.
+
+Houskeeper will identify multiple waypoints or routepoints at the same location, list them and offer to share one for all routes with a point at that location. 
+
+==== Imported waypoints and routes
+
+When I adopted OpenCPN, I exported my substantial library of waypoints from my old system (MacENC) as GPX files and imported them into OpenCPN.
+I then imported my routes, imagining OpenCPN would link the waypoints into routes.
+
+OpenCPN does not work like that.
+
+When you add waypoints by importing them from a GPX file, OpenCPN creates new waypoints, even if waypoints with the same name already exist.
+
+When you import a route from a GPX file, OpenCPN creates a new route with a set of routepoints, ignoring any existing waypoints or routes.
+
+You can end up with multiple waypoints and routepoints at the same location.
+These may exactly overlay each other and you may not even be aware there are multiple copies - unless you shift one of them.
+
+In my case, Housekeeper found I had duplicate marks at several locations - as many as *eight* in some cases.
+And if, when editing a route,  you accept the invitation to use a nearby mark, you will not know which of multiple marks at that location will be used.
+
+WARNING: Mutiple duplicated marks are dangerous in my opinion.  Suppose you need to move a mark because a channel has shifted or a new obstruction has been identified.  If you have multiple marks, they all need to be moved.  If some of them hidden at the time you move the mark, they will retain their old location.  You may end up sailing a route with a mark in its old position.
