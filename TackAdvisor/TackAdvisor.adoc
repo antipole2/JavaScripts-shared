@@ -23,4 +23,5 @@ When you set Driver to a beat or near run, TackAdvisor will display the necessar
 |==========================
 |Version|Date|Note
 |v0.3.1 |9 Dec 2021 |fix to ensure deletion of tack route on termination
+|v0.4|9 Dec 2021|uses plugin v0.5 - much simplified script accesses routes directly
 |===========================

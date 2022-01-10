@@ -11,7 +11,7 @@ There is no resilience.
 
 There are navigational applications better optimised these devices and more robust.
 I use https://inavx.com[iNavX], which is available on iOS (iPad and iPhone) and Android devices.
-I will asume the other device are running iNavX here.
+I will asume the other device is running iNavX here.
 
 If OpenCPN is being used as the main planning tool and navigational application,
 iNavX needs to shadow OpenCPN and keep synchronised with any changes in the navigation.
@@ -43,12 +43,21 @@ This script fixes up the APB sentences to carry the full route name.
 
 == Instructions for making this work
 
-. Have OpenCPN receive NMEA data on one port - say 60001
+For this to work, your device running iNavX needs to receive NMEA data over a WiFi connection via a WiFi router.
+
+Note that many instrument WiFi gateways create their own WiFi network and are not actual routers.
+This is the case, for example, for the Actisense W2K-1 and also the Yacht Devices YDNR-02N.
+
+If your gateway is not also a router, you need a WiFi router and need to connect your gateway as a client of that network.
+You could use a 12V-powered WiFI router (readily available) or your computer may be able to provide this.
+MacOS can create an _ad hoc_ WiFi network from the WiFi pull-down menu - in Monterey and later, this is hidden unless you enable it in Settings->Network->WiFi->Advanced and tick _Show legacy networks and options_.
+
+. Have OpenCPN receive NMEA data from your gateway on one port - say 60001
 . Have OpenCPN send NMEA data on a different port - say 60002 +
 Drop outgoing sentences ECRMB,ECAPB because the script sends modified sentences NVRMB,NVAPB
 . Connect your device to the same WiFi network
 . Within iNavX select Instruments  > TCP/IP and set the protocol and port number to as in Step 2 above.
-. On the same panel, Enable Waypoints and enable Link. +
+. On the same panel, enable Waypoints and enable Link. +
 You should now see the NMEA sentences scrolling in the monitoring pane of this panel.
 . Click Done and then select the Chart.
 
@@ -84,7 +93,7 @@ Stop the script and start it again.
 
 == My network set up
 
-On Antipole I have an NMEA2000 network and an Actisense W2K-1 NMEA200 to WiFi converter.
+On Antipole I have an NMEA2000 network and an Actisense W2K-1 NMEA2000 to WiFi converter.
 The W2K-1 is usually used to create a WiFi network.
 However, it is not a router and you cannot use it to connect OpenCPN and other devices.
 
@@ -99,7 +108,7 @@ In the event that OpenCPN were to fail, I would connect the iOS devices via port
 
 == Implementation notes
 
-These notes may be of iterest to thos maintining te script.
+These notes may be of iterest to those maintining the script.
 They are not need to use it.
 
 === Forming the RTE sentences
@@ -112,4 +121,4 @@ The easy way out would be to send each routepoint in its own RTE installment.
 So with 6 routepoints there would be 6 RTE installments.
 Simpe but inefficient.
 
-The script actually pack the routepoints into the minimum number of RTE installements possible.
+The script actually packs the routepoints into the minimum number of RTE installements possible.
