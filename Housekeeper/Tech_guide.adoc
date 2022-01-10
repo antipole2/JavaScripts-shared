@@ -82,7 +82,11 @@ This discipline ensures that all information need is hel within the structures.
 
 This function examines the structures and presents a dialogue with buttons for each kind of action for which there is an issue.
 
-Processing of buttons has to be handled in a separate function and 
-
 Function 'doNaming()' identifies the button selected and makes the required changes.
-Each issue is shifted off the array of issues do that, when the dialogue is next presented, only buttons for remaining isues are displayed.
+This requires information not available in the dialogue structure passed to the function.
+So this extra informartion is stashed in the savedData structure from where it can be accessed from the function.
+Each issue is shifted off the array of issues so that, when the dialogue is next presented, only buttons for remaining issues are displayed.
+
+When WhatToDoA has processed all structures, it calls WhatToDoB to deal with the location clusters.
+
+=== `WhatToDoB()`
