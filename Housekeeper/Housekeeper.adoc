@@ -1,7 +1,7 @@
 = Housekeeper
 :table-caption!:
 
-https:../Housekeeper/Housekeeper.js[Housekeeper.js]
+link:https:../Housekeeper/Housekeeper.js[Housekeeper.js]
 
 == What this script addresses
 
@@ -133,5 +133,5 @@ If you stop the script without this step, nothing will be changed.
 == About the script
 
 This script is quite complex.
-There is a https:../Housekeeper/Housekeeper_tech_guide.adoc[technical description] that documents how the script works.
+There is a link:https:../Housekeeper/Housekeeper_tech_guide.adoc[technical description] that documents how the script works.
 You should familiarise yourself with this before attempting to modify it.
