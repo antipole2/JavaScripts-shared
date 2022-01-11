@@ -405,7 +405,7 @@ function report(){	// report on what we have found
 				lastClassification = location.classification;
 				}
 			else print("\n");
-			print( i, "\tAt ", formattedPosition(location.position), "\n");
+			print("At ", formattedPosition(location.position), "\n");
 			print(formatLocation(location), "\n");
 			}
 		}
@@ -903,7 +903,7 @@ function formatLocation(loc){	// return string displaying location details
 		else s+= " (not used in any route)\n";
 		for (m = 1; m < mark.uses.length; m++){
 			thisUse = mark.uses[m];
-			s += padString(" ", 31) + "shared with leg " + padString(thisUse.leg.toString(), 2) + " in " + routes[thisUse.route].name + "\n";
+			s += padString(" ", 20) + "shared with leg " + padString(thisUse.leg.toString(), 2) + " in " + routes[thisUse.route].name + "\n";
 			}
 		}
 	return (s);
