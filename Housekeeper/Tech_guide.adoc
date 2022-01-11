@@ -1,6 +1,6 @@
 = Technical guide for the Housekeeper script
 
-As this script is quite complex, this guid documents the script's structure and how it works.
+As this script is quite complex, this guide documents the script's structure and how it works.
 It would be wise to read this before attempting to modify or maintain the Housekeepper script.
 
 There are two variables set up early on which are useful during debugging.
@@ -90,3 +90,11 @@ Each issue is shifted off the array of issues so that, when the dialogue is next
 When WhatToDoA has processed all structures, it calls WhatToDoB to deal with the location clusters.
 
 === `WhatToDoB()`
+
+This function works through the locations, which have been sorted on by location class.  For each location it presents a dialogue which differs for each class.
+The function used to process the button choice is also class-specific.
+
+=== Saving back to OpenCPN
+
+Finally, you can choose to save th updates back into OpenCPN.
+This is simply a matter of working through the `allpoints` and `routes` and updating or deleting them according to the action attribute.
