@@ -27,7 +27,7 @@ If the route has _From_ or _To_ attributes, these are used to construct the rout
 |Uniquify route names||Makes duplicated route names unique by adding suffixes _1, _2 etc.
 |Remove Goto routes|When you navigate to a waypoiynt/location, OpenCPN creates a one leg route with a name like 'Goto <waypoint name>'|These routes can be removed
 |Remove routepoints removed from routes|When you create a route, OpenCPN adds routepoints with names 001, 002, 003 etc.
-If you remove one of these routepoints from the route, it becomes a free-standing waypoint.|Freestanding waypoints with names lik 0001, 002 which are no longer included in any route can be removed.
+If you remove one of these routepoints from the route, it becomes a free-standing waypoint.|Freestanding waypoints with names like 0001, 002 which are no longer included in any route can be removed.
 |===
 
 === Successive repeated routepoints
