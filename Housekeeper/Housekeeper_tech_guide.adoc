@@ -1,7 +1,7 @@
 = Technical guide for the Housekeeper script
 
 As this script is quite complex, this guide documents the script's structure and how it works.
-It would be wise to read this before attempting to modify or maintain the Housekeepper script.
+It would be wise to read this before attempting to modify or maintain the Housekeeper script.
 
 There are two variables set up early on which are useful during debugging.
 
@@ -12,7 +12,7 @@ If this is set to true, the script prints its progress and also certain structur
 `var doSaves = true;`
 
 If this is set to false, the changes are not actually saved back int OpenCPN even though they are reported.
-THis allows testing without the inconvenience of having to restore the OpenCPN data to its previous state.
+This allows testing without the inconvenience of having to restore the OpenCPN data to its previous state.
 
 == Overall approach
 
