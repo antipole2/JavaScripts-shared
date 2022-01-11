@@ -36,6 +36,11 @@ They need at least v0.4 of the plugin.
 |Monitors OpenCPN messages and counts NMEA sentences over a period and then reports what has been seen.
 |link:https:../MessageNMEAsampling/MessageNMEAsampling.adoc[Fuller description and instructions]
 |Antipole
+
+|link:https://raw.githubusercontent.com/antipole2/JavaScripts-shared/main/Housekeeper/Housekeeper.js[Housekeper.js]
+|Examines your waypoints & routes for anomolies and offers to fix them.
+|link:https:../Housekeeper/Housekeeper_tech_guide.adoc[Fuller description and instructions]
+|Antipole
 |===
 
 === Issues
