@@ -37,7 +37,7 @@ They need at least v0.4 of the plugin.
 |link:https:../MessageNMEAsampling/MessageNMEAsampling.adoc[Fuller description and instructions]
 |Antipole
 
-|link:https://raw.githubusercontent.com/antipole2/JavaScripts-shared/main/Housekeeper/Housekeeper.js[Housekeper.js]
+|link:https:../Housekeeper/Housekeeper.js[Housekeper.js]
 |Examines your waypoints & routes for anomolies and offers to fix them.
 |link:https:../Housekeeper/Housekeeper.adoc[Fuller description and instructions]
 |Antipole
