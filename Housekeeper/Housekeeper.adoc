@@ -25,9 +25,9 @@ The script is structured in such a way that you can make the proposed changes an
 |Name unnamed routes||Assigns names like 'Route 1', 'Route 2' etc.
 If the route has _From_ or _To_ attributes, these are used to construct the route name.  The constructed name is always unique.
 |Uniquify route names||Makes duplicated route names unique by adding suffixes _1, _2 etc.
-|Remove Goto routes|When you navigate to a waypoiynt/location, OpenCPN creates a one leg route with a name like 'Goto <waypoint name>'|These routes can be removed
+|Remove Goto routes|When you navigate to a waypoint/location, OpenCPN creates a one leg route with a name like 'Goto <waypoint name>'|These routes can be removed
 |Remove routepoints removed from routes|When you create a route, OpenCPN adds routepoints with names 001, 002, 003 etc.
-If you remove one of these routepoints from the route, it becomes a free-standing waypoint.|Freestanding waypoints with names like 0001, 002 which are no longer included in any route can be removed.
+If you remove one of these routepoints from the route, it becomes a free-standing waypoint.|Freestanding waypoints with names like 0001, 002 and with an icon name of 'diamond' which are no longer included in any route can be removed.
 |===
 
 === Successive repeated routepoints
