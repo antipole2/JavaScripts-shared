@@ -1,7 +1,9 @@
-// Waypoint, route and track housekeeper v 0.1
+// Waypoints and routes housekeeper v 1.0
 
 // Options
 nearby = 0.05;	//two points this close in nm regarded as at same position
+
+// Before making changes past here, read technical guide
 
 var log = false;
 var doSaves = true;
@@ -138,6 +140,7 @@ function analyse(){	// analyse what we have in OpenCPN
 			(point.routeCount == 0) && 
 			(point.markName.length == 3) && 
 			!isNaN(Number(point.markName)) &&
+			(point.iconName == "diamond") && 
 			(point.action == none)
 			) removedRoutePointsIndex.push(i);
 		}
