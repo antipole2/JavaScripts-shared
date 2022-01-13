@@ -1,7 +1,7 @@
 // set show at scale for waypoints selected by icon
 
 guids = OCPNgetWaypointGUIDs();
-for (w = 0; w < guids.length; w++){
+for (w = 0; w < guids.length; w++){	// for each waypoint
 	waypoint = OCPNgetSingleWaypoint(guids[w]);
 	if (!waypoint.isFreeStanding) continue;	// ignore routepoints
 	if (waypoint.iconName == "cicle") waypoint.useMinScale = false;
