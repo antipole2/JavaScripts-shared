@@ -81,7 +81,7 @@ The above example may seem unlikely, but Housekeeper has found two real cases of
 === Co-located waypoints
 Housekeeper will identify multiple marks at the same lcation. There is an option at the start of the script
 
-`nearby = 0.05;	//two points this close in nm regarded as at same position`
+`nearby = 0.01;	//two points this close in nm regarded as at same position`
 
 This specifies how close points need to be before they are regarded as at the same point.
 You can adjust this to your own requirement.
