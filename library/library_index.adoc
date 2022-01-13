@@ -7,6 +7,13 @@ They need at least v0.4 of the plugin.
 |===
 |Name |Description |Details/instructions |Author
 
+|link:https:../SetWaypointScale.js[SetWaypointScale.js]
+|Simple script to select waypoints by icon name to display only at larger scale.
+As written, circle is always displayed and anything else (e.g. anchor) only at larger scale.
+Adapt to your choice.
+|
+|Antipole
+
 |link:https:../Driver/Driver.js[Driver.js]
 |A simple way of driving the ship on a compass course or relative to a simulated wind.
 |link:https:../Driver/Driver.adoc[instructions]
