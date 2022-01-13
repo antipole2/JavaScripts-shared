@@ -73,7 +73,9 @@ Your route would now be:
 
 Housekeeper will spot that when it removes the repeated point, you would be left with a singleton route with just a starting point and it will delete the route.
 
-The above example may seem unlikely, but Housekeeper has found a real case of a repeated routepoint in my routes.
+From v1.2, Housekeeper identifies a repeated point when its location is within the `nearby` distance from the previous point.  It no longer needs to be the same mark.
+
+The above example may seem unlikely, but Housekeeper has found two real cases of a repeated routepoint in my routes.
 
 
 === Co-located waypoints
