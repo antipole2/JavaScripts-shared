@@ -853,7 +853,6 @@ function doSave(dialogue){
 					try{ OCPNdeleteSingleWaypoint(waypoint.GUID);}
 					catch(err){
 						success = false;
-						if (true) print("Point already gone - ", waypoint, "\n");
 						}
 					if (success) {
 						print("Deleted ", type, "\t'", waypoint.markName, "'\n");
