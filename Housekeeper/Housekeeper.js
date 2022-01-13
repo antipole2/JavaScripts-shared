@@ -78,6 +78,7 @@ load();
 analyse();
 
 if (report()) whatToDoA();
+else stopScript("Nothing to do");
 
 function load(){	// loads data from OCPN
 	allpoints = [];
@@ -866,7 +867,7 @@ function doSave(dialogue){
 				changes++;
 				}
 			}
-	if (!changes) throw("Nothing saved\n");
+	if (!changes) stopScript("No changes made in OpenCPN");
 	stopScript(changes + s(" change", changes) + " made in OpenCPN");
 		}
 	}
