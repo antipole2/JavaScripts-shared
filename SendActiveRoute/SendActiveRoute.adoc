@@ -72,7 +72,20 @@ together with predicted time on route and ETA.
 If you wish to force an advance to the next routepoint, this should be done on OpenCPN, whereupon iNavX will update too.
 
 If you advance the routepoint in iNavX, it will start ignoring changes in the active routepoint send from OpenCPN.
-To restore this, go to the panel used for step 5 above, turn Enable Waypoints off and back on again.
+To restore this, go to the panel used for step 5 above, turn Enable Waypoints off and back on again. at home
+
+=== Familiarisation at home
+
+You can excercise the set up and familiarise yourself with it while away from your boat at home.
+
+• Set up OpenCPN as above
+• Activate a route or waypoint
+• Connect your iNavX device to the same WiFi network
+• Determine the IP address of your computer.  On MacOS, System Preferences > Network > WiFi > Advanced > TCP/IP.
+• Use this address in iNavX in the s above
+
+You can u
+
 
 == Limitations
 [WARNING]
