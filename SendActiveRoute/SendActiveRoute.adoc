@@ -82,9 +82,14 @@ You can excercise the set up and familiarise yourself with it while away from yo
 • Activate a route or waypoint
 • Connect your iNavX device to the same WiFi network
 • Determine the IP address of your computer.  On MacOS, System Preferences > Network > WiFi > Advanced > TCP/IP.
-• Use this address in iNavX in the s above
+• Use this address in iNavX in the instructions above
 
-You can u
+You can drive the ship using a simulator.
+
+Using the JavaScript plugin, open an additional console via the Tools button.
+Load the driver.js script into this console and run it.
+You can, for example, set a compass course and speed.
+See the Driver for details
 
 
 == Limitations
