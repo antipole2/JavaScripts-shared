@@ -2,9 +2,9 @@
 // If the route or its routepoints are updated, iNavX will update to reflect this
 // V2.0 - major rewrite to utilise latest plugin capabilities - much simplified
 // V2.01 - fixed error crept in to RMB sentence
+// V3.0 - major rewrite to take advantage of OpenCPN v5.6 & JavaScript plugin v0.5
 
-Position = require("Position");	// load the required constructors
-Route = require("Route");	
+const repeatInterval = 15;		// repeat after this number of seconds
 
 //	here we define enduring variables we need outside the functions
 var debug = false;			// for debug prints
@@ -12,17 +12,24 @@ var log = false;				// log output
 var alerts = true;			// diplay advisory alerts
 var longWaypoints = true;		// restore long waypoint names
 const prefix = "$NV";		// NMEA identifier
-const repeatInterval = 15;		// repeat after this number of seconds
-var activeRoutepointName = "";		// to hold the active routepoint name, else ""
-var activeRouteName = "";	// the name of the active route
-var lastRoutePoint;			// these two are needed to fix up  RMB sentences and synthesise a BOD sentence…
-var nextRoutePoint;			// … which is needed so iNavX can work out which leg of the route we are on
-var bearingToDest;			// bearing to destination WP from where WP is activated
-var fromHere;				// position we are navigating from
-var start					// waypoint we start from
-var variation;				// magnetic variation
-var workingPosition = new Position();	// creates a working position object
-var route = new Route();		// a working route object
+var activeWaypointGUID = false;
+var lastActiveWaypointGUID = false;
+var route;
+var activeRoutePoint = false;
+var lastRoutePoint = false;
+var startFrom = false;		// waypoint where we started from if before 1st point in route, else false
+var activeWpSentence = false;
+
+config = OCPNgetPluginConfig();
+version = config.versionMajor + config.versionMinor/10;
+if (version < 0.5) throw("Script requires plugin v0.5 or later");
+
+Position = require("Position");	// load the required constructors
+Waypoint = require("Waypoint");
+Route = require("Route");	
+
+var workingPosition = new Position();
+
 
 if (alerts) alert("SendActiveRoute active\n");
 if (longWaypoints) OCPNonNMEAsentence(processNMEA);  	// start processing NMEA sentences			
@@ -32,163 +39,129 @@ consoleHide();				// start listening
 function listenOut(){
 	if (debug) print("Listening out\n");
 	// this is where we start the action
-	APRgpx = OCPNgetARPgpx();  // get Active Route Point as GPX
-	if (debug) print(APRgpx, "\n");
-	if (APRgpx.length > 0){
-		// we have an Active Route Point. Need to extract the routepoint name and save for later
-		routepointPart  = /<name>.*<\/name>/.exec(APRgpx);
-		routepointName = routepointPart[0].slice(6, -7);
-		if (routepointName != activeRoutepointName){
-			// active routepoint has changed
-			bearingToDest = "";	// invalidate any previous info
-			lastRoutePoint = "";  nextRoutePoint = "";
-			activeRoutepointName = routepointName;
+	activeRouteGUID = OCPNgetActiveRouteGUID();
+	if (activeRouteGUID){
+		activeWaypointGUID = OCPNgetActiveWaypointGUID();
+		if (!activeWaypointGUID) throw("Logic error - no activeWaypointGUID");
+		activeWaypoint = OCPNgetSingleWaypoint(activeWaypointGUID);
+		route = OCPNgetRoute(activeRouteGUID);
+		if (activeWaypointGUID != lastActiveWaypointGUID){ // active waypoint has changed
 			if (alerts){
 				alert(false);
-				alert("Active routepoint now ", routepointName, "\n");
+				alert("Active routepoint now ", activeWaypoint.markName, "\n");
 				}
-			// we need to remember our position for navigation from here to next routepoint
-			here = OCPNgetNavigation();
-			delete start; /***/
-			start = new Waypoint(here);
-			start.markName = "Start";
-			variation = here.variation; //save magnetic variation
-			// now get the route leg
-			OCPNonMessageName(handleAR, "OCPN_ACTIVE_ROUTELEG_RESPONSE");
-			OCPNsendMessage("OCPN_ACTIVE_ROUTELEG_REQUEST");
+			lastRoutePoint = activeRoutePoint;	// remeber what it was
 			}
-		else { // still on same leg - send same stuff
-			formSentences();
+		if (route.waypoints[0].GUID == activeWaypointGUID){
+			// we are yet to reach the first point of the route
+			// so we need to insert a starting point on the front of the route
+			if (!lastActiveWaypointGUID){
+				// we have not yet established our starting point
+				here = OCPNgetNavigation();
+				startFrom = new Waypoint(here)
+				startFrom.markName = "Start2";
+				lastRoutePoint = startFrom;
+				}	
+			route.waypoints.unshift(startFrom);	// add starting point to route
+			} 
+		for (p = 0; p < route.waypoints.length; p++){	// for each point in route
+			point = route.waypoints[p];
+			workingPosition.latitude = point.position.latitude;
+			workingPosition.longitude = point.position.longitude;
+			sentence = prefix + "WPL" + "," + workingPosition.NMEA + "," + point.markName;
+			send(sentence); // OCPNpushNMEA(sentence);
+			if (point.GUID == activeWaypointGUID) { // this is the active point
+				activeWpSentence = sentence;
+				activeRoutePoint = point;
+				if (p > 0) lastRoutePoint = route.waypoints[p-1]; // expect p > 0 always but being carefull
+				}
 			}
+		// next we build an array of lists of routepoints to go in each RTE sentence as space permits
+		available = 79 - 15 - route.name.length - 3;  // space available in RTE for routepoint names
+		spaceLeft = available;
+		var wpLists = []; // create our array of routepoint groups to go in an RTE sentence
+		wpLists.length = 0;	// Force empty array - don't know why we need to do this
+		listIndex = 0;
+		wpLists[listIndex] = "";
+		for (p = 0; p < route.waypoints.length; p++){
+			nextRoutePoint = route.waypoints[p];				
+			wpName = route.waypoints[p].markName;
+			wpNameLength = wpName.length;
+			if (spaceLeft >= wpNameLength){
+				wpLists[listIndex] += (wpName + ",");
+				spaceLeft -= (wpNameLength+1);	//allow for comma
+				continue;
+				}
+			else{
+				// no more space in this one
+				wpLists[listIndex] = wpLists[listIndex].slice(0,-1);  // drop trailing comma
+				wpLists.push("");  // new array member starts empty
+				listIndex += 1; spaceLeft = available;
+				p -= 1; // don't forget this last routepoint still to be fitted in next time
+				}
+			}
+		// we may have a trailing comma after last one
+		lastOne = wpLists[listIndex];
+		lastChar = lastOne.charAt(lastOne.length - 1);
+		if (lastChar == ",") lastOne = lastOne.slice(0,-1); // drop it
+		wpLists[listIndex] = lastOne;
+		arrayCount = wpLists.length;
+		for (i in wpLists) { // send out the RTE sentences
+			sentence = prefix + "RTE," + arrayCount + "," + (i*1+1) + ",c," + route.name + "," + wpLists[i];
+			send(sentence);
+			}
+		lastActiveWaypointGUID = activeWaypointGUID; // remember
 		}
 	else {
-		if (debug) print("No active route routepoint in GPX\n");
-		if (activeRoutepointName != ""){
-			// No longer have active Routepoint			
-			if (alerts){
-				alert(false);
-				alert("No active routepoint\n");
-				}
+		if (alerts){
+			alert(false);
+			alert("No active routepoint\n");
 			}
-		activeRoutepointName = "";
+		activeWaypointGUID = false;
+		lastActiveWaypointGUID = false;
+		startFrom = false;
+		sentence = prefix + "BOD"; // + "," + bearingToDest.toFixed(2) + "," + "T" + "," + bearingToDestM.toFixed(2) + "," + "M" + "," + activeRoutePoint.markName + "," + lastRoutePoint.markName;
+//		send(sentence);
 		}
 	onSeconds(listenOut, repeatInterval);	 // Do it again
 	}
 
-function handleAR(activeRouteJS){
-	// we have received the active route, if there is one
-	// have seen invalid JSON e.g. when no XTE, so..
-	try {activeRoute = JSON.parse(activeRouteJS);}
-	catch(err){
-		return;
+function formSentences(route){
+	for (p = 0; p < route.waypoints.length; p++){	// for each point in route
+		workingPosition.position = route.waypoints[p].position;
+		sentence = prefix + "WPL" + "," + workingPosition.NMEA + "," + route.waypoints[i].markName;
+		send(sentence); // OCPNpushNMEA(sentence);
 		}
-	if (debug) print("Active route:\n", activeRoute,"\n");
-	// NB the JSON returned creates an array
-	if (!activeRoute[0].error ){
-		// we have an active route
-		routeGUID = activeRoute[0].active_route_GUID;
-		delete route;
-		route = new Route;
-		route.get(routeGUID);
-		if (debug) print("Route is: ", route.name, " with ", route.waypoints.length, " routepoints\n");
-		activeRouteName = route.name;	// attribute in here has capitalised name!
-		lastRoutePoint = ""; nextRoutePoint = "";  // clear out previous route info
-		formSentences();
-		}
-	else throw("Active route point but active route returned had error");	
 	}
 
-function formSentences(){
-	// we work through the route points, sending out WPL sentences and noting which is the next and last
-	if (debug) print("Route: ", route, "\n");
-	for (i = 0; i < route.waypoints.length; i++){// push out the WPT sentences
-		workingPosition.latitude = route.waypoints[i].position.latitude;	// convert from position as in JSON to our way of doing it
-		workingPosition.longitude = route.waypoints[i].position.longitude;
-		sentence = prefix + "WPL" + "," + workingPosition.NMEA + "," + route.waypoints[i].markName;
-		send(sentence); // OCPNpushNMEA(sentence); 
-		if (route.waypoints[i].markName == activeRoutepointName){
-			activeWPL = sentence;	// remember for later]
-			if (debug) print("Remembering routepoint ", i, ": ", activeWPL, "\n");
-			if (i > 0) {
-				// not the first routepoint
-				lastRoutePoint = route.waypoints[i-1];
-				nextRoutePoint = route.waypoints[i];
-				}
-			else {
-				// Still to reach first point - use special start waypoint
-				sentence = prefix + "WPL" + "," + start.position.NMEA + "," + start.markName;
-				if (debug) print("Start waypoint: ", sentence, "\n"); 
-				route.waypoints.unshift(start);	// add it to start of route
-				i++;	// adjust position
-				send(sentence);	// send this extra start wp
-				lastRoutePoint = start;
-				nextRoutePoint = route.waypoints[i];
-				}
-			vectorToWp = OCPNgetVectorPP(lastRoutePoint.position, nextRoutePoint.position);
-			bearingToDest = vectorToWp.bearing;
-			}
-		}	
-	// next we build an array of lists of routepoints to go in each RTE sentence as space permits
-	available = 79 - 15 - route.name.length - 3;  // space available in RTE for routepoint names
-	spaceLeft = available;
-	var wpLists = []; // create our array of routepoint groups to go in an RTE sentence
-	wpLists.length = 0;	// Force empty array - don't know why we need to do this
-	listIndex = 0;
-	wpLists[listIndex] = "";
-	for (i = 0; i < route.waypoints.length; i++){
-		wpName = route.waypoints[i].markName;
-		wpNameLength = wpName.length;
-		if (spaceLeft >= wpNameLength){
-			wpLists[listIndex] += (wpName + ",");
-			spaceLeft -= (wpNameLength+1);	//allow for comma
-			continue;
-			}
-		else{
-			// no more space in this one
-			wpLists[listIndex] = wpLists[listIndex].slice(0,-1);  // drop trailing comma
-			wpLists.push("");  // new array member starts empty
-			listIndex += 1; spaceLeft = available;
-			i -= 1; // don't forget this last routepoint still to be fitted in next time
-			}
-		}
-	// we may have a trailing comma after last one
-	lastOne = wpLists[listIndex];
-	lastChar = lastOne.charAt(lastOne.length - 1);
-	if (lastChar == ",") lastOne = lastOne.slice(0,-1); // drop it
-	wpLists[listIndex] = lastOne;
-	arrayCount = wpLists.length;
-	for (i in wpLists) { // send out the RTE sentences
-		sentence = prefix + "RTE," + arrayCount + "," + (i*1+1) + ",c," + route.name + "," + wpLists[i];
-		send(sentence);
-		}	
-	// Now to send a BOD sentence
-	if (bearingToDest != ""){ 	// can only do this if we have acquired a bearing - else wait until we have it
-		bearingToDest = bearingToDest*1;  // force this to be number for next bit
-/*  kluge  */  variation = 0;
-		bearingToDestM = bearingToDest + variation;
-		sentence = prefix + "BOD" + "," + bearingToDest.toFixed(2) + "," + "T" + "," + bearingToDestM.toFixed(2) + "," + "M" + "," + nextRoutePoint.markName + "," + lastRoutePoint.markName;
-		if (debug) print(sentence, "\n");
-		send(sentence); //OCPNpushNMEA(sentence);
-		if (activeWPL != "") send(activeWPL); //OCPNpushNMEA(activeWPL);  // repeat the active WPL fer th BOD, as per MacENC
-		}
-	else if (alert) alert("Waiting for BOD\n");
+function send(sentence){
+	if (log) printOrange(sentence, "\n");
+	OCPNpushNMEA(sentence);
 	}
 
 function processNMEA(input){	// we need to un-abbreviate the routepoint name in APB sentences
-	if(input.OK && (activeRouteName != "")){ // only bother if have active routepoint
+	if(input.OK && activeRouteGUID){ // only bother if have active route
 		switch (input.value.slice(0,6)) {
 		case "$ECRMB":
 			{
 			if (nextRoutePoint == "") break;	// we cannot act until we have this
 			splut = input.value.split(",", 20);
 			shortWPname = splut[4];
-			if (activeRoutepointName.startsWith(shortWPname)){  // we check this really is the right one
+			if (activeWaypoint.markName.startsWith(shortWPname)){  // we check this really is the right one
 				splut[0] = prefix + "RMB";		// give it our branding
 				splut[4] = lastRoutePoint.markName; // and add the origin WP name
-				splut[5] = nextRoutePoint.markName;	// the full destination WP Name
+				splut[5] = activeRoutePoint.markName;	// the full destination WP Name
 				bearingToDest = splut[11];	// remember the bearing
 				result = splut.join(",");  // put it back together
 				send(result);
+				// now add a BOD sentence
+				bearingToDest = Number(bearingToDest);  // force this to be number for next bit
+				/*  kluge  */  variation = 0;
+				bearingToDestM = bearingToDest + variation;
+				sentence = prefix + "BOD" + "," + bearingToDest.toFixed(2) + "," + "T" + "," + bearingToDestM.toFixed(2) + "," + "M" + "," + activeRoutePoint.markName + "," + lastRoutePoint.markName;
+				if (debug) print(sentence, "\n");
+				send(sentence); //OCPNpushNMEA(sentence);
+				if (activeWpSentence) send(activeWpSentence);
 				}
 			break;
 			}
@@ -197,7 +170,7 @@ function processNMEA(input){	// we need to un-abbreviate the routepoint name in 
 			// print("APB received\n");
 			splut = input.value.split(",", 20);
 			splut[0] = prefix + "APB";		// give it our branding
-			splut[10] = nextRoutePoint.markName;  // the full destination WP Name
+			splut[10] = activeRoutePoint.markName;  // the full destination WP Name
 			result = splut.join(",");  // put it back together
 			send(result);
 			break;
@@ -207,9 +180,4 @@ function processNMEA(input){	// we need to un-abbreviate the routepoint name in 
 			}
 		}
 	OCPNonNMEAsentence(processNMEA); // Listen out for another NMEA sentence
-	}
-
-function send(sentence){
-	if (log) print(sentence, "\n");
-	OCPNpushNMEA(sentence);
 	}
