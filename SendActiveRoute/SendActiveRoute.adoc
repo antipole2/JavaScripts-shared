@@ -124,3 +124,7 @@ V3 was a rewrite to make use of the new faciities in OpenCPN v5.6 and the JavaSc
 
 It has been possible to greatly simplify it.
 This version is more robust and handles changes in the active route and modifications to the route or its points without requiring a script restart.
+
+V3 requires v0.5 or later of the JavaScript plugin.
+If you need to use an earlier version of the plugin,
+V2 of the script is availale https://github.com/antipole2/JavaScripts-shared/blob/main/SendActiveRoute/SendActiveRoute_v2.js[here] but is unmaintained.
