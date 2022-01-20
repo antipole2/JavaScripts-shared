@@ -1,4 +1,6 @@
-// Waypoints and routes housekeeper v 1.2
+// Waypoints and routes housekeeper v1.3
+// v1.3	Makes renaming unnamed routes consistant & better handles Goto routes
+
 
 // Options
 nearby = 0.01;	//two points this close in nm regarded as at same position
@@ -84,6 +86,15 @@ function load(){	// loads data from OCPN
 	allpoints = [];
 	routes = [];
 	wpguids = OCPNgetWaypointGUIDs();
+
+	// look out for duplicate guids
+	wpguids.sort();
+	for (i = 1; i < wpguids.length; i++){
+		if (wpguids[i] == wpguids[i-1]) throw(
+		"Load found duplicate guids, which should not occur\nTry quiting and restarting OpenCPN\n" +
+		"If this persists, please report");
+		}
+
 	if (log) print("wpguids length: ", wpguids.length, "\n");
 	if (wpguids.length > 0){
 		for (i = 0; i < wpguids.length; i++){
@@ -127,7 +138,7 @@ function analyse(){	// analyse what we have in OpenCPN
 		
 	// check for and index unnamed waypoints
 	wpUnnamedIndex = [];		// unnamed waypoints
-	removedRoutePointsIndex = [];	// routepoints likely removved from route
+	removedRoutePointsIndex = [];	// routepoints likely removed from route
 	for (i = 0; i < allpoints.length; i++){	// initial scan of points and set up extra attributes
 		allpoints[i].uses = [];
 		point = allpoints[i];
@@ -165,6 +176,7 @@ function analyse(){	// analyse what we have in OpenCPN
 				}
 			}
 		}
+	if (log) print("waypointNameDuplicateClusters: ", waypointNameDuplicateClusters, "\n");
 	
 	// now for the routes
 	routes.sort(function(a, b){	// sort on route names
@@ -175,21 +187,27 @@ function analyse(){	// analyse what we have in OpenCPN
 	// check for and index unnamed routes and goto routes
 	rtUnnamedIndex = [];
 	rtGotoIndex = [];
+	activeRouteGUID = OCPNgetActiveRouteGUID();
 	for (i = 0; i < routes.length; i++){
-		if (routes[i].name.length == 0) rtUnnamedIndex.push(i);
+		route = routes[i];
+		if (route.name.length == 0) rtUnnamedIndex.push(i);
 		if (
-			(routes[i].name.startsWith("Go to ")) &&
-			(routes[i].waypoints.length == 2) &&
-			(routes[i].action == none)) rtGotoIndex.push(i);
-		}	
+			(route.name.startsWith("Go to ") || (route.name == "Temporary GOTO Route")) &&
+			(route.waypoints.length == 2) && (route.GUID != activeRouteGUID) &&
+			(route.action == none)
+			) rtGotoIndex.push(i);
+		}
+	if (log) print("rtUnnamedIndex: ", rtUnnamedIndex, "\n");
+
 	// look for duplicate route names and build clusters
 	routeNameDuplicateClusters = [];
 	for (i = 1; i < routes.length; i++){
+		if (rtGotoIndex.indexOf(i) >= 0) continue; // ignore routes already identified as Gotos
 		if (routes[i].name == routes[i-1].name){
 			cluster = [];
 			cluster[0] = i-1; cluster[1] = i;
 			while (i < routes.length-1){	// check for yet another
-				if (routes[i].name == waypoints[i+1].name){
+				if (routes[i].name == routes[i+1].name){
 					i++;
 					cluster.push(i);
 					}
@@ -339,7 +357,7 @@ function report(){	// report on what we have found
 			}
 		else routepointCount++
 		}
-	print(allpoints.length, s("\tpoint",allpoints.length), "\n");
+	print(allpoints.length, s("\twaypoint",allpoints.length), "\n");
 	if (waypointsInRoutesCount == 0) print("None are included in any route\n");
 	else if (waypointsInRoutesCount == 1) print("of which one is included in one or more routes\n");
 	else print("of which ", waypointsInRoutesCount, " are included in one or more routes\n");
@@ -368,7 +386,7 @@ function report(){	// report on what we have found
 		print("\n", rtUnnamedIndex.length, s(" route", rtUnnamedIndex.length), " unnamed\n");
 		}
 	if (rtGotoIndex.length > 0) {
-		print("\n", rtGotoIndex.length, s(" route", rtGotoIndex.length)," named 'Go to...', with just two points and likely obsolete\n");
+		print("\n", rtGotoIndex.length, s(" GOTO inactive route", rtGotoIndex.length)," with just two points and likely obsolete\n");
 		for (i = 0; i < rtGotoIndex.length; i++) print(routes[rtGotoIndex[i]].name, "\n");
 		}
 	if (removedRoutePointsIndex.length> 0){
@@ -429,13 +447,13 @@ function whatToDoA(){	// decide next action
 	if (log) print("whatToDoA - totalToDo: ", totalToDo, "\n");
 	if (totalToDo > 0 ){
 		ic = issuesCount();
-		dialogue[1].value = "Act on " + ic + s("issue", ic) + " outstanding" + hint;
+		dialogue[1].value = "Act on " + ic + s(" issue", ic) + " outstanding" + hint;
 		hint = "";
 		if (wpUnnamedIndex.length > 0) dialogue.push({type:"button", label:buttonWpUnnamed});
 		if (rtUnnamedIndex.length > 0) dialogue.push({type:"button", label:buttonRtUnnamed});
 		if (waypointNameDuplicateClusters.length > 0) dialogue.push({type:"button", label:buttonWpDuplicates});
-		if (routeNameDuplicateClusters.length > 0) dialogue.push({type:"button", label:buttonRtDuplicates});
 		if (rtGotoIndex.length > 0) dialogue.push({type:"button", label:buttonGoto});
+		if (routeNameDuplicateClusters.length > 0) dialogue.push({type:"button", label:buttonRtDuplicates});
 		if (removedRoutePointsIndex.length > 0) dialogue.push({type:"button", label:buttonRemoveRemoved});
 		if (sucessiveRoutePointClusters.length > 0) dialogue.push({type:"button", label:buttonSuccessiveRoutepoints});
 
@@ -483,14 +501,14 @@ function doNaming(dialogue){
 		suffix = 1;
 		print("\n");
 		while (rtUnnamedIndex.length > 0){	// if have from or to, build on that - make sure name not already used
-			newName = "Route " + suffix;
+			newName = "Route_" + suffix;
 			i = rtUnnamedIndex.shift()
 			if (routes[i].from.length != 0) newName = "From " + routes[i].from;
 			if (routes[i].to.length != 0){
 				if (routes[i].from.length != 0) newName += " ";
 				newName += "To " + routes[i].to;
 				}
-			if (newName.length == 0) newName = "Route " + suffix++;
+			if (newName.length == 0) newName = "Route_" + suffix++;
 			while (rtInUse(newName)){
 				newName = "Route_" + suffix++;
 				}		
