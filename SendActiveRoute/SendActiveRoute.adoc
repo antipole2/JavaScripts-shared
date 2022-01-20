@@ -86,10 +86,6 @@ Route 2 with routepoints A, X, C & Y +
 Route 1 still exists withing iNavX but the routepoints A and C within it have the position of those routepoints in Route B.
 ====
 
-CAUTION: To avoid refetching the whole list of routes every few sconds, the script does not check for a change in route name.
-So if you edit the route name in OpenCPN, the script will get confused.
-Stop the script and start it again.
-
 == My network set up
 
 On Antipole I have an NMEA2000 network and an Actisense W2K-1 NMEA2000 to WiFi converter.
@@ -121,3 +117,10 @@ So with 6 routepoints there would be 6 RTE installments.
 Simpe but inefficient.
 
 The script actually packs the routepoints into the minimum number of RTE installements possible.
+
+=== Script history
+
+V3 was a rewrite to make use of the new faciities in OpenCPN v5.6 and the JavaScript plugin v0.5.
+
+It has been possible to greatly simplify it.
+This version is more robust and handles changes in the active route and modifications to the route or its points without requiring a script restart.
