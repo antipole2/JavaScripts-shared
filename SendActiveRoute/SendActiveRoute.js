@@ -10,7 +10,6 @@ const repeatInterval = 15;		// repeat after this number of seconds
 var debug = false;			// for debug prints
 var log = false;				// log output
 var alerts = true;			// diplay advisory alerts
-var longWaypoints = true;		// restore long waypoint names
 const prefix = "$NV";		// NMEA identifier
 var activeWaypointGUID = false;
 var lastActiveWaypointGUID = false;
@@ -32,7 +31,7 @@ var workingPosition = new Position();
 
 
 if (alerts) alert("SendActiveRoute active\n");
-if (longWaypoints) OCPNonNMEAsentence(processNMEA);  	// start processing NMEA sentences			
+OCPNonNMEAsentence(processNMEA);  	// start processing NMEA sentences			
 listenOut();
 consoleHide();				// start listening
 
