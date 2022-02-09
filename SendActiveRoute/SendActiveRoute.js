@@ -49,7 +49,7 @@ function listenOut(){
 				alert(false);
 				alert("Active routepoint now ", activeWaypoint.markName, "\n");
 				}
-			lastRoutePoint = activeRoutePoint;	// remeber what it was
+			lastRoutePoint = activeRoutePoint;	// remember what it was
 			}
 		if (route.waypoints[0].GUID == activeWaypointGUID){
 			// we are yet to reach the first point of the route
@@ -58,7 +58,7 @@ function listenOut(){
 				// we have not yet established our starting point
 				here = OCPNgetNavigation();
 				startFrom = new Waypoint(here)
-				startFrom.markName = "Start2";
+				startFrom.markName = "Start";
 				lastRoutePoint = startFrom;
 				}	
 			route.waypoints.unshift(startFrom);	// add starting point to route
@@ -111,7 +111,7 @@ function listenOut(){
 			}
 		lastActiveWaypointGUID = activeWaypointGUID; // remember
 		}
-	else {
+	else {	// no active route/waypoint
 		if (alerts){
 			alert(false);
 			alert("No active routepoint\n");
@@ -119,19 +119,10 @@ function listenOut(){
 		activeWaypointGUID = false;
 		lastActiveWaypointGUID = false;
 		startFrom = false;
-		sentence = prefix + "BOD"; // + "," + bearingToDest.toFixed(2) + "," + "T" + "," + bearingToDestM.toFixed(2) + "," + "M" + "," + activeRoutePoint.markName + "," + lastRoutePoint.markName;
-//		send(sentence);
 		}
 	onSeconds(listenOut, repeatInterval);	 // Do it again
 	}
 
-function formSentences(route){
-	for (p = 0; p < route.waypoints.length; p++){	// for each point in route
-		workingPosition.position = route.waypoints[p].position;
-		sentence = prefix + "WPL" + "," + workingPosition.NMEA + "," + route.waypoints[i].markName;
-		send(sentence); // OCPNpushNMEA(sentence);
-		}
-	}
 
 function send(sentence){
 	if (log) printOrange(sentence, "\n");
