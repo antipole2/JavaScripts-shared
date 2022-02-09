@@ -72,7 +72,25 @@ together with predicted time on route and ETA.
 If you wish to force an advance to the next routepoint, this should be done on OpenCPN, whereupon iNavX will update too.
 
 If you advance the routepoint in iNavX, it will start ignoring changes in the active routepoint send from OpenCPN.
-To restore this, go to the panel used for step 5 above, turn Enable Waypoints off and back on again.
+To restore this, go to the panel used for step 5 above, turn Enable Waypoints off and back on again. at home
+
+=== Familiarisation at home
+
+You can excercise the set up and familiarise yourself with it while away from your boat at home.
+
+• Set up OpenCPN as above
+• Activate a route or waypoint
+• Connect your iNavX device to the same WiFi network
+• Determine the IP address of your computer.  On MacOS, System Preferences > Network > WiFi > Advanced > TCP/IP.
+• Use this address in iNavX in the instructions above
+
+You can drive the ship using a simulator.
+
+Using the JavaScript plugin, open an additional console via the Tools button.
+Load the driver.js script into this console and run it.
+You can, for example, set a compass course and speed.
+See the Driver link:https:../Driver/Driver.adoc[instructions here.]
+
 
 == Limitations
 [WARNING]
@@ -85,10 +103,6 @@ and then a different +
 Route 2 with routepoints A, X, C & Y +
 Route 1 still exists withing iNavX but the routepoints A and C within it have the position of those routepoints in Route B.
 ====
-
-CAUTION: To avoid refetching the whole list of routes every few sconds, the script does not check for a change in route name.
-So if you edit the route name in OpenCPN, the script will get confused.
-Stop the script and start it again.
 
 == My network set up
 
@@ -121,3 +135,14 @@ So with 6 routepoints there would be 6 RTE installments.
 Simpe but inefficient.
 
 The script actually packs the routepoints into the minimum number of RTE installements possible.
+
+=== Script history
+
+V3 was a rewrite to make use of the new faciities in OpenCPN v5.6 and the JavaScript plugin v0.5.
+
+It has been possible to greatly simplify it.
+This version is more robust and handles changes in the active route and modifications to the route or its points without requiring a script restart.
+
+V3 requires v0.5 or later of the JavaScript plugin.
+If you need to use an earlier version of the plugin,
+V2 of the script is availale https://github.com/antipole2/JavaScripts-shared/blob/main/SendActiveRoute/SendActiveRoute_v2.js[here] but is unmaintained.

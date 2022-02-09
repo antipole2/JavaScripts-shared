@@ -55,7 +55,9 @@ Adapt to your choice.
 Please raise any issues with these scripts or their documentation using the Issues tab, including the script name in the issue title.
 
 === Contributing to this library +
-If you have developed a script that you would like to contribute, please store it somewhere online and send me
+If you have developed a script that you would like to contribute, please store it somewhere online.
+You can submit a request for it to be included in this library by raising an enhancement request on https://opencpn.org/flyspray/index.php?do=tasklist&project=97[Flyspray here].
+Please include:
 
 * the link to your script
 * the description for the table entry
