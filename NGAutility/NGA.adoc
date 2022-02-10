@@ -2,23 +2,22 @@
 
 (under construction - ignore)
 
-https://github.com/antipole2/JavaScripts-shared/blob/main/NGAutility.js[NGAutility.js]
+https://github.com/antipole2/JavaScripts-shared/blob/main/NGAutility/NGA.js[NGAutility.js]
 
-The _OpenCPN Debugger_ plugin can be used to monitor NMEA sentences but the output can be difficult to use.
-This script is an alternative.
-It monitors OpenCPN messages and NMEA sentences over 30 seconds (configurable).
+This script facilitates creating objects in OpenCPN to record navigational warnings.
+This version is for those from the USA Coast Guard Navigation Centre, which issues NGAs.
 
-It then reports:
-
-* which OpenCPN messages have been seen.
-* which NMEA sentences have been seen and the count of each, sorted by type and then sender.
-* for each NMEA sentence type and sender, it then lists one sample of each.
-
-You might find one sample of each insufficient.  For example, you could have more than one sender using the same talker ID.
-The script contains an array of sentence types which are to all be be displayed.
-For example, configuring
-
-`var displayThese = ["GPGGA", "JSVTG"];`
-
-will cause all sentences of these types to be displayed in addition to the single samples.
-To supress this feature, leave the array empty or set it to some non-existant type.
+.The warnings are in free text form, e.g.:
+----
+050613Z FEB 22
+NAVAREA XII 68/22(18).
+EASTERN NORTH PACIFIC.
+CALIFORNIA.
+1. HAZARDOUS OPERATIONS 101430Z TO 110130Z AND
+111430Z TO 112100Z FEB IN  AREA BOUND BY
+32-36N 118-20W, 32-12N 119-18W,
+32-22N 119-28W, 32-32N 119-18W,
+33-02N 118-38W.
+2. CANCEL THIS MSG 112200Z FEB 22.
+----
+The script presents a form in which the relevant parts of this can be entered.
