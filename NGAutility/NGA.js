@@ -125,7 +125,6 @@ function process(d){
 				description:description
 				};
 			OCPNaddSingleWaypoint(waypoint);
-			print("Created waypoint");
 			}
 		else {	//multiple positions - create route
 			marks = [];
@@ -138,15 +137,16 @@ function process(d){
 					GUID: OCPNgetNewGUID()
 					}
 				marks.push(mark);
+				if (i == 0) firstMark = mark;	// remember for closing the loop
 				}
+			marks.push(firstMark);	// close the route
 			route = {
 				name: preface + name,
 				waypoints: marks,
 				from:description,
 				to:"Expires: " + expires,
 				};
-			OCPNaddRoute(route);	
-			print("Created route\n");			
+			OCPNaddRoute(route);			
 			}
 		}
 	onDialogue(process, dialogue);
@@ -172,8 +172,8 @@ function formatPositions(input){
 function isExpired(description){
 	// examines a description and returns true if expired
 	if (description == null) return false;
-	expiry = description.match(/Expires: \d\d\d\d\d\d[A-Z] [A-Z][A-Z][A-Z] \d\d/);
-	if (expiry.length == 0) return false;	// no expiry found
+	expiry = description.match(/Expires: *\d\d\d\d\d\d[A-Z] [A-Z][A-Z][A-Z] \d\d/);
+	if (expiry == null) return false;	// no expiry found
 	expiry = expiry[0].slice(8);	// drop prefix
 	day = expiry.match(/\d\d/)[0];
 	month = expiry.match(/[A-Z][A-Z][A-Z]/)[0];
