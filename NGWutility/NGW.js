@@ -1,7 +1,12 @@
+icon = "Circle";	// icon to be used for new waypints
 preface = "NGA:";	//we will identify objects with this preface
+
 // look for expired NGWs
+objects = [];	// will be array of objects to delete
 now = new Date();
 const monthNames = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+
 // first waypoint
 guids = OCPNgetWaypointGUIDs();
 for (i = 0; i < guids.length; i++){
@@ -12,6 +17,8 @@ for (i = 0; i < guids.length; i++){
 		description = waypoint.description;
 		if (isExpired(description)){
 			printOrange("\nWaypoint ",name, "\n", description, "\n");
+			waypoint.isWaypoint = true;
+			objects.push(waypoint);	// remember for later
 			}
 		}
 	}
@@ -25,24 +32,59 @@ for (i = 0; i < guids.length; i++){
 		expires = route.to;
 		if (isExpired(expires)){
 			printOrange("\nRoute ", name, "\n", route.from, "\n",expires, "\n");
+			route.isWaypoint = false;
+			objects.push(route);
 			}
 		}
 	}
-		
+
+if (objects.length > 0){
+	// there are objects maybe to delete
+	yesNo = [
+		{type:"caption", value:"NGA Warnings"},
+		{type:"text", value:"Delete expired?"},
+		{type:"button", label:["Delete","Leave"]}
+		]
+	onDialogue(deleteObjects, yesNo);
+	};
+
 dialogue = [
 	{type:"caption", value:"NGA Warnings"},
 	{type:"field", label:"Name",width:300},
 	{type:"field", label:"Description", multiline:true, width:300, height:50},
 	{type:"field", label:"Location(s)", multiline:true, width:300, height:50},
 	{type:"field", label:"Expires",width:200},
-	{type:"button", label:"enter"}
-	]
+	{type:"button", label:"enter"},
+	{type:"hLine"},
+	{type:"button", label:"quit"}
+	];
 
-
-onDialogue(process, dialogue);
+function deleteObjects(result){
+	button = result[result.length-1].label;
+	if (button == "Delete"){	// delete the objects
+		while (objects.length > 0){
+			thisOne = objects.shift();
+			if (thisOne.isWaypoint){
+				OCPNdeleteSingleWaypoint(thisOne);
+				print("Deleted waypoint ", thisOne.markName, "\n");
+				}
+			else {
+				OCPNdeleteRoute(thisOne);
+				print("Deleted route ", thisOne.name, "\n");
+				}
+			}
+		}
+	onDialogue(process, dialogue);
+	consoleHide();
+	}
 
 function process(d){
 	alert(false);
+	button = d[d.length-1].label;
+	if (button == "quit") {
+//		scriptResult("");
+		stopScript("");	// quit silently with no result
+		}
 	name = d[1].value.trim();
 	description = d[2].value.trim();
 	locations = d[3].value.trim();
@@ -74,7 +116,7 @@ function process(d){
 			waypoint = {
 				position,
 				markName:name,
-				iconName:"Hazard",
+				iconName:icon,
 				description:description
 				};
 			OCPNaddSingleWaypoint(waypoint);
@@ -87,7 +129,7 @@ function process(d){
 				mark = {
 					position: position,
 					markName: ("000" + i).slice(-3),
-					iconName: "Circle",
+					iconName: icon,
 					GUID: OCPNgetNewGUID()
 					}
 				marks.push(mark);
