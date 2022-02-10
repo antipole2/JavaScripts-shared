@@ -21,3 +21,16 @@ CALIFORNIA.
 2. CANCEL THIS MSG 112200Z FEB 22.
 ----
 The script presents a form in which the relevant parts of this can be entered.
+For the above this could be
+
+image::NGAScreenshot.png[]
+
+On selecting `enter` the script checks that the position coordinates are in the correct format and that the expiry date, if any, is in the NGA format.
+It then creates an object in OpenCPN.
+
+If only one position is provided, it creates a waypoint and incorporates the desciption and expiry date in the description field.
+
+If more than one position is provided, it creates a closed route with the positions as routepoints.
+The plugin is unable to access the description field, so it stashes the description in the _From_ attribute and the expiry in the _To_ field.
+
+In both cases, the name is prefixed with the tag NGA:
