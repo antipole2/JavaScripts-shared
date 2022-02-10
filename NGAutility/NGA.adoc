@@ -28,7 +28,7 @@ image::NGAScreenshot.png[]
 On selecting `enter` the script checks that the position coordinates are in the correct format and that the expiry date, if any, is in the NGA format.
 It then creates an object in OpenCPN.
 
-If only one position is provided, it creates a waypoint and incorporates the desciption and expiry date in the description field.
+If only one position is provided, it creates a waypoint and incorporates the description and expiry date in the description field.
 
 If more than one position is provided, it creates a closed route with the positions as routepoints.
 The plugin is unable to access the description field, so it stashes the description in the _From_ attribute and the expiry in the _To_ field.
