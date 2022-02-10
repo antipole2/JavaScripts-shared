@@ -1,8 +1,8 @@
-= NGW Utility
+= NGA Warnings Utility (USA version)
 
 (under construction - ignore)
 
-https://github.com/antipole2/JavaScripts-shared/blob/main/MessageNMEAsampling/MessageNMEAsampling.js[MessageNMEAsampling.js]
+https://github.com/antipole2/JavaScripts-shared/blob/main/NGAutility.js[NGAutility.js]
 
 The _OpenCPN Debugger_ plugin can be used to monitor NMEA sentences but the output can be difficult to use.
 This script is an alternative.
