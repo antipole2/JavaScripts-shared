@@ -87,8 +87,7 @@ function process(d){
 	alert(false);
 	button = d[d.length-1].label;
 	if (button == "quit") {
-//		scriptResult("");
-		stopScript("");	// quit silently with no result
+		stopScript("");	// quit with no result
 		}
 	name = d[1].value.trim();
 	description = d[2].value.trim();
@@ -152,7 +151,7 @@ function process(d){
 	onDialogue(process, dialogue);
 	}
 
-function formatPositions(input){
+function formatPositions(input){	// turn the NGA position into a JS position
 	function formDegs(half){
 		parts = half.split("-");
 		deg = parts[0];
@@ -169,8 +168,7 @@ function formatPositions(input){
 	return position;
 	}
 
-function isExpired(description){
-	// examines a description and returns true if expired
+function isExpired(description){ // examines an expiry and returns true if expired
 	if (description == null) return false;
 	expiry = description.match(/Expires: *\d\d\d\d\d\d[A-Z] [A-Z][A-Z][A-Z] \d\d/);
 	if (expiry == null) return false;	// no expiry found
