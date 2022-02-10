@@ -6,11 +6,12 @@ objects = [];	// will be array of objects to delete
 now = new Date();
 const monthNames = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 
+w = 400; h = 70;	// size of form fields
 dialogue = [
 	{type:"caption", value:"NGA Warnings"},
-	{type:"field", label:"Name",width:300},
-	{type:"field", label:"Description", multiline:true, width:300, height:50},
-	{type:"field", label:"Location(s)", multiline:true, width:300, height:50},
+	{type:"field", label:"Name",width:w},
+	{type:"field", label:"Description", multiline:true, width:w, height:h},
+	{type:"field", label:"Location(s)", multiline:true, width:w, height:h},
 	{type:"field", label:"Expires",width:200},
 	{type:"button", label:"enter"},
 	{type:"hLine"},
