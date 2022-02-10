@@ -1,7 +1,5 @@
 = NGA Warnings Utility (USA version)
 
-(under construction - ignore)
-
 https://github.com/antipole2/JavaScripts-shared/blob/main/NGAutility/NGA.js[NGAutility.js]
 
 This script facilitates creating objects in OpenCPN to record navigational warnings.
