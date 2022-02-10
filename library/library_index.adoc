@@ -48,11 +48,16 @@ Adapt to your choice.
 |Examines your waypoints & routes for anomolies and offers to fix them.
 |link:https:../Housekeeper/Housekeeper.adoc[Fuller description and instructions]
 |Antipole
+
+|link:https:../NGAutility/NGA.js[NGA.js]
+|Provides a form to enter NGA navigational warnings and display them as waypoints or routes.  It also manages expired entries.
+|link:https:../NGAutility/NGA.adoc[Fuller description and instructions]
+|Antipole
 |===
 
 === Issues
 
-Please raise any issues with these scripts or their documentation using the Issues tab, including the script name in the issue title.
+Please raise any issues with these scripts or their documentation using the https://github.com/antipole2/JavaScripts-shared/issues[Issues tab], including the script name in the issue title.
 
 === Contributing to this library +
 If you have developed a script that you would like to contribute, please store it somewhere online.
