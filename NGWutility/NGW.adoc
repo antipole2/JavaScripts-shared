@@ -1,4 +1,6 @@
-= MessageNMEAsampling
+= NGW Utility
+
+(under construction - ignore)
 
 https://github.com/antipole2/JavaScripts-shared/blob/main/MessageNMEAsampling/MessageNMEAsampling.js[MessageNMEAsampling.js]
 
