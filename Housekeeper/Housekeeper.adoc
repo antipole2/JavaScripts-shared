@@ -20,6 +20,7 @@ The script is structured in such a way that you can make the proposed changes an
 |===
 |Issue|Explanation|Proposed fix
 
+|Fix empty icon names|It is possible for points to have no icon name assigned, but this is not aparrent visually| Assigns an icon  (Circle by default).
 |Name unnamed waypoints||Assigns names like 'Waypoint_1', Waypoint_2 etc. always ensuring the assigned name is unique.
 |Uniquify waypoint names||Makes duplicated waypoint names unique by adding suffixes _1, _2 etc.
 |Name unnamed routes||Assigns names like 'Route 1', 'Route 2' etc.
