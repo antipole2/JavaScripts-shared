@@ -10,8 +10,8 @@ w = 400; h = 70;	// size of form fields
 dialogue = [
 	{type:"caption", value:"NGA Warnings"},
 	{type:"field", label:"Name",width:w},
-	{type:"field", label:"Description", multiline:true, width:w, height:h},
-	{type:"field", label:"Location(s)", multiline:true, width:w, height:h},
+	{type:"field", label:"Description", multiLine:true, width:w, height:h},
+	{type:"field", label:"Location(s)", multiLine:true, width:w, height:h},
 	{type:"field", label:"Expires",width:200},
 	{type:"button", label:"enter"},
 	{type:"hLine"},
@@ -90,13 +90,14 @@ function process(d){
 		stopScript("");	// quit with no result
 		}
 	name = d[1].value.trim();
+//	print("Description: '", d[2].value.toString(), "'\n");
 	description = d[2].value.trim();
 	locations = d[3].value.trim();
 	expires = d[4].value;
 	if (expires != ""){
 		// have expiry - check it is valiid
 		if (expires.match(/\d\d\d\d\d\d[A-Z] [A-Z][A-Z][A-Z] \d\d/) == null)
-			alert("Invaid expiry\n");
+			alert("Invalid expiry\n");
 		}
 	if ((name.length == 0) || (locations.length == 0)){
 		alert("Name and location required");
@@ -121,6 +122,7 @@ function process(d){
 				position,
 				markName:name,
 				iconName:icon,
+				isNameVisible:true,
 				description:description
 				};
 			OCPNaddSingleWaypoint(waypoint);
