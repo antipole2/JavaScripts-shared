@@ -6,6 +6,6 @@ Select waypoints within a rectangle by setting their visibility.
 
 Create two waypoints with the exact names 'TopLeft' and 'BottomRight' and place BottomRight southeast of TopRight.
 
-Now run the script.  AFter checks, it will set as visible all waypoints within the selected rectangle and will hide all others.
+Now run the script.  After checks, it will set as visible all waypoints within the selected rectangle and will hide all others.
 
 You can drag the corner markers where you will and run the script again.
