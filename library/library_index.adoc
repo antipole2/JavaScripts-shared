@@ -53,6 +53,11 @@ Adapt to your choice.
 |Provides a form to enter NGA navigational warnings and display them as waypoints or routes.  It also manages expired entries.
 |link:https:../NGAutility/NGA.adoc[Fuller description and instructions]
 |Antipole
+
+|link:https:../SelectWaypoints/SelectWaypoints.js[SelectWaypoints.js]
+|Set waypoints within a chosen area visible and hide others.
+|link:https:../SelectWaypoints/SelectWaypoints.adoc[Fuller description and instructions]
+|Antipole
 |===
 
 === Issues
