@@ -1,6 +1,6 @@
 = SelectWaypoints
 
-https://github.com/antipole2/JavaScripts-shared/blob/main/SelectWaypoints/SelectWaypoints.js[SelectWaypoints.js]
+https://github.com/antipole2/JavaScripts-shared/blob/b1e9e6e67cb5f04195a8655769257946b97d2aad/SelectWaypoints/SelectWayoints.js[SelectWaypoints.js]
 
 Select waypoints within a rectangle by setting their visibility.
 
