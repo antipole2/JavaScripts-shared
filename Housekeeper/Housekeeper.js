@@ -101,7 +101,7 @@ function load(){	// loads data from OCPN
 	wpguids.sort();
 	for (i = 1; i < wpguids.length; i++){
 		if (wpguids[i] == wpguids[i-1]) throw(
-		"Load found duplicate guids, which should not occur\nTry quiting and restarting OpenCPN\n" +
+		"Load found multiple for guids " +wpguids[i] +  "\nThis should not occur\nTry quiting and restarting OpenCPN\n" +
 		"If this persists, please report");
 		}
 
