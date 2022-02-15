@@ -1,4 +1,4 @@
-icon = "Circle";	// icon to be used for new waypints
+icon = "Circle";	// icon to be used for new waypoints
 preface = "NGA:";	//we will identify objects with this preface
 
 // look for expired NGWs
