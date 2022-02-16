@@ -133,6 +133,22 @@ When all issues have been dealt with, either by adopting the proposed change or 
 you have the option of saving the changes back into OpenCPN.
 If you stop the script without this step, nothing will be changed.
 
+== Duplicate GUIDs
+
+This script has found that sometimes OpenCPN has mutilple entries for the same GUID.
+
+If this is so, the script reports this and stops.
+
+If you are unable to resolve the issue, you can choose to ignore the duplicates.
+Change `ignoreDuplicates = false` to `ignoreDuplicates = true`
+
+== Time-outs
+
+This script may take significant time to run if there are many points to analyse.
+It allocates itself extra time based on the number of GUIDs.
+If you are running on a slow computer or with limited memory, it might still timeout.
+The allocation adjustment is made in the function load( ) and you could adjust it.
+
 == About the script
 
 This script is quite complex.
