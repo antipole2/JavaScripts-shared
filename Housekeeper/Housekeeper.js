@@ -84,7 +84,6 @@ if (version < 0.5) throw("Housekeeper requires plugin v0.5 or later");
 load();
 
 analyse();
-printBlue("Done analysis\n");
 
 onExit(wrapUp);
 
