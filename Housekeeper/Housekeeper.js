@@ -5,11 +5,12 @@
 
 // Options
 nearby = 0.01;	//two points this close in nm regarded as at same position
+ignoreDuplicates = true;	// if duplicate guids found, warn, ignore and proceed else stop
 
 // Before making changes past here, read technical guide
 
-var log = false;
-var doSaves = true;
+var log = false;	// if true, print log and diagnotics
+var doSaves = true;	// if false, OCPN will not actually be updated
 
 // action definitions
 none = Symbol("None");
@@ -83,6 +84,7 @@ if (version < 0.5) throw("Housekeeper requires plugin v0.5 or later");
 load();
 
 analyse();
+printBlue("Done analysis\n");
 
 onExit(wrapUp);
 
@@ -97,13 +99,34 @@ function load(){	// loads data from OCPN
 	routes = [];
 	wpguids = OCPNgetWaypointGUIDs();
 
+	timeAlloc(1000 + wpguids.length);	// allow extra time according to number of guids
+
 	// look out for duplicate guids
 	wpguids.sort();
+	warningsGiven = false;
 	for (i = 1; i < wpguids.length; i++){
-		if (wpguids[i] == wpguids[i-1]) throw(
-		"Load found multiple for guids " +wpguids[i] +  "\nThis should not occur\nTry quiting and restarting OpenCPN\n" +
-		"If this persists, please report");
+		dupCount = 0;
+		for (var s = i; wpguids[s] == wpguids[i-1]; s++){
+			dupCount++;
+			}
+		if (dupCount > 0){
+			if (!warningsGiven){
+				printOrange("*** Warning - duplicate GUIDs found ***\n");
+				warningsGiven = true;
+				}
+			printOrange(wpguids[i], " occurs ", dupCount+1, " times\n");
+			if (ignoreDuplicates){
+				wpguids.splice(i, dupCount);	// remove duplicates
+				s -= dupCount;
+				}
+			}
+		i = s;
 		}
+	if (warningsGiven && !ignoreDuplicates)
+		throw(
+		"Load found duplicate guids. This should not occur.\nTry quiting and restarting OpenCPN.\n" +
+		"If this persists, please report.\n" +
+		"You can ignore the duplicates by setting 'ignoreDuplicates = true' in the script");
 
 	if (log) print("wpguids length: ", wpguids.length, "\n");
 	if (wpguids.length > 0){
@@ -351,9 +374,8 @@ function analyse(){	// analyse what we have in OpenCPN
 		if (b.classification.order > a.classification.order) return -1;
 		return 0;
 		});
-	if (log) print("Locations classified\n");	
-
-	if (log){
+	if (log) {
+		print("Locations classified\n");	
 		print("blankIconsIndex.length\t", blankIconsIndex.length, "\n");		
 		print("wpUnnamedIndex.length\t", wpUnnamedIndex.length, "\n");
 		print("wpOrphaned\t", wpOrphaned, "\n");
@@ -390,7 +412,7 @@ function report(){	// report on what we have found
 		printUnderlined("\nIssues\n");
 		}
 	if (blankIconsIndex.length > 0)
-		print("\n", blankIconsIndex.length, s(" waypoint", wpUnnamedIndex.length)," with blank icon name\n");
+		print("\n", blankIconsIndex.length, s(" waypoint", blankIconsIndex.length)," with blank icon name\n");
 	if (wpUnnamedIndex.length > 0) print(wpUnnamedIndex.length, s(" waypoint", wpUnnamedIndex.length)," unnamed\n");
 	if (wpOrphaned){
 		printOrange("Warning: ", wpOrphaned, s("waypoint", wpOrphaned), " are orphaned - please report\n");
@@ -659,7 +681,7 @@ function whatToDoB(lastButton){
 			ic = issuesCount();
 			issueDisplay = {type: "text", value: ic + s(" issue", ic) + " outstanding"}; 
 			if (loc.classification.order == 1){ // this location has only unused waypoints - could delete some
-				// dialogue can obly handle maxPoints, so if more do in batches
+				// dialogue can only handle maxPoints, so if more do in batches
 				batches = (loc.marks.length > maxPoints) ? true : false;
 				loc.marks = loc.marks.slice(0,maxPoints);
 				loc.wpNames = loc.wpNames.slice(0,maxPoints);	// can only handle 10 at a time
@@ -672,7 +694,7 @@ function whatToDoB(lastButton){
 				caption,
 				issueDisplay,
 				{type: "text", value:"At " + formattedPosition(location.position) + "\n" + loc.classification.desc},
-				{type:"text", value:formatLocation(loc)},
+				{type:"text", value:formatLocation(loc), style:{font:"monospace"}},
 				{type: "text", value:"Choose which to delete"},
 				{type: "tickList", value: loc.wpNames},
 				{type: "button", label:[buttonDeleteAll, buttonDeleteSelected, buttonKeepAll]}
@@ -694,7 +716,7 @@ function whatToDoB(lastButton){
 					caption,
 					issueDisplay,
 					{type: "text", value:"At " + formattedPosition(location.position) + "\n" + loc.classification.desc},
-					{type:"text", value:formatLocation(loc)},
+					{type:"text", value:formatLocation(loc), style:{font:"monospace"}},
 					{type:"text", value:"Share WP '" + loc.wpNames + "' for all points?"},
 					{type: "button", label:[buttonShare, buttonSkip, buttonSkipAll]}
 					];
@@ -712,7 +734,7 @@ function whatToDoB(lastButton){
 					caption,
 					issueDisplay,
 					{type: "text", value:"At " + formattedPosition(location.position) + "\n" + loc.classification.desc},
-					{type:"text", value:formatLocation(loc)},
+					{type:"text", value:formatLocation(loc),  style:{font:"monospace"}},
 					{type:"text", value:"Select waypoint to use for all points.  Other points will be removed."},
 					{type:"radio", value: loc.wpNames},
 					{type: "button", label:[buttonShare, buttonSkip, buttonSkipAll]}
@@ -731,7 +753,7 @@ function whatToDoB(lastButton){
 					caption,
 					issueDisplay,
 					{type: "text", value:"At " + formattedPosition(loc.position) + "\n" + loc.classification.desc},
-					{type:"text", value:formatLocation(loc)},
+					{type:"text", value:formatLocation(loc), style:{font:"monospace"}},
 					{type:"text", value:"Select routepoint to use for all points?"},
 					{type:"spinner", range: [1,loc.marks.length],label:"Choose by row number"},
 					{type: "button", label:[buttonShare, buttonSkip, buttonSkipAll]}
@@ -1005,6 +1027,10 @@ function displayRoute(rt){
 	}
 
 function formatLocation(loc){	// return string displaying location details
+	function twoChars(n){
+		// given a number, returns blank padded string length 2
+		return(("  " + n.toString()).slice(-2));
+		}
 	var s = "";
 	padding = 0;
 	for (p = 0; p < loc.marks.length; p++){ // work out padding needed for this loc
@@ -1018,12 +1044,12 @@ function formatLocation(loc){	// return string displaying location details
 		s += mark.GUID.slice(0,5) + ".." + mark.GUID.slice(-5) + " ";
 		if (mark.uses.length > 0){	// in at least one route
 			thisUse = mark.uses[0];
-			s += " leg " + padString(thisUse.leg.toString(), 2) +  " in " +routes[thisUse.route].name + "\n";
+			s += " leg " + twoChars(thisUse.leg) +  " in " +routes[thisUse.route].name + "\n";
 			}
 		else s+= " (not used in any route)\n";
 		for (m = 1; m < mark.uses.length; m++){
 			thisUse = mark.uses[m];
-			s += padString(" ", 21) + "shared with leg " + padString(thisUse.leg.toString(), 2) + " in " + routes[thisUse.route].name + "\n";
+			s += padString(" ", 21) + "shared with leg " + twoChars(thisUse.leg) + " in " + routes[thisUse.route].name + "\n";
 			}
 		}
 	return (s);
