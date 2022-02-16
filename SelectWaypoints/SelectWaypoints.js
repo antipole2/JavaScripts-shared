@@ -36,7 +36,7 @@ for (i = 0; i < guids.length; i++){
 	if ((waypoint.markName == "TopLeft") || (waypoint.markName == "BottomRight"))
 		continue;	// ignore the corner markers
 	inside =
-		(waypoint.position.latitude <= top) && (waypoint.position.latitude <= bottom)  &&
+		(waypoint.position.latitude <= top) && (waypoint.position.latitude >= bottom)  &&
 		(waypoint.position.longitude >= left) && (waypoint.position.longitude <= right);
 	show(waypoint, inside);
 	if (inside) {shown++;}
