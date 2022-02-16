@@ -5,7 +5,7 @@
 
 // Options
 nearby = 0.01;	//two points this close in nm regarded as at same position
-ignoreDuplicates = true;	// if duplicate guids found, warn, ignore and proceed else stop
+ignoreDuplicates = false;	// if duplicate guids found, warn, ignore and proceed else stop
 
 // Before making changes past here, read technical guide
 
