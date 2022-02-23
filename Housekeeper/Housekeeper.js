@@ -1,4 +1,4 @@
-// Waypoints and routes housekeeper v1.3
+// Waypoints and routes housekeeper v1.4
 // v1.3	Makes renaming unnamed routes consistant & better handles Goto routes
 // v1.4	Offers to assign icon to points without any icon + various improvements
 
