@@ -24,6 +24,8 @@ For the above this could be
 image::NGAScreenshot.png[]
 
 On selecting `enter` the script checks that the position coordinates are in the correct format and that the expiry date, if any, is in the NGA format.
+V1.1 of the script now accepts positions with seconds, e.g. 32-36-30N 118-20-32W
+
 It then creates an object in OpenCPN.
 
 If only one position is provided, it creates a waypoint and incorporates the description and expiry date in the description field.
