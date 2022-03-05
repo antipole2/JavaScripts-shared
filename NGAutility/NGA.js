@@ -1,3 +1,5 @@
+// v1.1 5 Mar 2022 now accepts position in format DD-MM-SSH
+
 icon = "Circle";	// icon to be used for new waypoints
 preface = "NGA:";	//we will identify objects with this preface
 
@@ -156,16 +158,27 @@ function process(d){
 function formatPositions(input){	// turn the NGA position into a JS position
 	function formDegs(half){
 		parts = half.split("-");
-		deg = parts[0];
-		min = parts[1]
-		hem = min.slice(-1);
-		min = min.slice(0, -1);
-		result = deg*1 + min/60;
+		if (parts.length == 2){	// DD MM.MH
+			deg = parts[0];
+			min = parts[1];
+			hem = min.slice(-1);
+			min = min.slice(0, -1);
+			result = deg*1 + min/60;
+			}
+		else if (parts.length == 3){	// DD MM SSH
+			deg = parts[0];
+			min = parts[1];
+			sec = parts[2];
+			hem = sec.slice(-1);
+			sec = sec.slice(0, -1);
+			result = deg*1 + min/60 + sec/(60*60);
+			}
+		else throw("Badly formed position: " + half);
 		if ((hem == "S")|| (hem == "W")) result = result*-1;
 		return result;
 		}
 	halves = input.split(" ");
-	if (halves.length != 2) throw("Invalid position");
+	if (halves.length != 2) throw("Invalid position: " + input);
 	position = {latitude:formDegs(halves[0]), longitude:formDegs(halves[1])};
 	return position;
 	}
