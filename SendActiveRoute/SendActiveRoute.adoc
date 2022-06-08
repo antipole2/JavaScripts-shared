@@ -102,6 +102,8 @@ Route 1 with routepoints A, B, C & D +
 and then a different +
 Route 2 with routepoints A, X, C & Y +
 Route 1 still exists withing iNavX but the routepoints A and C within it have the position of those routepoints in Route B.
+
+If you have inserted or appended routepoints, it is quite likely your route contains different routepoints wih the same name, such as NM001.+
 ====
 
 == My network set up
