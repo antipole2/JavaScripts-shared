@@ -103,7 +103,10 @@ and then a different +
 Route 2 with routepoints A, X, C & Y +
 Route 1 still exists withing iNavX but the routepoints A and C within it have the position of those routepoints in Route B.
 
-If you have inserted or appended routepoints, it is quite likely your route contains different routepoints wih the same name, such as NM001.+
+If you have inserted or appended routepoints, it is quite likely your route contains different routepoints wih the same name, such as NM001.
+This will confuse iNavX, whiich will wrongly use one waypoint multiple times.
+You need to make sure the routepoint names are unique.
+A good way of achieving this is to use the link:https:../Housekeeper/Housekeeper.adoc[Housekeeper script].
 ====
 
 == My network set up
