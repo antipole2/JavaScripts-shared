@@ -59,9 +59,9 @@ Adapt to your choice.
 |link:https:../SelectWaypoints/SelectWaypoints.adoc[Fuller description and instructions]
 |Antipole
 
-|link:https:../TracksToKML/TracksToKML.js[TracksToKML.js]
+|link:https:../TracksToKML/tracksToKML.js[TracksToKML.js]
 |Export tracks to a .kml file.
-|link:https:../TracksToKML/TracksToKML.adoc[Fuller description and instructions]
+|link:https:../TracksToKML/tracksToKML.adoc[Fuller description and instructions]
 |Antipole
 |===
 
