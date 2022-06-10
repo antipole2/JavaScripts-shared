@@ -51,7 +51,7 @@ You need to edit this to include your own GoogleMaps API key and to point it to 
 Also included is the script archiveTracks.js
 This can be run at the end of a cruise to add the #A tag to all track names, thus excluding them from your next cruise's track.
 
-link:https://https:../[You can find all the files here.]
+link:https://https:../TracksToKML[You can find all the files here.]
 
 
 NB GoogleMaps caches the generated map.  If you update the .kml file, there may be a delay of a day or so before this is reflected in the displayed map.
