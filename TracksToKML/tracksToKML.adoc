@@ -1,3 +1,4 @@
+= Converting tracks to .kml files
 For many years I have published tracks of our cruising as .kml GooglMaps tracks.
 Until now I had a process of exporting the latest few leg tracks as .gpx files, converting the file to .kml and then going through a series of grep edits to convert them to my chosen style (using BBEdit on a Mac).  I then had to splice the latest tracks into the online .kml file and fix up the stopping places at the join.  This has been tedious and error prone.
 
