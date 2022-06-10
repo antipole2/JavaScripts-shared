@@ -51,7 +51,6 @@ You need to edit this to include your own GoogleMaps API key and to point it to 
 Also included is the script archiveTracks.js
 This can be run at the end of a cruise to add the #A tag to all track names, thus excluding them from your next cruise's track.
 
-link:https://github.com/antipole2/JavaScripts-shared/tree/main/TracksToKML[You can find all the files here.]
 link:https:../TracksToKML[You can find all the files here.]
 
 
