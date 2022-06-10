@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+  <Document>
+    <visibility>1</visibility>
+    <open>1</open>
+    <Style id="anchor">
+      <IconStyle>
+        <scale>0.8</scale>
+        <Icon>
+          <href>https://blog.antipole.co.uk/blog/uploads/icons/anchor.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="bollard">
+      <IconStyle>
+        <scale>0.8</scale>
+        <Icon>
+          <href>https://blog.antipole.co.uk/blog/uploads/icons/bollard.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="buoy">
+      <IconStyle>
+        <scale>0.8</scale>
+        <Icon>
+          <href>https://blog.antipole.co.uk/blog/uploads/icons/buoy.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="2013">
+      <LineStyle>
+        <!-- red -->
+        <color>ff0600ff</color>
+        <width>3</width>
+      </LineStyle>
+    </Style>
+    <Style id="2014">
+      <LineStyle>
+        <!-- yellow -->
+        <color>FF00FFFF</color>
+        <width>3</width>
+      </LineStyle>
+    </Style>
+    <Style id="A">
+      <LineStyle>
+        <!-- red -->
+        <color>ff0600ff</color>
+        <width>3</width>
+      </LineStyle>
+    </Style>
+    <Style id="C">
+      <LineStyle>
+        <!-- orange -->
+        <color>ff007cff</color>
+        <width>3</width>
+      </LineStyle>
+    </Style>
+    <Style id="E">
+      <LineStyle>
+        <!-- yellow -->
+        <color>ff00ffff</color>
+        <width>3</width>
+      </LineStyle>
+    </Style>
+    <Style id="G">
+      <LineStyle>
+        <!-- light green -->
+        <color>ff03c81a</color>
+        <width>3</width>
+      </LineStyle>
+    </Style>
+    <Style id="B">
+      <LineStyle>
+        <!-- blue -->
+        <color>ffff0000</color>
+        <width>3</width>
+      </LineStyle>
+    </Style>
+    <Style id="D">
+      <LineStyle>
+        <!-- green -->
+        <color>ff336600</color>
+        <width>3</width>
+      </LineStyle>
+    </Style>
+    <Style id="F">
+      <LineStyle>
+        <!-- magenta -->
+        <color>ffff00ff</color>
+        <width>2</width>
+      </LineStyle>
+    </Style>
+    <Style id="H">
+      <LineStyle>
+        <!-- purple -->
+        <color>ffff00a0</color>
+        <width>3</width>
+      </LineStyle>
+    </Style>
+    <!-- end of headers -->
+    <name>Tracks</name>
+    <description>A list of tracks</description>
+    <visibility>1</visibility>
+    <open>0</open>
+    <!-- end of header file -->

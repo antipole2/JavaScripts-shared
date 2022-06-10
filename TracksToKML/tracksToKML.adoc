@@ -1,0 +1,54 @@
+For many years I have published tracks of our cruising as .kml GooglMaps tracks.
+Until now the process of exporting the latest few leg tracks as .gpx files, converting the file to .kml and then going through a series of grep edits to convert them to my chosen style (using BBEdit on a Mac).  I then had to spice the latest tracks into the online .kml file and fix up the stopping place at the join.  This has been tedious and error prone.
+
+This season, I am using a new process, using a script for the JavaScript plugin, that does the whole task automatically with one click. It is a huge improvement and I share it here in case others find it useful.
+
+The presentation of the resultant track is my own preference but can easily be modified according to taste.  I show each stopping point as an icon of the appropriate mooring type (anchor, buoy or bollard).  Clicking on it shows the arrival and departure date time.  Each leg is a different colour from the previous one and clicking on it reveals the leg name.
+
+All tracks from previous cruises have a tag #A (for archived) in the track name and are ignored.
+At present, it is not possible for a plugin to identify that a track is in a layer.  I have tracks from certain previous cruises in a layer.  I tag these with 'Layer' in their name and these are ignored.
+
+I give each track a suitable name, e.g. 2022-05-27 Mevagissey to Marizion
+I set the From and To track attributes accordingly, e.g.
+		In the From field: Mevagissey #buoy
+		In the To field:   Marizion #anchor
+		
+What the script does
+
+1 Reads the tracks, ignoring any with a #A or #Layer tag in its name
+2 Sorts the tracks by start time (deduced from the time-stamp of the first trackpoint)
+3 Checks that the position of the first trackpoint is close to (configurable) the last trackpoint of the previous leg and that the mooring types match.
+If the distance is greater than that configured, it is considered a break and separate end and start marks are created.
+The script first copies in a .kml header section containing style definitions then generates the .kml for the series of legs and the stopping marks and finally adds a .kml tail.
+
+The resulting .kml file can be uploaded to my sailing blog site using any suitable FTP utility (I use Cyberduck on my Mac).  This file is referenced from a minimal .html file which services the URL to display the track.
+
+As the cruise develops, I rerun the script and it generates an updated file which includes the latest legs and which replaces the previous version.
+
+Between cruises, I run a simple script that adds the #A tag into the track name of any tracks not already so tagged.  Thus they will be excluded from the tracks of the next cruise.
+
+As an example, here is a link to our present cruise track - it will develop as our cruise progresses.
+
+I have added all the files to the JavaScript plugin shared scripts library here.
+
+How to use
+
+Create folder on your system
+Copy into that folder the Head.kml and Tail.kml files
+Load the tracksToKML.js script into the plugin
+Edit the folder definition within the script to match your folder location, editing
+const folder ="/Users/Tony/Documents/Marine/Tracks/";	// where files are
+
+
+Run the script.  If all is well, it will create a file Tracks.kml in your folder.
+You can upload this file to your web space.
+You will also need a .html file which will isplay the track in GooglMaps.
+ 
+You will find a pro forma file Tracks.html.
+You need to edit this to include your own GoogleMaps API key and to point it to your uploaded .kml file.
+
+Also included is the script archiveTracks.js
+This can be run at the end of a cruise to add the #A tag to all track names, thus excluding them from your next cruise's track.
+
+NB GoogleMaps caches the generated map.  If you update the .kml file, there may be a delay of a day or so before this is reflected in the displayed map.
+If you do not want to wait, you can change the names of both files and edit the address within the .html file.  This will cause the map to be regenerated.
