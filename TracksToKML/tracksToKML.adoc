@@ -11,10 +11,11 @@ All tracks from previous cruises have a tag #A (for archived) in the track name 
 At present, it is not possible for a plugin to identify that a track is in a layer.  I have tracks from certain previous cruises in a layer.  I tag these with 'Layer' in their name and these are also ignored.
 
 I give each track a suitable name, e.g. 2022-05-27 Mevagissey to Marizion
+
 I set the From and To track attributes accordingly, e.g.
 
-. In the From field: Mevagissey #buoy
-. In the To field:   Marizion #anchor
+• In the From field: Mevagissey #buoy
+• In the To field:   Marizion #anchor
 		
 == What the script does
 
@@ -22,7 +23,7 @@ I set the From and To track attributes accordingly, e.g.
 . Sorts the tracks by start time (deduced from the time-stamp of the first trackpoint)
 . Checks that the position of the first trackpoint is close to (configurable) the last trackpoint of the previous leg and that the mooring types match.
 If the distance is greater than that configured, it is considered a break and separate end and start marks are created.
-The script copies in a .kml header section containing style definitions then generates the .kml for the series of legs and the stopping marks and finally adds a .kml tail.
+The script copies in a .kml header section containing style definitions then inserts the .kml for the series of legs and the stopping marks and finally adds a .kml tail.
 
 The resulting .kml file can be uploaded to my sailing blog site using any suitable FTP utility (I use Cyberduck on my Mac).  This file is referenced from a minimal .html file which services the URL to display the track.
 
@@ -32,7 +33,7 @@ Between cruises, I run a simple script that adds the #A tag into the track name 
 
 As an example, here is link:https://blog.antipole.co.uk/blog/uploads/blog-charts/2022/Tracks.html[a link to our present cruise track.] - it will develop as our cruise progresses.
 
-I have added all the files to the JavaScript plugin shared scripts library here.
+link:https:../TracksToKML[You can find all the files here.]
 
 == How to use
 
@@ -52,9 +53,6 @@ You need to edit this to include your own GoogleMaps API key and to point it to 
 
 Also included is the script archiveTracks.js
 This can be run at the end of a cruise to add the #A tag to all track names, thus excluding them from your next cruise's track.
-
-link:https:../TracksToKML[You can find all the files here.]
-
 
 NB GoogleMaps caches the generated map.  If you update the .kml file, there may be a delay of a day or so before this is reflected in the displayed map.
 If you do not want to wait, you can change the names of both files and edit the address within the .html file.  This will cause the map to be regenerated.
