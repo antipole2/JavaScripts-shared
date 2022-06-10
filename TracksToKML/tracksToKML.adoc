@@ -31,7 +31,7 @@ As the cruise develops, I rerun the script and it generates an updated file whic
 
 Between cruises, I run a simple script that adds the #A tag into the track name of any tracks not already so tagged.  Thus they will be excluded from the tracks of the next cruise.
 
-As an example, here is link:https://blog.antipole.co.uk/blog/uploads/blog-charts/2022/Tracks.html[a link to our present cruise track.] - it will develop as our cruise progresses.
+As an example, here is link:https://blog.antipole.co.uk/blog/uploads/blog-charts/2022/Tracks.html[a link to our present cruise track.] It will develop as our cruise progresses.
 
 link:https:../TracksToKML[You can find all the files here.]
 
