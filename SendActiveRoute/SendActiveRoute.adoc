@@ -85,7 +85,6 @@ You can excercise the set up and familiarise yourself with it while away from yo
 • Use this address in iNavX in the instructions above
 
 You can drive the ship using a simulator.
-
 Using the JavaScript plugin, open an additional console via the Tools button.
 Load the driver.js script into this console and run it.
 You can, for example, set a compass course and speed.
