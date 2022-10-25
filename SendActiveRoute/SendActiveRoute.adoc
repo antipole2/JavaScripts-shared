@@ -105,8 +105,12 @@ Route 1 still exists withing iNavX but the routepoints A and C within it have th
 
 If you have inserted or appended routepoints, it is quite likely your route contains different routepoints wih the same name, such as NM001.
 This will confuse iNavX, whiich will wrongly use one waypoint multiple times.
-You need to make sure the routepoint names are unique.
-A good way of achieving this is to use the link:https:../Housekeeper/Housekeeper.adoc[Housekeeper script].
+
+The practical and easy solution to this is to resequence the routepoints by control-clicking on the route and selecting Resequence Waypoints...
+I have used this extensively.  I do this before starting on any route and have had no issues.
+
+Alternatively, you can make all routepoint names unique by using the link:https:../Housekeeper/Housekeeper.adoc[Housekeeper script].
+However, you would need to repeat this if you add new waypoints.
 ====
 
 == My network set up
