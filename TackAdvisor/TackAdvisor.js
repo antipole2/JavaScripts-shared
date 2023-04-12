@@ -4,6 +4,7 @@
 // v0.3 works with relative wind angle
 // v0.3.1 fix to ensure deletion of tack route on termination
 // v0.4 uses plugin v0.5 - much simplified script accesses routes directly
+// v0.5 adds option to publish tack waypoint and increses time between alert about no wind data
 
 // configuration
 repeatInterval = 5;	// seconds
@@ -17,6 +18,7 @@ displayDialogue = true;
 debug = false;
 simulate= false;
 routeName = "tackRoute";	// name of route to be created
+publishTackWP = true;	// send the tack point for display
 
 // Enduring variables
 var routeGUID = false;
@@ -34,7 +36,7 @@ routeDisplayDialog = [
 
 Position = require("Position");
 Waypoint = require("Waypoint");
-Route = require("Route");
+Route =    require("Route");
 hereWaypoint = new Waypoint;
 hereWaypoint.markName = "From";
 targetWaypoint = new Waypoint;
@@ -112,6 +114,9 @@ function update(){
 	if (!active){
 		try { OCPNdeleteRoute(tackRoute.GUID);}
 		catch(err){} 
+		if (publishTackWP){	// sending tack point - cannot remove it so park it somewhere out of view
+			OCPNpushNMEA("$JSWPT,00.00,00.00," + tackWaypoint.markName);
+			}
 		}
 	}
 
@@ -121,7 +126,7 @@ function updateWorks(){
 		if (windRetry-- > 0) return false;
 		alert(false);
 		alert("Not found valid wind data");
-		windRetry = windRetryMax;
+		windRetry = windRetryMax * 2;
 		return false;
 		}
 	else alert(false);
@@ -226,6 +231,9 @@ function updateWorks(){
 	catch (err) {
 		routeGUID = OCPNaddRoute(tackRoute);
 		tackRoute.GUID = routeGUID;
+		}
+	if (publishTackWP){ // send the tackpoint
+		OCPNpushNMEA("$JSWPT," + tackWaypoint.NMEA + "," + tackWaypoint.markName);
 		}
 
 	// 	now to display the outcome

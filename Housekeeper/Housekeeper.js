@@ -1,20 +1,22 @@
 // Waypoints and routes housekeeper v1.4
 // v1.3	Makes renaming unnamed routes consistant & better handles Goto routes
 // v1.4	Offers to assign icon to points without any icon + various improvements
-
+// v1.5	28 Mar 2023 Many improvements in information given and reliability
 
 // Options
-nearby = 0.01;	//two points this close in nm regarded as at same position
+nearby = 0.015;	//two points this close in nm regarded as at same position
 ignoreDuplicates = false;	// if duplicate guids found, warn, ignore and proceed else stop
+time = 1000;	// time (ms) to allow before extra for number of guids
+extraTime = 10;	// extra time (ms) per guids
 
 // Before making changes past here, read technical guide
-var log = false;	// if true, print log and diagnotics
 var doSaves = true;	// if false, OCPN will not actually be updated (for testing)
+var log = false;	// if true, print log and diagnotics
 
 // action definitions
-none = Symbol("None");
-update = Symbol("Update");
-remove = Symbol("Remove");
+const none = "None";
+const update = "Update";
+const remove = "Remove";
 
 caption = {type:"caption", value:"Housekeeper"};
 
@@ -83,7 +85,7 @@ Position = require("Position");
 // work starts here
 config = OCPNgetPluginConfig();
 version = config.versionMajor + config.versionMinor/10
-if (version < 0.5) throw("Housekeeper requires plugin v0.5 or later");
+if (version < 2.0) throw("Housekeeper requires plugin v2.0 or later");
 
 load();
 
@@ -100,7 +102,12 @@ function load(){	// loads data from OCPN
 	routes = [];
 	wpguids = OCPNgetWaypointGUIDs();
 
-	timeAlloc(1000 + wpguids.length);	// allow extra time according to number of guids
+	try {	// messageBox not available pre-v2
+		if (wpguids.length > 250) messageBox("You have a lot of waypoints\nSome operations may take a long while\nGive them time!");
+		}
+	catch(err){;}
+
+	timeAlloc(time + extraTime*wpguids.length);	// allow extra time according to number of guids
 
 	// look out for duplicate guids
 	wpguids.sort();
@@ -129,7 +136,7 @@ function load(){	// loads data from OCPN
 		"If this persists, please report.\n" +
 		"You can ignore the duplicates by setting 'ignoreDuplicates = true' in the script");
 
-	if (log) print("wpguids length: ", wpguids.length, "\n");
+	if (log) printBlue("wpguids length: ", wpguids.length, "\n");
 	if (wpguids.length > 0){
 		for (i = 0; i < wpguids.length; i++){
 			point =  OCPNgetSingleWaypoint(wpguids[i]);
@@ -147,7 +154,7 @@ function load(){	// loads data from OCPN
 			routes.push(route);
 			}
 		}
-	if (log) print("Finished loading\n");
+	if (log) printBlue("Finished loading\n");
 	}
 
 function analyse(){	// analyse what we have in OpenCPN
@@ -158,10 +165,12 @@ function analyse(){	// analyse what we have in OpenCPN
 	waypointsInRoute = [];
 	waypointsNotInRoute = [];
 	blankIconsIndex = [];
+	timeAlloc(time + extraTime*wpguids.length);	// allow extra time according to number of guids
+
 
 	if (log){
-		print(allpoints.length, " points\n");
-		print(routes.length, " routes\n");
+		printBlue(allpoints.length, " points\n");
+		printBlue(routes.length, " routes\n");
 		}
 
 	allpoints.sort(function(a, b){	// sort on mark names and put routepoints after waypoints with same name
@@ -171,7 +180,7 @@ function analyse(){	// analyse what we have in OpenCPN
 		if (b.isFreeStanding && !a.isFreeStanding) return 1;
 		return 0;
 		});
-	if (log) print("Sorted all points\n");
+	if (log) printBlue("Sorted all points\n");
 		
 	// check for and index unnamed waypoints
 	wpUnnamedIndex = [];		// unnamed waypoints
@@ -192,8 +201,8 @@ function analyse(){	// analyse what we have in OpenCPN
 			) removedRoutePointsIndex.push(i);		
 		}
 	if (log) {
-		print("wpUnnamedIndex: ", wpUnnamedIndex, "\n");
-		print("removedRoutePointsIndex: ", removedRoutePointsIndex, "\n");
+		printBlue("wpUnnamedIndex: ", wpUnnamedIndex, "\n");
+		printBlue("removedRoutePointsIndex: ", removedRoutePointsIndex, "\n");
 		}
 		
 	// look for duplicate waypoint names ignoring routepoints and build clusters
@@ -203,14 +212,14 @@ function analyse(){	// analyse what we have in OpenCPN
 		lastPoint = allpoints[i-1];
 		if ((thisPoint.markName == lastPoint.markName)
 			&& (thisPoint.isFreeStanding && lastPoint.isFreeStanding)
-			&& (thisPoint.routeCount == 0 && lastPoint.routeCount == 0)){
+			 /*&& (thisPoint.routeCount == 0 && lastPoint.routeCount == 0) */){
 			cluster = [];
 			cluster[0] = i-1; cluster[1] = i;
 			while (i < allpoints.length-1){	// check for yet another
 				nextPoint = allpoints[i+1];
 				if ((thisPoint.markName == nextPoint.markName)
 					&& nextPoint.isFreeStanding
-					&& (nextPoint.routeCount == 0)){
+					/* && (nextPoint.routeCount == 0)*/){
 					i++;
 					cluster.push(i);
 					}
@@ -221,7 +230,7 @@ function analyse(){	// analyse what we have in OpenCPN
 				}
 			}
 		}
-	if (log) print("waypointNameDuplicateClusters: ", waypointNameDuplicateClusters, "\n");
+	if (log) printBlue("waypointNameDuplicateClusters: ", waypointNameDuplicateClusters, "\n");
 	
 	// now for the routes
 	routes.sort(function(a, b){	// sort on route names
@@ -242,7 +251,7 @@ function analyse(){	// analyse what we have in OpenCPN
 			(route.action == none)
 			) rtGotoIndex.push(i);
 		}
-	if (log) print("rtUnnamedIndex: ", rtUnnamedIndex, "\n");
+	if (log) printBlue("rtUnnamedIndex: ", rtUnnamedIndex, "\n");
 
 	// look for duplicate route names and build clusters
 	routeNameDuplicateClusters = [];
@@ -263,7 +272,7 @@ function analyse(){	// analyse what we have in OpenCPN
 				}
 			}
 		}
-	if (log) print("routeNameDuplicateClusters:", routeNameDuplicateClusters, "\n");
+	if (log) printBlue("routeNameDuplicateClusters:", routeNameDuplicateClusters, "\n");
 
 	// any successive repeated routepoints
 	sucessiveRoutePointClusters = [];
@@ -283,7 +292,7 @@ function analyse(){	// analyse what we have in OpenCPN
 			sucessiveRoutePointClusters.push(cluster);	// if we formed a cluster, add it to array
 			}
 		}
-	if (log) print("sucessiveRoutePointClusters: ", sucessiveRoutePointClusters, "\n");
+	if (log) printBlue("sucessiveRoutePointClusters: ", sucessiveRoutePointClusters, "\n");
 
 	// now to add route usages to allpoints
 	for (r = 0; r < routes.length; r++){	// for each route
@@ -296,7 +305,7 @@ function analyse(){	// analyse what we have in OpenCPN
 			}
 		}
 
-	if (log) print("Route usage added\n");
+	if (log) printBlue("Route usage added\n");
 
 	locations = [];	// group marks by location
 	for (m = 0; m < allpoints.length; m++){
@@ -315,7 +324,7 @@ function analyse(){	// analyse what we have in OpenCPN
 		loc.position = mark.position;
 		loc.names.push(mark.markName);
 		loc.indexes.push(m);
-		if (mark.isFreeStanding){	// keep a separate record of free-standing waypiunts
+		if (mark.isFreeStanding){	// keep a separate record of free-standing waypoints
 			loc.wpNames.push(mark.markName);
 			loc.wpIndexes.push(m);
 			}
@@ -341,7 +350,7 @@ function analyse(){	// analyse what we have in OpenCPN
 			}
 		locations.push(loc);
 		}
-	if (log) print("Built ", locations.length, " locations\n");
+	if (log) printBlue("Built ", locations.length, " locations\n");
 
 
 	// we are not interested in any locations with only one mark - drop them
@@ -350,7 +359,7 @@ function analyse(){	// analyse what we have in OpenCPN
 			locations.splice(i, 1);	// remove it
 			}
 		}
-	if (log) print("Locations after thinning ", locations.length, "\n");
+	if (log) printBlue("Locations after thinning ", locations.length, "\n");
 
 	// classify the location clusters
 	for (i = locations.length-1; i >= 0; i--){
@@ -383,24 +392,24 @@ function analyse(){	// analyse what we have in OpenCPN
 			throw("analysis location classification logic error");
 			}
 		}
-	if (log) print("About to sort locations\n");
+	if (log) printBlue("About to sort locations\n");
 	locations.sort(function(a, b){	// sort on classification
 		if (b.classification.order < a.classification.order) return 1;
 		if (b.classification.order > a.classification.order) return -1;
 		return 0;
 		});
 	if (log) {
-		print("Locations classified\n");	
-		print("blankIconsIndex.length\t", blankIconsIndex.length, "\n");		
-		print("wpUnnamedIndex.length\t", wpUnnamedIndex.length, "\n");
-		print("wpOrphaned\t", wpOrphaned, "\n");
-		print("waypointNameDuplicateClusters.length\t", waypointNameDuplicateClusters.length, "\n");
-		print("removedRoutePointsIndex.length\t", removedRoutePointsIndex.length, "\n");
-		print("rtUnnamedIndex.length\t", rtUnnamedIndex.length, "\n");
-		print("rtGotoIndex.length\t", rtGotoIndex.length, "\n");
-		print("routeNameDuplicateClusters.length\t", routeNameDuplicateClusters.length, "\n");
-		print("sucessiveRoutePointClusters.length\t", sucessiveRoutePointClusters.length, "\n");
-		print("locations.length\t", locations.length, "\n");
+		printBlue("Locations classified\n");	
+		printBlue("blankIconsIndex.length\t", blankIconsIndex.length, "\n");		
+		printBlue("wpUnnamedIndex.length\t", wpUnnamedIndex.length, "\n");
+		printBlue("wpOrphaned\t", wpOrphaned, "\n");
+		printBlue("waypointNameDuplicateClusters.length\t", waypointNameDuplicateClusters.length, "\n");
+		printBlue("removedRoutePointsIndex.length\t", removedRoutePointsIndex.length, "\n");
+		printBlue("rtUnnamedIndex.length\t", rtUnnamedIndex.length, "\n");
+		printBlue("rtGotoIndex.length\t", rtGotoIndex.length, "\n");
+		printBlue("routeNameDuplicateClusters.length\t", routeNameDuplicateClusters.length, "\n");
+		printBlue("sucessiveRoutePointClusters.length\t", sucessiveRoutePointClusters.length, "\n");
+		printBlue("locations.length\t", locations.length, "\n");
 		}
 	}
 
@@ -554,6 +563,21 @@ function doNaming(dialogue){
 			}
 		return false;
 		}
+	function uniquifyWp(name){	// ensures wp name is unique
+		while (wpInUse(name)){
+			// look for numerical suffix after '_'
+			usi = name.lastIndexOf("_");;
+			if (usi < 0) name += "_1";
+			else {
+				front = name.substr(0,usi);
+				suffix = name.substr(usi+1);
+				if (suffix == NaN) suffix += "_1";
+				else suffix = parseInt(suffix) + 1;
+				name = front + "_" + suffix;
+				}
+			}
+		return name;
+		}
 	button = dialogue[dialogue.length-1].label;
 	if (button == buttonQuit) stopScript();
 	else if (button == buttonSkip) whatToDoB("");
@@ -614,20 +638,29 @@ function doNaming(dialogue){
 		print("\n");
 		while (waypointNameDuplicateClusters.length > 0){
 			cluster = waypointNameDuplicateClusters.shift();
-			suffix = 1;
 			name = allpoints[cluster[0]].markName;
-			for (i = 0; i < cluster.length; i++){
-				newName = name + "_" + suffix;
+//			if (log) printBlue("cluster: ", cluster, " cluster[0].markName: ", name, "\n");
+			for (i = 1; i < cluster.length; i++){
+				newName = uniquifyWp(allpoints[cluster[i]].markName);
+				if (log) printBlue("i: ", i, "\tname: ", name, "\tnewName: ", newName, "\n");
+				if (newName != name){
+					allpoints[cluster[i]].markName = newName;
+/*
+				if (suffix > 0) newName = name + "_" + suffix;
+				else newName = name;
 				while (wpInUse(newName)){
 					newName = name + "_" + ++suffix;
 					}
 				// have unique name
 				allpoints[cluster[i]].markName = newName;
-				allpoints[cluster[i]].action = update;
-				changes++;
-				print("Waypoint '", name, "' to be renamed '", newName, "'\n");
+*/
+					allpoints[cluster[i]].action = update;
+					changes++;
+					print("Waypoint '", name, "' to be renamed '", newName, "'\n");
+					}
 				}
 			}
+		analyse();
 		whatToDoA();
 		}
 	else if (button == buttonRtDuplicates){	// make route names unique
@@ -695,12 +728,15 @@ function doNaming(dialogue){
 	}
 
 function whatToDoB(lastButton){
-	if (log) print("whatToDoB - totalToDo: ", totalToDo, "\tButton: ", lastButton, "\n");
+	if (log) printBlue("whatToDoB - lastButton: ", lastButton, "\n");
 	if ((lastButton == buttonSkipAll) || (locations.length == 0)) saveDialogue();
 	else {
 		for (L = 0; L < locations.length; L++){
 			loc = locations[L];
 			ic = issuesCount();
+			if (log) {
+				printBlue("WhatToDoB starting on location ", L, " Classification ", loc.classification.order, "\n");
+				}
 			issueDisplay = {type: "text", value: ic + s(" issue", ic) + " outstanding"}; 
 			if (loc.classification.order == classifications.MW0.order){ // this location has only unused waypoints - could delete some
 				// dialogue can only handle maxPoints, so if more do in batches
@@ -752,7 +788,7 @@ function whatToDoB(lastButton){
 				hadAction = true;
 				return;
 				}
-			else if ((loc.classification.order == classifications.MW1.order) || (loc.classification.order == classifications.MWn)){
+			else if ((loc.classification.order == classifications.MW1.order) || (loc.classification.order == classifications.MWn.order)){
 				// multiple waypoints - select which to use
 				dialogue = [
 					caption,
@@ -825,7 +861,7 @@ function whatToDoB(lastButton){
 				hadAction = true;
 				return;
 				}
-			else throw("whatToDoB classication unexpected");
+			else throw("whatToDoB classication unexpected - order: " + loc.classification.order);
 			}
 		if (changes > 0) saveDialogue();
 		}
@@ -859,6 +895,8 @@ function deleteWaypoints(dialogue){
 				if (indexes[i] == true){
 					waypoint = allpoints[savedData.wpIndexes[i]];	// waypoint to be deleted
 					waypoint.action = remove;
+					allpoints[savedData.wpIndexes[i]].action = remove;
+					if (log) print("Poimt to remove: ", allpoints[savedData.wpIndexes[i]], "\n");
 					changes++;
 					print("Will delete waypoint '", waypoint.markName, "'\n");					
 					}
@@ -884,10 +922,12 @@ function shareWaypoint(dialogue){	// one true WP to be shared with RPs
 					route.waypoints[leg] = waypoint;
 					route.action = update;
 					changes++;
-					print("replacing mark ", padString("'"+ mark.markName + "'", 12) , " in leg ", padString(leg,3), " of '",route.name, "'\n");
+					print("by replacing mark ", padString("'"+ mark.markName + "'", 12) , " in leg ", padString(leg,3), " of '",route.name, "'\n");
 					}
 				}
-			if (mark.GUID != waypoint.GUID) mark.action = remove;
+			if (mark.GUID != waypoint.GUID) {
+				mark.action = remove;
+				}
 			}			
 		}
 	locations.splice(savedData.locationIndex, 1); // finished with this location		
@@ -896,7 +936,9 @@ function shareWaypoint(dialogue){	// one true WP to be shared with RPs
 
 function shareOneofSeveralWaypoints(dialogue){
 	button = dialogue[dialogue.length-1].label;
-	if (button == buttonShare){
+	if (button == buttonSkip) {a = 0;} // do nothing
+	else if (button == buttonSkipAll) locations.length = 1;// pretend this was the last
+	else if (button == buttonShare){
 		if (savedData.wpNames.length < 2) throw("shareWaypoint logic error 2");
 		selection = dialogue[dialogue.length-3].value;
 		for (i = 0; i < savedData.wpNames.length; i++){
@@ -917,15 +959,25 @@ function shareOneofSeveralWaypoints(dialogue){
 					route.waypoints[leg] = waypoint;
 					route.action = update;
 					changes++;
-					print("replacing ", type, " '"+ mark.markName + "' in leg ", padString(leg,3), " of '",route.name, "'\n");
+					print("by replacing ", type, " '"+ mark.markName + "' in leg ", padString(leg,3), " of '",route.name, "'\n");
 					}
 				}
-			if (waypoint.GUID != mark.GUID) mark.action = remove;
+			}
+		for (i = 0; i < savedData.wpNames.length; i++){
+			if (savedData.wpNames[i] != selection){
+				print("Waypoint '", allpoints[savedData.wpIndexes[i]].markName, "' will be removed\n");
+				allpoints[savedData.wpIndexes[i]].action = remove;
+				changes++;
+				}
 			}
 		if (changes == changesBefore){
 			printOrange("No changes needed - consider deleting waypoint(s) ");
 			for (m = 0; m < loc.marks.length; m++){
-				if (loc.marks[m].uses.length == 0) printOrange("'",loc.marks[m].markName, "' ");
+				if (loc.marks[m].uses.length == 0){
+					printOrange("'",loc.marks[m].markName, "' ");
+					loc.marks[m].action = remove;
+					changes++;
+					}
 				}
 			print("\n");
 			}
@@ -937,23 +989,51 @@ function shareOneofSeveralWaypoints(dialogue){
 function shareOneofSeveralRoutepoints(dialogue){
 	alert(false);
 	button = dialogue[dialogue.length-1].label;
-	toDo = 0;
-	if (button == buttonShareAll) toDo = savedData.ahead + 1;
-	else if (button == buttonShareOne)  toDo = 1;
-	while (toDo--){
+	if (log) printBlue("shareOneofSeveralRoutepoints entered with button: ", button, "\n");
+	if (button == buttonSkip){
+		locations.splice(savedData.locationIndex, 1); // finished with this location
+		whatToDoB(button);
+		return;
+		}
+	else if (button == buttonSkipAll){
+		locations.length = 0;
+		whatToDoB(button);
+		return;
+		}		
+	if (button == buttonShareAll){
+		toDo = savedData.ahead + 1;
+		index= 0;
+		}
+	else if (button == buttonShare){
+		spinner = dialogue[dialogue.length-3];
+		if (spinner.type != "spinner") throw("Program erorr in shareOneofSeveralRoutepoints");
+		index = spinner.value-1; 	// selecting one
+		printBlue("Spinner value: ", index, "\n");
+		toDo = 1;
+		}
+	else if (button == buttonShareOne){
+		index = 0;
+		toDo = 1;
+		}
+	if (log) printBlue("toDo: ", toDo, "\n");
+	while (toDo-- > 0){
 		loc = locations[savedData.locationIndex];
-		point = loc.marks[0];	// use first point
-		print("Will share routepoint '", point.markName, "'\n");
-		for (m = 1; m < loc.marks.length; m++){
+		useMark = loc.marks[index];
+		leg = useMark.uses[0].leg;
+		route = routes[useMark.uses[0].route];
+		print("Will share routepoint '", useMark.markName, "' in leg ", padString(leg,3), " of '",route.name,"'\n");
+		for (m = 0; m < loc.marks.length; m++){
+			if (m == index) continue;
 			mark = loc.marks[m];
+
 			for (u = 0; u < mark.uses.length; u++){
 				route = routes[mark.uses[u].route];
 				leg = mark.uses[u].leg;
-				route.waypoints[leg] = point;
+				route.waypoints[leg] = useMark;
 				route.action = update;
 				changes++;
-				print("replacing routepoint '", mark.markName, "' in leg ", padString(leg,3), " of '",route.name, "'\n");				
-				}
+				print("by replacing routepoint '", mark.markName, "' in leg ", padString(leg,3), " of '",route.name, "'\n");				
+				}	
 			}
 		locations.splice(savedData.locationIndex, 1); // finished with this location
 		}
@@ -978,15 +1058,15 @@ function saveDialogue(){
 
 function doSave(dialogue){
 	alert(false);
-	changes = 0;
 	button = dialogue[dialogue.length-1].label;
 	if (button == buttonQuit) stopScript("No changes saved");
 	else if (!dialogue[2].value){	
 		alert("You must tick the box");
-		save();
+		saveDialogue(dialogue);
 		return;
 		}
 	else {
+		changes = 0;
 		doneSave = false;
 		for (i = 0; i < routes.length; i++){	// do routes before points !
 			route = routes[i];
@@ -1006,17 +1086,18 @@ function doSave(dialogue){
 			if (waypoint.isFreeStanding) type = "waypoint";
 			else type = "routepoint";
 			if (waypoint.action == remove){
+				success = true;
 				if (doSaves){
 					// removing route may have already removed point, so...
-					success = true;
 					try{ OCPNdeleteSingleWaypoint(waypoint.GUID);}
 					catch(err){
+						if (log) printBlue(waypoint.markName, " already removed\n");
 						success = false;
 						}
-					if (success) {
-						print("Deleted ", type, "\t'", waypoint.markName, "'\n");
-						changes++;
-						}
+					}
+				if (success) {
+					print("Deleted ", type, "\t'", waypoint.markName, "'\n");
+					changes++;
 					}
 				}
 			else if (waypoint.action == update){

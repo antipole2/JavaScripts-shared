@@ -3,6 +3,8 @@
 // V2.0 - major rewrite to utilise latest plugin capabilities - much simplified
 // V2.01 - fixed error crept in to RMB sentence
 // V3.0 - major rewrite to take advantage of OpenCPN v5.6 & JavaScript plugin v0.5
+// V3.1 - no active waypoint alert displayed only once
+// V3.2 - checks for no route name and drops nasty chars in route and mark names
 
 const repeatInterval = 15;		// repeat after this number of seconds
 
@@ -10,6 +12,7 @@ const repeatInterval = 15;		// repeat after this number of seconds
 var debug = false;			// for debug prints
 var log = false;				// log output
 var alerts = true;			// diplay advisory alerts
+var noAWPalerted = false;		// Have already displayed no active waypoint alert
 const prefix = "$NV";		// NMEA identifier
 var activeWaypointGUID = false;
 var lastActiveWaypointGUID = false;
@@ -32,8 +35,11 @@ var workingPosition = new Position();
 
 if (alerts) alert("SendActiveRoute active\n");
 OCPNonNMEAsentence(processNMEA);  	// start processing NMEA sentences			
-listenOut();
-consoleHide();				// start listening
+listenOut();	// start listening
+if (!debug) {
+	if (version >= 2) consolePark();
+	else consoleHide();
+	}
 
 function listenOut(){
 	if (debug) print("Listening out\n");
@@ -44,10 +50,18 @@ function listenOut(){
 		if (!activeWaypointGUID) throw("Logic error - no activeWaypointGUID");
 		activeWaypoint = OCPNgetSingleWaypoint(activeWaypointGUID);
 		route = OCPNgetRoute(activeRouteGUID);
+		route.name = clean(route.name);
+		if (route.name.length == 0){	// empty route name
+			alert(false);
+			alert("Route has empty name");
+			onSeconds(listenOut, repeatInterval);	 // listen out for something better
+			return;
+			}
 		if (activeWaypointGUID != lastActiveWaypointGUID){ // active waypoint has changed
 			if (alerts){
 				alert(false);
 				alert("Active routepoint now ", activeWaypoint.markName, "\n");
+				noAWPalerted = false;
 				}
 			lastRoutePoint = activeRoutePoint;	// remember what it was
 			}
@@ -65,6 +79,7 @@ function listenOut(){
 			} 
 		for (p = 0; p < route.waypoints.length; p++){	// for each point in route
 			point = route.waypoints[p];
+			point.markName = clean(point.markName);
 			workingPosition.latitude = point.position.latitude;
 			workingPosition.longitude = point.position.longitude;
 			sentence = prefix + "WPL" + "," + workingPosition.NMEA + "," + point.markName;
@@ -114,12 +129,16 @@ function listenOut(){
 	else {	// no active route/waypoint
 		if (alerts){
 			alert(false);
-			alert("No active routepoint\n");
+			if (!noAWPalerted){
+				noAWPalerted = true;
+				alert("No active routepoint\n");
+				}
 			}
 		activeWaypointGUID = false;
 		lastActiveWaypointGUID = false;
 		startFrom = false;
 		}
+	if (debug) printBlue("activeRouteGUID: ", activeRouteGUID, "\n");
 	onSeconds(listenOut, repeatInterval);	 // Do it again
 	}
 
@@ -133,6 +152,7 @@ function processNMEA(input){	// we need to un-abbreviate the routepoint name in 
 	if(input.OK && activeRouteGUID){ // only bother if have active route
 		switch (input.value.slice(0,6)) {
 		case "$ECRMB":
+			if (debug) printBlue("Received NMEA: ", input.value, "\n");
 			{
 			if (nextRoutePoint == "") break;	// we cannot act until we have this
 			splut = input.value.split(",", 20);
@@ -157,6 +177,7 @@ function processNMEA(input){	// we need to un-abbreviate the routepoint name in 
 			}
 		case "$ECAPB":
 			{
+			if (debug) printBlue("Received NMEA: ", input.value, "\n");
 			// print("APB received\n");
 			splut = input.value.split(",", 20);
 			splut[0] = prefix + "APB";		// give it our branding
@@ -170,4 +191,15 @@ function processNMEA(input){	// we need to un-abbreviate the routepoint name in 
 			}
 		}
 	OCPNonNMEAsentence(processNMEA); // Listen out for another NMEA sentence
+	}
+
+function clean(input) { // purge input string of troublesome characters
+	nasties = ",()"; //chars to drop
+	output = "";
+	for (i = 0; i < input.length; i++){
+		ch = input[i];
+		found = nasties.indexOf(ch);
+		if (found < 0) output += ch;
+		}
+	return output;
 	}
