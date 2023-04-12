@@ -58,6 +58,11 @@ Adapt to your choice.
 |Set waypoints within a chosen area visible and hide others.
 |link:https:../SelectWaypoints/SelectWaypoints.adoc[Fuller description and instructions]
 |Antipole
+
+|link:https:../TracksToKML/tracksToKML.js[TracksToKML.js]
+|Export tracks to a .kml file.
+|link:https:../TracksToKML/tracksToKML.adoc[Fuller description and instructions]
+|Antipole
 |===
 
 === Issues
