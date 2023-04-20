@@ -31,6 +31,22 @@ Changing the visibility of a route is only available in OpenCPN 5.8 and later.
 
 It is not presently possible to change the visibility of a track because of limitations in the plugin API.
 ===========
+.Time limits
+[NOTE]
+===========
+If you have a large number of waypoints/routepoints, the script could take significant time to run.
+The script sets a fresh time limit for each phase of its work, depending on the number of points you have.  This amount is set with the _timePerPoint_ variable near the start of the script.
+The most time-consuming bit is updating visibility or names within OpenCPN and the script only performs these updates on an as-needed basis.  So if the script does run out of time, you can probably repeat the operation without increasing the limit and it will continue from where it got to before.
+===========
+
+== Off-loading objects
+
+This utility ca be used to off-load objects for particular areas such as a cruising ground you ar enot visiting at present.  The objects are exported into a .gpx file and can then b deleted from OpenCPN.  If you return to the area, the objects can be imported back into OpenCPN.
+
+[TIP]
+==========
+Before unloading ojects, I strongly recommend running the https://github.com/antipole2/JavaScripts-shared/blob/main/Housekeeper/Housekeeper.adoc[Housekeeper script] to resolve any issues with your objects, such as multiple points at the same location.
+==========
 
 It is an alternative to the ShipDriver plugin but does not use steering to gradually change course.
 
