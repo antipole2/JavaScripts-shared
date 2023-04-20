@@ -1,11 +1,19 @@
-= SelectWaypoints
+= PointInPolygon function
 
-https://github.com/antipole2/JavaScripts-shared/blob/b1e9e6e67cb5f04195a8655769257946b97d2aad/SelectWaypoints/SelectWayoints.js[SelectWaypoints.js]
+https://github.com/antipole2/JavaScripts-shared/blob/373ad6dec5e7ae6672437c16b16ac9f7cbcbfe25/PointInPolygon/pointInPolygon.js[isPointInPolygon.js]
 
-Select waypoints within a rectangle by setting their visibility.
+JavaScript function to test whether a position is within a boundary polygon.
 
-Create two waypoints with the exact names 'TopLeft' and 'BottomRight' and place BottomRight southeast of TopRight.
+The script can be copied into your own script or loaded from a file.
 
-Now run the script.  After checks, it will set as visible all waypoints within the selected rectangle and will hide all others.
+[source,javascript]
+----
+isPointInPolygon = require("~/myScripts/pointInPoligon.js");
 
-You can drag the corner markers where you will and run the script again.
+isPointInPolygon({latitude:60, longitude:-1}, polygon);
+----
+returns true or false.
+
+The polygon is an array of positions.  If the last is not the same as the first (a closed polygon) it assumes a connection between the first and last points.  The polygon can be any shape, even crossing in a figure of eight.
+
+The position is compatible with that used in the JavaScript plugin and the polygon is as used in the array of points in a route.
