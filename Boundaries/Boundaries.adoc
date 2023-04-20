@@ -24,6 +24,7 @@ _Make visible_ makes the objects visible and makes all objects not selected invi
 
 _Prefix name_ adds a prefix (e.g. +UK-S:+ to the selected objects name and removes any matching prefix from unselcted objects.
 
+.Restrictions
 [NOTE]
 ===========
 Changing the visibility of a route is only available in OpenCPN 5.8 and later.
