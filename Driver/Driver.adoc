@@ -1,6 +1,6 @@
 = Driver
 
-https://github.com/antipole2/JavaScripts-shared/blob/main/Driver/Driver.js[Driver.s]
+https://github.com/antipole2/JavaScripts-shared/blob/main/Driver/Driver.js[Driver.js]
 
 This is a simulator that can be used to drive the ship in the absence of actual NMEA inputs.
 
