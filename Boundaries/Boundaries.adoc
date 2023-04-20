@@ -53,7 +53,7 @@ Before unloading ojects, I strongly recommend running the https://github.com/ant
 === Saving the objects to a .gpx file
 To export the objects using the Route & Mark Manager, you first need to make them visible and all other objects invisible.
 
-==== Makeing tracks visible
+==== Making tracks visible
 As it is not possible at present for the script to change track visibility, you need instead to add a prefix to the track name.
 In the tracks tab of the Route & Mark Manager you can then use the filter to show just those tracks.
 Then select _Show all tracks_.  This makes these tracks visible and others invisible.
