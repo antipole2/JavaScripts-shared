@@ -2,7 +2,9 @@ timePerPoint = 50;	// time allowance in ms
 trace = false;
 boundaries = [];
 boundaryNames = [];
-//positions = [];	// to be array of positions of points
+waypointGuidsTodo = [];	// to be array of selected waypoints
+routeGuidsTodo = [];	// to be array of selected routes
+trackGuidsTodo = [];	// to be array of selected routes
 inRoutes = 0;	// number of selected waypoints used in a route
 
 onExit(cleanup);
@@ -33,6 +35,8 @@ whatToDoIndex = dl.length;
 dl.push({type:"tickList", label:"What to do with them", value:["List", "Make visible", "Prefix name"]});
 prefixIndex = dl.length;
 dl.push({type:"field", label:"Prefix to use", suffix:": rest of name"});
+deleteIndex = dl.length;
+dl.push({type:"tick", value:["Delete selected objects"]});
 dl.push({type:"button", label:["Cancel", "*Go!"]});
 
 onDialogue(action, dl);
@@ -68,7 +72,9 @@ function action(response){
 	list = (ticked.indexOf("List") >= 0) ? true : false;
 	makeVisible = (ticked.indexOf("Make visible") >= 0) ? true : false;
 	prefix = (ticked.indexOf("Prefix name") >= 0) ? true : false;
-	if (!(list || makeVisible || prefix)) throw("No action chosen");
+	deleting = response[deleteIndex].value;
+	if (deleting && (makeVisible || prefix)) throw("Making visible or prefixing and deleting does not make sense");
+	if (!(list || makeVisible || prefix || deleting)) throw("No action chosen");
 	if (prefix){
 		prefixString = response[prefixIndex].value.trim();
 		if (trace) printBlue("Prefix is '", prefixString, "'\n");
@@ -93,7 +99,10 @@ function action(response){
 				selected = inside;
 				}
 			else selected = !inside;
-			if (selected) showing++;
+			if (selected){
+				waypointGuidsTodo.push(wp.GUID);
+				showing++;
+				}
 			if (selected && (wp.routeCount > 0))inRoutes++;
 			if (list && selected){
 				print("Waypoint\t", wp.markName, "\n");
@@ -151,7 +160,10 @@ function action(response){
 				}
 			if (pointIn && pointOut) selected = crossing;
 			else selected = (pointIn == inside);
-			if (selected) showing++;
+			if (selected){
+				routeGuidsTodo.push(route.GUID);
+				showing++;
+				}
 			if (list && selected){
 				print("Route\t", route.name, "\n");
 				}
@@ -193,7 +205,7 @@ function action(response){
 				}
 			}
 		print(showing, plural(" route", showing), " selected\n");
-		printOrange("If removing routes, you will probably want to exclude the bounaries\n");
+		printOrange("If removing routes, you will probably want to exclude the boundaries\n");
 		timeAlloc(oldTime);	
 		}
 
@@ -219,7 +231,10 @@ function action(response){
 				}
 			if (pointIn && pointOut) selected = crossing;
 			else selected = (pointIn == inside);
-			if (selected) showing++;
+			if (selected){
+				trackGuidsTodo.push(track.GUID);
+				showing++;
+				}
 			if (list && selected){
 				print("Track\t", track.name, "\n");
 				}
@@ -263,6 +278,48 @@ function action(response){
 		print(showing, plural(" track", showing), " selected\n");
 		timeAlloc(oldTime);	
 		}
+
+	if (deleting){
+		if (trace) printBlue("Will delete ", waypointGuidsTodo.length, " waypoints\t", routeGuidsTodo.length, " routes\t", trackGuidsTodo.length, " tracks\n");
+		num = trackGuidsTodo.length;
+		if (num > 0){
+			yes = messageBox("Are you sure you want to delete " + num + " selected " + plural("track", num) + " from OpenCPN?", "YesNo");
+			if (yes == 2){
+				for (i = 0; i < num; i++) OCPNdeleteTrack(trackGuidsTodo[i]);
+				}
+			}
+		num = routeGuidsTodo.length;
+		if (num > 0){
+			yes = messageBox("Are you sure you want to delete " + num + " selected " + plural("route", num) + " from OpenCPN?", "YesNo");
+			if (yes == 2){
+				for (i = 0; i < num; i++) OCPNdeleteRoute(routeGuidsTodo[i]);
+				}
+			}
+		num = waypointGuidsTodo.length;
+		if (num > 0){
+			yes = messageBox("Are you sure you want to delete " + num + " selected " + plural("waypoint", num) + " from OpenCPN?", "YesNo");
+			if (yes == 2){
+				routeGuids = OCPNgetRouteGUIDs();
+				for (i = 0; i < num; i++){
+					waypoint = OCPNgetSingleWaypoint(waypointGuidsTodo[i]);
+					rc = waypoint.routeCount;
+					if (rc == 0) OCPNdeleteSingleWaypoint(waypoint.GUID);
+					else {	// waypoint still used by route(s)
+						print("Waypoint '", waypoint.markName, "' in use by ", rc, plural(" route", rc), " and will not be deleted\n");
+						for (r = 0; r < routeGuids.length; r++){
+							route = OCPNgetRoute(routeGuids[r]);
+							for (p = 0; p < route.waypoints.length; p++){
+								if (route.waypoints[p].markName == waypoint.markName){
+									print("In route '", ((route.name == "")?"(unnamed)":route.name), "'\n");
+									break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		} 
 
 	OCPNrefreshCanvas();
 	}
