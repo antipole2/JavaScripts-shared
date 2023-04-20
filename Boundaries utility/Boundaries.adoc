@@ -1,0 +1,19 @@
+= Driver
+
+https://github.com/antipole2/JavaScripts-shared/blob/main/Driver/Driver.js[Driver.s]
+
+This is a simulator that can be used to drive the ship in the absence of actual NMEA inputs.
+
+It is an alternative to the ShipDriver plugin but does not use steering to gradually change course.
+
+It generates GLL, VTG and WML NMEA sentences.  You could add others as required.
+
+You can set Speed Over Ground (SOG), Course Over Ground (COG), Wind angle and wind speed.
+
+Selecting *Compass course* will then drive the boat along the selected course.  The angle to the wind is displayed.
+Alternatively, you can instead specify an angle to the wind and select *Port tack* or *Starboard tack*.  It will then calculate the required COG.
+Selecting the opposite tack will tack the boat.
+
+After changing the parameters, you need to click on one of the buttons to put the chnages into effect. 
+
+TIP: Driver can be run in its own console and used, for example, to experiment with or test the TackAdvisor and SendActiveRoute scripts running in their own consoles.
