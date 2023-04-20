@@ -2,9 +2,9 @@
 
 https://github.com/antipole2/JavaScripts-shared/blob/main/Boundaries/boundary.js[boundary.js]
 
-This utility allows selection and manipulation of waypoints, routes and tracks according to whether they ar inside a chosen boundary.
+This utility allows selection and manipulation of waypoints, routes and tracks according to whether they are inside a chosen boundary.
 
-You create one or more boundaries using pseudo routes on OpenCPN.  A boundary must include the text 'boundary' in its name (case insensitive) and must share the first and last points.  If you have several boundaries, they may share routepoint borders.
+You create one or more boundaries using pseudo-routes in OpenCPN.  A boundary must include the text 'boundary' in its name (case insensitive) and must share its first and last points.  If you have several boundaries, they may share routepoint borders.
 
 The script searches for boundaries and displays a dialogue, such as this example:
 
@@ -22,7 +22,9 @@ _List_  lists their names in the script output pane.
 
 _Make visible_ makes the objects visible and makes all objects not selected invisible.
 
-_Prefix name_ adds a prefix (e.g. +UK-S:+ to the selected objects name and removes any matching prefix from unselcted objects.
+_Prefix name_ adds a prefix (e.g. +UK-S:+ to the selected objects name and removes any matching prefix from unselected objects.
+
+_Delete_ deletes the selected objects.
 
 .Restrictions
 [NOTE]
@@ -41,23 +43,28 @@ The most time-consuming bit is updating visibility or names within OpenCPN and t
 
 == Off-loading objects
 
-This utility ca be used to off-load objects for particular areas such as a cruising ground you ar enot visiting at present.  The objects are exported into a .gpx file and can then b deleted from OpenCPN.  If you return to the area, the objects can be imported back into OpenCPN.
+This utility ca be used to off-load objects for particular areas such as a cruising ground you are not visiting at present.  The objects are exported into a .gpx file and can then be deleted from OpenCPN.  If you return to the area, the objects can be imported back into OpenCPN.
 
 [TIP]
 ==========
 Before unloading ojects, I strongly recommend running the https://github.com/antipole2/JavaScripts-shared/blob/main/Housekeeper/Housekeeper.adoc[Housekeeper script] to resolve any issues with your objects, such as multiple points at the same location.
 ==========
 
-It is an alternative to the ShipDriver plugin but does not use steering to gradually change course.
+=== Saving the objects to a .gpx file
+To export the objects using the Route & Mark Manager, you first need to make them visible and all other objects invisible.
 
-It generates GLL, VTG and WML NMEA sentences.  You could add others as required.
+==== Making tracks visible
+As it is not possible at present for the script to change track visibility, you need instead to add a prefix to the track name.
+In the tracks tab of the Route & Mark Manager you can then use the filter to show just those tracks.
+Then select _Show all tracks_.  This makes these tracks visible and others invisible.
 
-You can set Speed Over Ground (SOG), Course Over Ground (COG), Wind angle and wind speed.
+With all the desired waypoints, routes and tracks visible and no others visible, you can use _Export All Visible..._ to save to a single .gpx file.
 
-Selecting *Compass course* will then drive the boat along the selected course.  The angle to the wind is displayed.
-Alternatively, you can instead specify an angle to the wind and select *Port tack* or *Starboard tack*.  It will then calculate the required COG.
-Selecting the opposite tack will tack the boat.
+=== Deleting the objects
+You can now run the script again with the same boundary and the _Delete_ action selected.
+The script deletes routes before waypoints and checks that the waypoints to be deleted are not still used by any remaining routes.  If they are still in use, they are not deleted and the routes are listed. 
 
-After changing the parameters, you need to click on one of the buttons to put the chnages into effect. 
-
-TIP: Driver can be run in its own console and used, for example, to experiment with or test the TackAdvisor and SendActiveRoute scripts running in their own consoles.
+[CAUTION]
+========
+While I belive this utility functions as described, it is up to you to make any necessary backups of .xml object files so you can recover from untoward results.
+========

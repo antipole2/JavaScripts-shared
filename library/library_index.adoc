@@ -49,6 +49,16 @@ Adapt to your choice.
 |link:https:../Housekeeper/Housekeeper.adoc[Fuller description and instructions]
 |Antipole
 
+|link:https:../Bondaries/boundary.js[boundary.js]
+|Select objects within a boundary and, optionally, offload them.
+|link:https:../Boundaries/Boundaries.adoc[Fuller description and instructions]
+|Antipole
+
+|link:https:../PointInPolygon/isPointInPolygon.js[isPointInPolygon.js]
+|Function to determine whether a position is inside a polygon.
+|link:https:../PointInPolygon/pointInPolygon.adoc[Fuller description and instructions]
+|Antipole
+
 |link:https:../NGAutility/NGA.js[NGA.js]
 |Provides a form to enter NGA navigational warnings and display them as waypoints or routes.  It also manages expired entries.
 |link:https:../NGAutility/NGA.adoc[Fuller description and instructions]
