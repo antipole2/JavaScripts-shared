@@ -51,7 +51,7 @@ Adapt to your choice.
 
 |link:https:../Bondaries/boundary.js[boundary.js]
 |Select objects within a boundary and, optionally, offload them.
-|link:https:../Boundaries/boundary.adoc[Fuller description and instructions]
+|link:https:../Boundaries/Boundaries.adoc[Fuller description and instructions]
 |Antipole
 
 |link:https:../PointInPolygon/isPointInPolygon.js[isPointInPolygon.js]
