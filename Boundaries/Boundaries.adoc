@@ -43,11 +43,19 @@ The most time-consuming bit is updating visibility or names within OpenCPN and t
 
 == Off-loading objects
 
-This utility ca be used to off-load objects for particular areas such as a cruising ground you ar enot visiting at present.  The objects are exported into a .gpx file and can then b deleted from OpenCPN.  If you return to the area, the objects can be imported back into OpenCPN.
+This utility ca be used to off-load objects for particular areas such as a cruising ground you are not visiting at present.  The objects are exported into a .gpx file and can then be deleted from OpenCPN.  If you return to the area, the objects can be imported back into OpenCPN.
 
 [TIP]
 ==========
 Before unloading ojects, I strongly recommend running the https://github.com/antipole2/JavaScripts-shared/blob/main/Housekeeper/Housekeeper.adoc[Housekeeper script] to resolve any issues with your objects, such as multiple points at the same location.
 ==========
 
-You save objects to a .gpx file and delete them from OpenCPN using the Route and Mark Manager.
+=== Saving the objects to a .gpx file
+To export the objects using the Route & Mark Manager, you first need to make them visible and all other objects invisible.
+
+==== Makeing tracks visible
+As it is not possible at present for the script to change track visibility, you need instead to add a prefix to the track name.
+In the tracks tab of the Route & Mark Manager you can then use the filter to show just those tracks.
+Then select _Show all tracks_.  This makes these tracks visible and others invisible.
+
+With all the desired waypoints, routes and tracks visible and no others visible, you can use _Export All Visible..._ to save to a single .gpx file.
