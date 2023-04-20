@@ -24,6 +24,13 @@ _Make visible_ makes the objects visible and makes all objects not selected invi
 
 _Prefix name_ adds a prefix (e.g. +UK-S:+ to the selected objects name and removes any matching prefix from unselcted objects.
 
+[NOTE]
+===========
+Changing the visibility of a route is only available in OpenCPN 5.8 and later.
+
+It is not presently possible to change the visibility of a track because of limitations in the plugin API.
+===========
+
 It is an alternative to the ShipDriver plugin but does not use steering to gradually change course.
 
 It generates GLL, VTG and WML NMEA sentences.  You could add others as required.
