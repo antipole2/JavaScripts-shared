@@ -48,16 +48,4 @@ This utility ca be used to off-load objects for particular areas such as a cruis
 Before unloading ojects, I strongly recommend running the https://github.com/antipole2/JavaScripts-shared/blob/main/Housekeeper/Housekeeper.adoc[Housekeeper script] to resolve any issues with your objects, such as multiple points at the same location.
 ==========
 
-It is an alternative to the ShipDriver plugin but does not use steering to gradually change course.
-
-It generates GLL, VTG and WML NMEA sentences.  You could add others as required.
-
-You can set Speed Over Ground (SOG), Course Over Ground (COG), Wind angle and wind speed.
-
-Selecting *Compass course* will then drive the boat along the selected course.  The angle to the wind is displayed.
-Alternatively, you can instead specify an angle to the wind and select *Port tack* or *Starboard tack*.  It will then calculate the required COG.
-Selecting the opposite tack will tack the boat.
-
-After changing the parameters, you need to click on one of the buttons to put the chnages into effect. 
-
-TIP: Driver can be run in its own console and used, for example, to experiment with or test the TackAdvisor and SendActiveRoute scripts running in their own consoles.
+You save objects to a .gpx file and delete them from OpenCPN using the Route and Mark Manager.
