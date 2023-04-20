@@ -59,3 +59,12 @@ In the tracks tab of the Route & Mark Manager you can then use the filter to sho
 Then select _Show all tracks_.  This makes these tracks visible and others invisible.
 
 With all the desired waypoints, routes and tracks visible and no others visible, you can use _Export All Visible..._ to save to a single .gpx file.
+
+=== Deleting the objects
+You can now run the script again with the same boundary and the _Delete_ action selected.
+The script deletes routes before waypoints and checks that the waypoints to be deleted are not still used by any remaining routes.  If they are still in use, they are not deleted and the routes are listed. 
+
+[CAUTION]
+========
+While I belive this utility functions as described, it is up to you to make any necessary backups of .xml object files so you can recover from untoward results.
+========
