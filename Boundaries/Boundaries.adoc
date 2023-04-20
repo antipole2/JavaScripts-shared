@@ -22,7 +22,7 @@ _List_  lists their names in the script output pane.
 
 _Make visible_ makes the objects visible and makes all objects not selected invisible.
 
-_Prefix name_ adds a prefix (e.g. +UK-S:+ to the selected objects name and removes any matching prefix from unselcted objects.
+_Prefix name_ adds a prefix (e.g. +UK-S:+ to the selected objects name and removes any matching prefix from unselected objects.
 
 _Delete_ deletes the selected objects.
 
