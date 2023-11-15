@@ -17,6 +17,7 @@ var lastMooring;
 var output;	// output buffer
 
 guids = OCPNgetTrackGUIDs();
+timeAlloc(1000 + guids.length * 100);
 for (t = 0; t < guids.length; t++){
 	track = OCPNgetTrack(guids[t]);
 	if (track.name.match(/Layer/)) continue;
@@ -100,7 +101,7 @@ for (t = 0; t < tracks.length; t++){	// for each not archived track
 		if (nextMooring == null ) throw("Track '" + tracks[t+1].name + "' does not have valid mooring in 'from' (#buoy | #anchor | #bollard)");
 		nextMooring = nextMooring[0];
 		if (nextMooring != lastMooring){
-			printOrange("Warning: \n\tTrack '", tracks[t+1].name, "' start mooring ", nextMooring, "\n\tdiffers from end mooring of previous track '", track.name, " ", lastMooring, "\n");
+			printOrange("Warning: \n\tTrack '", tracks[t+1].name, "' start mooring ", nextMooring, "\n\tdiffers from end mooring of previous track '", track.name, " ", lastMooring, "'\n");
 			continuity = false;
 			}
 		}
