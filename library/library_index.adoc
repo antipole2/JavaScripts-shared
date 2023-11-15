@@ -73,6 +73,11 @@ Adapt to your choice.
 |Export tracks to a .kml file.
 |link:https:../TracksToKML/tracksToKML.adoc[Fuller description and instructions]
 |Antipole
+
+|link:https:../SignalK/ProcessSignalK.js[ProcessSignalK.js]
+|Illustration of processing SignalK input
+|
+|Antipole
 |===
 
 === Issues
