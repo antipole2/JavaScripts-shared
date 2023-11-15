@@ -19,7 +19,7 @@ function received(message){
 		case "GLL":
 			position = new Position(value);
 			print("Position at\t\t", timeStamp, " is\t", position.formatted, "\n");
-			break
+			break;
 		case "VTG":
 			cog = values[1].value;
 			sog = values[2].value;
@@ -29,8 +29,9 @@ function received(message){
 			hdt = values[0].value;
 			stw = values[1].value;
 			print("Through water at\t", timeStamp, " is\tHDT:", hdt, "\tSTW:", stw,  "\n");
+			break;
 		default:
-		}
+			}
 		}
 	OCPNonMessageName(received, "OCPN_CORE_SIGNALK");
 	};
