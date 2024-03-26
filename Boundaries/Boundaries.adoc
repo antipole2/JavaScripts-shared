@@ -66,5 +66,5 @@ The script deletes routes before waypoints and checks that the waypoints to be d
 
 [CAUTION]
 ========
-While I belive this utility functions as described, it is up to you to make any necessary backups of .xml object files so you can recover from untoward results.
+While I believe this utility functions as described, it is up to you to make any necessary backups of .xml object files so you can recover from untoward results.
 ========
