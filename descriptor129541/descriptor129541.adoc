@@ -1,9 +1,9 @@
 = NMEA2000 descriptor for PGN 129541 GPS Almanac Data
 
-This descriptor for NMEA2000 PGN 129541 includes greek characters that the JavaScript engine on Windows cannot handle.
+This descriptor for NMEA2000 PGN 129541 includes Greek characters that the JavaScript engine on Windows cannot handle.
 It has, therefore been omitted from the built-in library of descriptors.
 
-If you are not running on windows, you can use this as a custom descriptor.
+If you are not running on Windows, you can use this as a custom descriptor.
 
 To install this, copy the raw text of this file and paste it into your script so that it will create a variable `descriptor129541` being the descriptor object.
 
