@@ -81,7 +81,7 @@ Adapt to your choice.
 
 |link:https:../descriptor129541/descriptor129541.js[descriptor129541.js]
 |Custom NMEA2000 descriptor for PGN 129541 GPS Almanac Data
-|link:https:../descriptor129541/descriptor129541.adoc
+|link:https:../descriptor129541/descriptor129541.adoc[Fuller description and instructions]
 |Antipole
 |===
 
