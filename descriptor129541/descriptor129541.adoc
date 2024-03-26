@@ -3,20 +3,33 @@
 This descriptor for NMEA2000 PGN 129541 includes greek characters that the JavaScript engine on Windows cannot handle.
 It has, therefore been omitted from the built-in library of descriptors.
 
-If you are not running on windows, you can use this as a custom descriptor
+If you are not running on windows, you can use this as a custom descriptor.
+
+To install this, copy the raw text of this file, which starts
 
 https://github.com/antipole2/JavaScripts-shared/blob/main/descriptor129541/descriptor129541.js[descriptor129541.js]
 
-It is an alternative to the ShipDriver plugin but does not use steering to gradually change course.
+paste it into your scriot suchthat it will create a variable `descriptor129541` being the descriptor object.
+You can then supply this as the argument to the NMEA2000 constructor.  The returned object can be used to parse 129541 messages.
 
-It generates GLL, VTG and WML NMEA sentences.  You could add others as required.
+Example code
 
-You can set Speed Over Ground (SOG), Course Over Ground (COG), Wind angle and wind speed.
+```
+NMEA2000 = require("NMEA2000");
 
-Selecting *Compass course* will then drive the boat along the selected course.  The angle to the wind is displayed.
-Alternatively, you can instead specify an angle to the wind and select *Port tack* or *Starboard tack*.  It will then calculate the required COG.
-Selecting the opposite tack will tack the boat.
+descriptor129541 = {"PGN":129541,
+        "Id":"gpsAlmanacData",
+...
+<rest of pasted in descriptor>
+...                  
+    "Signed":false
+			}
+		]
+	};
 
-After changing the parameters, you need to click on one of the buttons to put the chnages into effect. 
+almanac = new NMEA2000(descriptor129541);
+print(almanac.description, "\n");
+```
 
-TIP: Driver can be run in its own console and used, for example, to experiment with or test the TackAdvisor and SendActiveRoute scripts running in their own consoles.
+The above script, when run, should print
+> GPS Almanac Data
