@@ -1,12 +1,12 @@
 = NMEA2000 descriptor for PGN 129541 GPS Almanac Data
 
-https://github.com/antipole2/JavaScripts-shared/blob/main/descriptor129541
-/descriptor129541.js[descriptor129541.js]
-
 This descriptor for NMEA2000 PGN 129541 includes greek characters that the JavaScript engine on Windows cannot handle.
 It has, therefore been omitted from the built-in library of descriptors.
 
 If you are not running on windows, you can use this as a custom descriptor
+
+https://github.com/antipole2/JavaScripts-shared/blob/main/descriptor129541
+/descriptor129541.js[descriptor129541.js]
 
 It is an alternative to the ShipDriver plugin but does not use steering to gradually change course.
 
