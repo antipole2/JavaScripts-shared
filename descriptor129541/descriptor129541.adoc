@@ -5,12 +5,11 @@ It has, therefore been omitted from the built-in library of descriptors.
 
 If you are not running on windows, you can use this as a custom descriptor.
 
-To install this, copy the raw text of this file, which starts
+To install this, copy the raw text of this file and paste it into your script so that it will create a variable `descriptor129541` being the descriptor object.
 
 https://github.com/antipole2/JavaScripts-shared/blob/main/descriptor129541/descriptor129541.js[descriptor129541.js]
 
-paste it into your scriot suchthat it will create a variable `descriptor129541` being the descriptor object.
-You can then supply this as the argument to the NMEA2000 constructor.  The returned object can be used to parse 129541 messages.
+You can then supply this as the custom descriptor to the NMEA2000 constructor.  The returned object can be used to parse 129541 messages.
 
 Example code
 
@@ -32,4 +31,5 @@ print(almanac.description, "\n");
 ```
 
 The above script, when run, should print
+
 > GPS Almanac Data
