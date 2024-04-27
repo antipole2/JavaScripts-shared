@@ -192,7 +192,7 @@ function buildRoute(){
 		else {
 			vector = OCPNgetVectorPP(positions[i-1],positions[i]);
 			distance += vector.distance;
-			vectorString = ("000" + vector.bearing.toFixed(0)).slice(-3) + String.fromCharCode(176) + " " + ("   " + vector.distance.toFixed(1)).slice(-4) + "nm";
+			vectorString = ("000" + vector.bearing.toFixed(0)).slice(-3) + "º" /* String.fromCharCode(176) */ + " " + ("   " + vector.distance.toFixed(1)).slice(-4) + "nm";
 			}
 		listString += (i + " " + vectorString + " " + padded + passingSide[i] + "\n");
 		}
