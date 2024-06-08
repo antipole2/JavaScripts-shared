@@ -95,7 +95,8 @@ Adapt to your choice.
 
 === Issues
 
-Please raise any issues with these scripts or their documentation using the https://github.com/antipole2/JavaScripts-shared/issues[Issues tab], including the script name in the issue title.
+If the script has its own repository, raise any issue as an issue on that repository.
+Otherwise raise any issues with these scripts or their documentation using the https://github.com/antipole2/JavaScripts-shared/issues[Issues tab], including the script name in the issue title.
 
 === Contributing to this library +
 If you have developed a script that you would like to contribute, please store it somewhere online.
