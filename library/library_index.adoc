@@ -1,7 +1,6 @@
 = OpenCPN JavaScripts library
 
 This library shares scripts you can use as-is, or modify for your own needs.
-They need at least v0.4 of the plugin.
 [cols="1,1,2,1"] 
 |===
 |Name |Description |Details/instructions |Author
