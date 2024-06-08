@@ -91,7 +91,7 @@ Please raise any issues with these scripts or their documentation using the http
 
 === Contributing to this library +
 If you have developed a script that you would like to contribute, please store it somewhere online.
-You can submit a request for it to be included in this library by raising an enhancement request on https://opencpn.org/flyspray/index.php?do=tasklist&project=97[Flyspray here].
+You can submit a request for it to be included in this library by starting a discussion https://github.com/antipole2/JavaScript_pi/discussions[here].
 Please include:
 
 * the link to your script
