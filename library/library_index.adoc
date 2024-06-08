@@ -5,6 +5,11 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |===
 |Name |Description |Details/instructions |Author
 
+|link:https://raw.githubusercontent.com/antipole2/PointUtility/main/pointUtility.js[PointUtility.js]
+|This script adds functionality for adding marks to OpenCPN.
+|link:https://github.com/antipole2/PointUtility[instructions]
+|Antipole
+
 |link:https:../SetWaypointScale.js[SetWaypointScale.js]
 |Simple script to select waypoints by icon name to display only at larger scale.
 As written, circle is always displayed and anything else (e.g. anchor) only at larger scale.
