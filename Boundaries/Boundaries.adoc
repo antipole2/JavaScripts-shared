@@ -2,7 +2,7 @@
 
 https://github.com/antipole2/JavaScripts-shared/blob/main/Boundaries/boundary.js[boundary.js]
 
-This utility allows selection and manipulation of waypoints, routes and tracks according to whether they are inside a chosen boundary.
+This utility allows the selection and manipulation of waypoints, routes and tracks according to whether they are inside a chosen boundary.
 
 You create one or more boundaries using pseudo-routes in OpenCPN.  A boundary must include the text 'boundary' in its name (case insensitive) and must share its first and last points.  If you have several boundaries, they may share routepoint borders.
 
