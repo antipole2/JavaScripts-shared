@@ -11,7 +11,7 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |Antipole
 
 |VDR2.js
-|VDR2 - an alternative to the VDR plugin
+|VDR2 - an alternative to the VDR plugin for recording
 |link:https://github.com/antipole2/VDR2[repository]
 |Antipole
 
