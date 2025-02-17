@@ -10,6 +10,11 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |link:https://github.com/antipole2/PointUtility[repository]
 |Antipole
 
+|Housekeeper.js
+|Examines your waypoints & routes for anomalies and offers to fix them.
+|link:https://github.com/antipole2/Housekeeper[respository with fuller description]
+|Antipole
+
 |VDR2.js
 |VDR2 - an alternative to the VDR plugin for recording
 |link:https://github.com/antipole2/VDR2[repository]
@@ -45,11 +50,6 @@ Adapt to your choice.
 |link:https://github.com/antipole2/JavaScripts-shared/blob/main/DuplicateCounter.js[DuplicateCounter.js]
 |Looks for routes or waypoints with duplicate names and reports the number of duplicates
 |
-|Antipole
-
-|Housekeeper.js
-|Examines your waypoints & routes for anomalies and offers to fix them.
-|link:https://github.com/antipole2/Housekeeper[respository with fuller description]
 |Antipole
 
 |link:https:../Boundaries/boundary.js[boundary.js]
