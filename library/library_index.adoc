@@ -52,12 +52,12 @@ Adapt to your choice.
 |link:https:../MessageNMEAsampling/MessageNMEAsampling.adoc[Fuller description and instructions]
 |Antipole
 
-|link:https:../Housekeeper/Housekeeper.js[Housekeeper.js]
-|Examines your waypoints & routes for anomolies and offers to fix them.
-|link:https:../Housekeeper/Housekeeper.adoc[Fuller description and instructions]
+|Housekeeper.js
+|Examines your waypoints & routes for anomalies and offers to fix them.
+|link:https://github.com/antipole2/Housekeeper[respository with fuller description]
 |Antipole
 
-|link:https:../Bondaries/boundary.js[boundary.js]
+|link:https:../Boundaries/boundary.js[boundary.js]
 |Select objects within a boundary and, optionally, offload them.
 |link:https:../Boundaries/Boundaries.adoc[Fuller description and instructions]
 |Antipole
