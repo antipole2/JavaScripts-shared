@@ -16,8 +16,8 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |Antipole
 
 |boundary.js
-|Select objects within a boundary and, optionally, offload them.
-|link:https://github.com/antipole2/Boundaries/tree/main[Fuller description and repository]
+|Select objects within a boundary and, optionally, work with them.
+|link:https://github.com/antipole2/Boundaries/tree/main[respository with fuller description]
 |Antipole
 
 |VDR2.js
