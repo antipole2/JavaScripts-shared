@@ -5,9 +5,9 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |===
 |Name |Description |Details/instructions |Author
 
-|link:https://raw.githubusercontent.com/antipole2/PointUtility/main/pointUtility.js[PointUtility.js]
+|PointUtility.js
 |This script adds functionality for adding marks to OpenCPN.
-|link:https://github.com/antipole2/PointUtility[instructions]
+|link:https://github.com/antipole2/PointUtility[repository]
 |Antipole
 
 |link:https://raw.githubusercontent.com/antipole2/VDR2/main/vdr2.js[VDR2.js]
