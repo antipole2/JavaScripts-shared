@@ -5,12 +5,12 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |===
 |Name |Description |Details/instructions |Author
 
-|PointUtility.js
+|pointUtility.js
 |This script adds functionality for adding marks to OpenCPN.
 |link:https://github.com/antipole2/PointUtility[repository]
 |Antipole
 
-|Housekeeper.js
+|housekeeper.js
 |Examines your waypoints & routes for anomalies and offers to fix them.
 |link:https://github.com/antipole2/Housekeeper[respository with fuller description]
 |Antipole
@@ -23,6 +23,11 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |VDR2.js
 |VDR2 - an alternative to the VDR plugin for recording
 |link:https://github.com/antipole2/VDR2[repository]
+|Antipole
+
+|AISrecord.js
+|Record AIS traffic movements, creating a separate file for each target replayable with VDR
+|link:https://github.com/antipole2/AISrecord[repository]
 |Antipole
 
 |link:https:../SetWaypointScale.js[SetWaypointScale.js]
