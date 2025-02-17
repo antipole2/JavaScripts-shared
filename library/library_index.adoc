@@ -47,11 +47,6 @@ Adapt to your choice.
 |
 |Antipole
 
-|link:https://raw.githubusercontent.com/antipole2/JavaScripts-shared/main/MessageNMEAsampling/MessageNMEAsampling.js[MessageNMEAsampling.js]
-|Monitors OpenCPN messages and counts NMEA sentences over a period and then reports what has been seen.
-|link:https:../MessageNMEAsampling/MessageNMEAsampling.adoc[Fuller description and instructions]
-|Antipole
-
 |Housekeeper.js
 |Examines your waypoints & routes for anomalies and offers to fix them.
 |link:https://github.com/antipole2/Housekeeper[respository with fuller description]
