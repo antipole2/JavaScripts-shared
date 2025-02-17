@@ -10,9 +10,9 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |link:https://github.com/antipole2/PointUtility[repository]
 |Antipole
 
-|link:https://raw.githubusercontent.com/antipole2/VDR2/main/vdr2.js[VDR2.js]
+|VDR2.js
 |VDR2 - an alternative to the VDR plugin
-|link:https://github.com/antipole2/VDR2[instructions]
+|link:https://github.com/antipole2/VDR2[repository]
 |Antipole
 
 |link:https:../SetWaypointScale.js[SetWaypointScale.js]
