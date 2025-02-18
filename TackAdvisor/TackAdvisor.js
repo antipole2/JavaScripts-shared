@@ -10,7 +10,7 @@
 repeatInterval = 5;	// seconds
 // wind angles we will work at
 minWindAngle = 10;	// Min wind angle to work with
-maxWindAngle = 60;	// Max angle off wind we will work with
+maxWindAngle = 75;	// Max angle off wind we will work with
 maxRunWindAngle = 179;	// Don't work if virtually straight down wind
 
 autoHide = false
@@ -225,6 +225,7 @@ function updateWorks(){
 	tackPosition = OCPNgetPositionPV(targetWaypoint.position, vectorBackToTp);
 	tackWaypoint.position.latitude = tackPosition.latitude;
 	tackWaypoint.position.longitude = tackPosition.longitude;
+	tackRoute.isVisible = true;
 
 	// now to create/update the route - not sure if we have one already or are updating
 	try { OCPNupdateRoute(tackRoute); }

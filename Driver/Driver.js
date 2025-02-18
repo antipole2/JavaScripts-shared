@@ -1,5 +1,6 @@
 // Drive ship in absence of real NMEA inputs
 
+var log = false;
 Position = require("Position");
 // we construct the panel dynamically, so we can note where things are
 panel = [];
@@ -24,7 +25,7 @@ panel.push({type:"button", label:["    Port tack     ", "Starboard tack"]})
 panel.push({type:"hLine"});
 panel.push({type:"button", label:["Quit"]})
 
-var COG, SOG;
+var COG, SOG, windAngle2;
 tick = 2;	// update every this number of seconds
 isActive = stopping = false;
 var positionLast = {latitude:0,longitude:0};
@@ -45,6 +46,8 @@ function panelAction(panelRead){
 	nav = OCPNgetNavigation();
 	positionLast.latitude = nav.position.latitude;
 	positionLast.longitude = nav.position.longitude;
+	windAngle2 = windAngle - 180;
+//	if (windAngle2 < 0) windAngle2 += 360;
 	stopping = false;
 	if (button.search("Stop") >= 0){
 		stopping = true;
@@ -54,15 +57,20 @@ function panelAction(panelRead){
 		}
 	else if (button.search("Compass") >= 0){
 		status = "Steering compass course";
+		windAngle2 = windDirection - COG;
+		if (windAngle2 < 0) windAngle2 += 360;
 		}
 	else if (button.search("Starboard") >= 0){
 		COG = windDirection - windAngle;
 		if (COG < 0) {COG += 360;}
+		windAngle2 = windAngle;
 		status = "On starboard tack";
 		}
 	else if (button.search("Port") >= 0){
 		COG = windDirection + windAngle;
 		if (COG >= 360) {COG -= 360;}
+		windAngle2 = -windAngle;
+		if (windAngle2 < 0) windAngle2 += 360;
 		status = "On port tack";
 		}
 	vector = {bearing: COG, distance: SOG*tick/(60*60)};
@@ -92,10 +100,15 @@ function update(){
 	date = date.slice(2,4) + date.slice(5,7) + date.slice(8, 10);
 //	RMC = "$JSRMC," + UTC + ",A," + newPosition.NMEA + "," + SOG + "," + COG + "," + date + "+,,,,A"; 
 	GLL = "$JSGLL," + positionNext.NMEA + "," + UTC + ",A,A"  ;
-	OCPNpushNMEA(GLL);
+	output(GLL);
 	VTG = "$JSVTG," + COG + ",T,,M," + SOG + ",N,,K,A";
-	OCPNpushNMEA(VTG);
-	MWV = "$JSMWV," + windDirection + ",T," + windSpeed + ",N,A";
-	OCPNpushNMEA(MWV);
+	output(VTG);
+	MWV = "$JSMWV," + windAngle2 + ",T," + windSpeed + ",N,A";
+	output(MWV);
 	positionLast = positionNext;
+	};
+
+function output(sentence){
+	if (log) print(sentence, "\n");
+	OCPNpushNMEA0183(sentence);
 	};

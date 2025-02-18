@@ -1,4 +1,4 @@
-const folder ="/Users/Tony/Documents/Marine/Tracks/";	// where files are
+const folder ="/Users/Tony/not_iCloud/Marine/Tracks/";	// where files are
 const trackFile = folder + "Tracks.kml";
 
 nextStyleIndex = 0;

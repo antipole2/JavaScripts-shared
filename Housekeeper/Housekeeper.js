@@ -1008,7 +1008,7 @@ function shareOneofSeveralRoutepoints(dialogue){
 		spinner = dialogue[dialogue.length-3];
 		if (spinner.type != "spinner") throw("Program erorr in shareOneofSeveralRoutepoints");
 		index = spinner.value-1; 	// selecting one
-		printBlue("Spinner value: ", index, "\n");
+		if (log) printBlue("Spinner value: ", index, "\n");
 		toDo = 1;
 		}
 	else if (button == buttonShareOne){

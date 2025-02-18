@@ -1,0 +1,4 @@
+From 18 Feb 2025, this script now has its own repository.
+Do not develop this copy
+
+Once everyone has moved on, this one can be deleted.
