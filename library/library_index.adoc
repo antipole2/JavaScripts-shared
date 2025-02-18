@@ -1,11 +1,34 @@
 = OpenCPN JavaScripts library
 
 This library shares scripts you can use as-is, or modify for your own needs.
-They need at least v0.4 of the plugin.
-
 [cols="1,1,2,1"] 
 |===
 |Name |Description |Details/instructions |Author
+
+|pointUtility.js
+|This script adds functionality for adding marks to OpenCPN.
+|link:https://github.com/antipole2/PointUtility[repository]
+|Antipole
+
+|housekeeper.js
+|Examines your waypoints & routes for anomalies and offers to fix them.
+|link:https://github.com/antipole2/Housekeeper[respository with fuller description]
+|Antipole
+
+|boundary.js
+|Select objects within a boundary and, optionally, work with them.
+|link:https://github.com/antipole2/Boundaries/tree/main[respository with fuller description]
+|Antipole
+
+|VDR2.js
+|VDR2 - an alternative to the VDR plugin for recording
+|link:https://github.com/antipole2/VDR2[repository]
+|Antipole
+
+|AISrecord.js
+|Record AIS traffic movements, creating a separate file for each target replayable with VDR
+|link:https://github.com/antipole2/AISrecord[repository]
+|Antipole
 
 |link:https:../SetWaypointScale.js[SetWaypointScale.js]
 |Simple script to select waypoints by icon name to display only at larger scale.
@@ -37,21 +60,6 @@ Adapt to your choice.
 |link:https://github.com/antipole2/JavaScripts-shared/blob/main/DuplicateCounter.js[DuplicateCounter.js]
 |Looks for routes or waypoints with duplicate names and reports the number of duplicates
 |
-|Antipole
-
-|link:https://raw.githubusercontent.com/antipole2/JavaScripts-shared/main/MessageNMEAsampling/MessageNMEAsampling.js[MessageNMEAsampling.js]
-|Monitors OpenCPN messages and counts NMEA sentences over a period and then reports what has been seen.
-|link:https:../MessageNMEAsampling/MessageNMEAsampling.adoc[Fuller description and instructions]
-|Antipole
-
-|link:https:../Housekeeper/Housekeeper.js[Housekeeper.js]
-|Examines your waypoints & routes for anomolies and offers to fix them.
-|link:https:../Housekeeper/Housekeeper.adoc[Fuller description and instructions]
-|Antipole
-
-|link:https:../Bondaries/boundary.js[boundary.js]
-|Select objects within a boundary and, optionally, offload them.
-|link:https:../Boundaries/Boundaries.adoc[Fuller description and instructions]
 |Antipole
 
 |link:https:../PointInPolygon/isPointInPolygon.js[isPointInPolygon.js]
@@ -87,11 +95,12 @@ Adapt to your choice.
 
 === Issues
 
-Please raise any issues with these scripts or their documentation using the https://github.com/antipole2/JavaScripts-shared/issues[Issues tab], including the script name in the issue title.
+If the script has its own repository, raise any issue as an issue on that repository.
+Otherwise raise any issues with these scripts or their documentation using the https://github.com/antipole2/JavaScripts-shared/issues[Issues tab], including the script name in the issue title.
 
 === Contributing to this library +
 If you have developed a script that you would like to contribute, please store it somewhere online.
-You can submit a request for it to be included in this library by raising an enhancement request on https://opencpn.org/flyspray/index.php?do=tasklist&project=97[Flyspray here].
+You can submit a request for it to be included in this library by starting a discussion https://github.com/antipole2/JavaScript_pi/discussions[here].
 Please include:
 
 * the link to your script
