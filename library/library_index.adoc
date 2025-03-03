@@ -15,6 +15,11 @@ This library shares scripts you can use as-is, or modify for your own needs.
 |link:https://github.com/antipole2/Housekeeper[respository with fuller description]
 |Antipole
 
+|followOCPN.js
+|Send navigational data out over NMEA so other devices can mirror OpenCPN.
+|link:https://github.com/antipole2/FollowOCPN[respository with details]
+|Antipole
+
 |boundary.js
 |Select objects within a boundary and, optionally, work with them.
 |link:https://github.com/antipole2/Boundaries/tree/main[respository with fuller description]
@@ -53,8 +58,8 @@ Adapt to your choice.
 |Antipole
 
 |link:https:../SendActiveRoute/SendActiveRoute.js[SendActiveRoute.js]
-|Mirror active waypoint or route to other devices running. e.g. iNavX.  Be sure to read the istructions about how to make this work!
-|link:https:../SendActiveRoute/SendActiveRoute.adoc[Fuller description and instructions]
+|Mirror active waypoint or route to other devices running. e.g. iNavX.  This script has been superceded by FollowOCPN
+|link:https://github.com/antipole2/FollowOCPN[FollowOCPN description and details]
 |Antipole
 
 |link:https://github.com/antipole2/JavaScripts-shared/blob/main/DuplicateCounter.js[DuplicateCounter.js]
