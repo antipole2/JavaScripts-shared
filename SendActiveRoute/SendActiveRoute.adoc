@@ -1,5 +1,7 @@
 = SendActiveRoute
 
+https://github.com/antipole2/FollowOCPN[#*This script has been superceded by FollowOCPN*#]
+
 https://github.com/antipole2/JavaScripts-shared/blob/main/SendActiveRoute/SendActiveRoute.js[SendActiveRoute.js]
 
 == What this script addresses
